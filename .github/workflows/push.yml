@@ -1,0 +1,70 @@
+name: On Push (Master)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test_web_dashboard:
+    name: Run Tests (Web Dashboard)
+    uses: freenalytics/freenalytics/.github/workflows/pr_web_dashboard.yml@master
+
+  test_server:
+    name: Run Tests (Server)
+    uses: freenalytics/freenalytics/.github/workflows/pr_server.yml@master
+
+  docker-publish:
+    name: Build Docker Image & Publish
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+    needs:
+      - test_web_dashboard
+      - test_server
+
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker Layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Login to GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Version From package.json
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Get Current Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Build & Push to GitHub Packages
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:latest,${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          build-args: |
+            DATE_CREATED=${{ steps.date.outputs.date }}
+            VERSION=${{ steps.package-version.outputs.current-version }}
+
+      - name: Image Digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
