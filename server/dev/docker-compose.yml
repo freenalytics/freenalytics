@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: on-failure
+    volumes:
+      - ./data-mongo:/data/db
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  redis:
+    image: redis:latest
+    restart: on-failure
+    volumes:
+      - ./data-redis:/data
+    ports:
+      - '6379:6379'
+    command: redis-server --loglevel warning

@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "greencoast/node"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "one-var": "off",
+    "max-len": ["warn", {
+      "code": 120,
+      "tabWidth": 2,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreRegExpLiterals": true,
+      "ignoreComments": true
+    }],
+    "no-extra-parens": "off",
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+    "no-console": "off",
+    "new-cap": "off",
+    "max-params": "off"
+  }
+}
