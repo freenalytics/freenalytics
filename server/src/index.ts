@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import api from './api';
+import apiRouter from './routes';
 import { logRequests } from './middleware/logging';
 import { handleError } from './middleware/error';
 
@@ -14,7 +14,7 @@ app.use(logRequests);
 
 app.options('*', cors());
 
-app.use('/api', api);
+app.use('/api', apiRouter);
 
 app.use(express.static(WEB_DASHBOARD_PATH));
 app.get('*', (_, res) => {
