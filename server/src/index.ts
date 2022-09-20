@@ -1,6 +1,9 @@
+import 'dotenv/config';
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
+import logger from '@greencoast/logger';
 import apiRouter from './routes';
 import { logRequests } from './middleware/logging';
 import { handleError } from './middleware/error';
@@ -23,6 +26,14 @@ app.get('*', (_, res) => {
 
 app.use(handleError);
 
-app.listen(HTTP_PORT, () => {
-  console.info(`Server has started on port ${HTTP_PORT}`);
-});
+mongoose.connect(process.env.MONGODB_URI as string)
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      logger.info(`Server has started on port ${HTTP_PORT}`);
+    });
+  })
+  .catch((error) => {
+    logger.error('Something happened when connecting to MongoDB.');
+    logger.error(error);
+  });
+
