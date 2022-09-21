@@ -10,4 +10,4 @@ export const JWT_DURATION = (
   process.env.JWT_DURATION ?
     parseInt(process.env.JWT_DURATION, 10) :
     SEVEN_DAYS_IN_SECONDS
-) * 1000;
+);
