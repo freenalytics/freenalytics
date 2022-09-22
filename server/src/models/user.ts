@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { PassportLocalDocument, PassportLocalModel, PassportLocalSchema, Schema, model } from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 
 export interface UserJwtPayload {
@@ -8,7 +8,7 @@ export interface UserJwtPayload {
   locale: string
 }
 
-export interface UserModel {
+export interface UserModel extends PassportLocalDocument {
   _id: string
   username: string
   createdAt: string
@@ -28,9 +28,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   }
-});
+}) as PassportLocalSchema<UserModel, any>;
 
 userSchema.plugin(passportLocalMongoose);
 
-// TODO: Better typing
-export default model('User', userSchema) as any;
+export default model<UserModel>('User', userSchema) as PassportLocalModel<UserModel>;

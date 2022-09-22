@@ -6,7 +6,7 @@ import User, { UserJwtPayload } from '../models/user';
 import { JWT_SECRET, JWT_DURATION } from '../config';
 
 passport.use(new LocalStrategy({ session: false }, User.authenticate()));
-passport.serializeUser(User.serializeUser());
+passport.serializeUser(User.serializeUser() as any);
 passport.deserializeUser(User.deserializeUser());
 
 const jwtStrategyParams = {
