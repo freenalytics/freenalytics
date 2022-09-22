@@ -21,8 +21,8 @@ export class HttpError extends Error {
 }
 
 export class InternalServerError extends HttpError {
-  constructor(message: string) {
-    super(message, HttpStatus.INTERNAL_SERVER_ERROR, 'Something unexpected happened when handling your request.');
+  constructor(message?: string) {
+    super(message ?? 'An unknown error occurred.', HttpStatus.INTERNAL_SERVER_ERROR, 'Something unexpected happened when handling your request.');
   }
 }
 
@@ -41,5 +41,23 @@ export class UnauthorizedRequestError extends HttpError {
 export class ModelValidationError extends HttpError {
   constructor(message: string) {
     super(message, HttpStatus.BAD_REQUEST, 'The data you have provided does not conform with the requirements for this endpoint.');
+  }
+}
+
+export class BadRequestError extends HttpError {
+  constructor(message: string) {
+    super(message, HttpStatus.BAD_REQUEST, 'The server could not handle your request. Please verify that your request is correct.');
+  }
+}
+
+export class AccountLockedError extends HttpError {
+  constructor(message: string) {
+    super(message, HttpStatus.UNAUTHORIZED, 'Your account is currently locked.');
+  }
+}
+
+export class WrongCredentialsError extends HttpError {
+  constructor(message: string) {
+    super(message, HttpStatus.UNAUTHORIZED, 'The credentials provided are incorrect.');
   }
 }
