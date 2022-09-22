@@ -1,5 +1,5 @@
 import { ResponseBuilder } from './http';
-import { HttpError } from '../errors/http';
+import { InternalServerError } from '../errors/http';
 
 describe('Utils: HTTP', () => {
   describe('class ResponseBuilder', () => {
@@ -28,7 +28,7 @@ describe('Utils: HTTP', () => {
 
     describe('withError()', () => {
       it('should set the error value in the body.', () => {
-        const error = new HttpError('Oops', 'desc');
+        const error = new InternalServerError('Oops');
         const builder = new ResponseBuilder().withError(error);
         expect(builder.build()).toMatchObject({
           status: error.statusCode,

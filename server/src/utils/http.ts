@@ -58,4 +58,8 @@ export class ResponseBuilder {
 
     return this._body;
   }
+
+  get statusCode(): number {
+    return this._body.status;
+  }
 }
