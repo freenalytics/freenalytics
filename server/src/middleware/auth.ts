@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import User, { UserJwtPayload } from '../models/user';
 import { JWT_SECRET, JWT_DURATION } from '../config';
 
 passport.use(new LocalStrategy({ session: false }, User.authenticate()));
@@ -14,8 +14,7 @@ const jwtStrategyParams = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 };
 
-// TODO: Need to type payload.
-passport.use(new JwtStrategy(jwtStrategyParams, async (payload, done) => {
+passport.use(new JwtStrategy(jwtStrategyParams, async (payload: UserJwtPayload, done) => {
   try {
     const user = await User.findById(payload.id);
 
@@ -29,8 +28,7 @@ passport.use(new JwtStrategy(jwtStrategyParams, async (payload, done) => {
   }
 }));
 
-// TODO: Need to type payload.
-export const createJwtToken = (payload: any) => {
+export const createJwtToken = (payload: UserJwtPayload) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION });
 };
 
