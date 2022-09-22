@@ -3,12 +3,7 @@ import logger from '@greencoast/logger';
 import onFinished from 'on-finished';
 
 export const logRequests = (req: Request, res: Response, next: NextFunction) => {
-  onFinished(res, (error, res) => {
-    if (error) {
-      logger.error(error);
-      return;
-    }
-
+  onFinished(res, (_, res) => {
     logger.info(`${req.method}:${req.originalUrl} ${res.statusCode} (${req.ip})`);
   });
 
