@@ -2,7 +2,7 @@
   "name": "web-dashboard",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development react-scripts start",
+    "dev": "cross-env DISABLE_ESLINT_PLUGIN=true NODE_ENV=development react-scripts start",
     "lint": "eslint ./src --ext .tsx,.ts",
     "lint:fix": "eslint ./src --ext .tsx,.ts --fix",
     "test": "jest",
