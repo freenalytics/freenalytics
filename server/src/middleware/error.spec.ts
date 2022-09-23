@@ -2,18 +2,9 @@ import { handleError } from './error';
 import { Request, Response } from 'express';
 import * as logger from '@greencoast/logger';
 import { InternalServerError, ResourceNotFoundError } from '../errors/http';
+import { ResponseMock } from '../../__mocks__/http_mocks';
 
 jest.mock('@greencoast/logger');
-
-class ResponseMock {
-  public status: jest.Mock;
-  public send: jest.Mock;
-
-  constructor() {
-    this.status = jest.fn(() => this);
-    this.send = jest.fn();
-  }
-}
 
 describe('Middleware: Error', () => {
   const res = new ResponseMock() as unknown as Response;

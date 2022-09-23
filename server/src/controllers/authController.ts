@@ -37,7 +37,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = (req: Request, res: Response) => {
   const { _id: id, username, locale, createdAt } = req.user as UserModel;
   const response = new ResponseBuilder()
     .withStatusCode(HttpStatus.OK)
