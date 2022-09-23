@@ -1,7 +1,7 @@
 import InlMessageFormat, { PrimitiveType, FormatXMLElementFn } from 'intl-messageformat';
 import strings from './strings';
 
-type TranslateValues = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]>>;
+export type TranslateValues = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]>>;
 
 export const DEFAULT_LOCALE = 'en';
 
