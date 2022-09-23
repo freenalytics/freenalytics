@@ -1,8 +1,10 @@
+import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
 import User, { UserJwtPayload } from '../models/user';
+import { UnauthorizedRequestError } from '../errors/http';
 import { JWT_SECRET, JWT_DURATION } from '../config';
 
 passport.use(new LocalStrategy({ session: false }, User.authenticate()));
@@ -32,5 +34,20 @@ export const createJwtToken = (payload: UserJwtPayload) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION });
 };
 
-export const verifyUser = passport.authenticate('jwt', { session: false });
+export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate('jwt', { session: false }, (error: Error, _, info: Error | Error[]) => {
+    if (error || info) {
+      if (error) {
+        return next(new UnauthorizedRequestError(error.message));
+      }
+
+      const infoError = Array.isArray(info) ? info[0] : info;
+      if (infoError) {
+        return next(new UnauthorizedRequestError(infoError.message));
+      }
+    }
+
+    next();
+  })(req, res, next);
+};
 export const localAuthenticate = passport.authenticate('local', { session: false });
