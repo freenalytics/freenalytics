@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, ReactNode } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { UserPayload } from '../types/user';
 
@@ -9,7 +9,7 @@ interface Context {
 }
 
 interface Props {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const AppContext = React.createContext<Context | null>(null);

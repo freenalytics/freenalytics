@@ -1,3 +1,7 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 @import 'global.scss';
+
+@import '../components/forms/loginForm';
+
+@import '../pages/login';
