@@ -1,7 +1,6 @@
 {
   "extends": [
-    "greencoast",
-    "react/app"
+    "greencoast"
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": [

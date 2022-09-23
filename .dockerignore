@@ -5,3 +5,5 @@
 **/build/
 **/client-build/
 **/dev/
+
+*.env
