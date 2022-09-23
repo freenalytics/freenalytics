@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
 import User, { UserJwtPayload } from '../models/user';
+import { getUserById } from '../services/userService';
 import { UnauthorizedRequestError } from '../errors/http';
 import { JWT_SECRET, JWT_DURATION } from '../config';
 
@@ -18,13 +19,7 @@ const jwtStrategyParams = {
 
 passport.use(new JwtStrategy(jwtStrategyParams, async (payload: UserJwtPayload, done) => {
   try {
-    const user = await User.findById(payload.id);
-
-    if (!user) {
-      return done(null, null);
-    }
-
-    return done(null, user);
+    return done(null, await getUserById(payload.id));
   } catch (error) {
     return done(error, null);
   }
