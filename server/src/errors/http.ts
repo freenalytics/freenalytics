@@ -61,3 +61,9 @@ export class WrongCredentialsError extends HttpError {
     super(message, HttpStatus.UNAUTHORIZED, 'The credentials provided are incorrect.');
   }
 }
+
+export class SchemaValidationError extends HttpError {
+  constructor(message: string) {
+    super(message, HttpStatus.BAD_REQUEST, 'The body of this request does not conform to the validation schema.');
+  }
+}
