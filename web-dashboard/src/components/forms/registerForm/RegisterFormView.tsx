@@ -1,14 +1,12 @@
 import React from 'react';
-import { Box, Form, Button, Heading, Block } from 'react-bulma-components';
-import { Link } from 'react-router-dom';
+import { Box, Form, Button, Heading } from 'react-bulma-components';
 import useLocale from '../../../hooks/locale';
-import { PUBLIC_ROUTES } from '../../../constants/routes';
 
 interface Props {
 
 }
 
-const LoginFormView: React.FC<Props> = () => {
+const RegisterFormView: React.FC<Props> = () => {
   const { t } = useLocale();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
@@ -17,15 +15,15 @@ const LoginFormView: React.FC<Props> = () => {
   };
 
   return (
-    <Box className="login-form">
+    <Box className="register-form">
       <form onSubmit={handleSubmit}>
         <Heading textAlign="center" size={5}>
-          {t('forms.login.header.text')}
+          {t('forms.register.header.text')}
         </Heading>
 
         <Form.Field>
           <Form.Label>
-            {t('forms.login.username.label')}
+            {t('forms.register.username.label')}
           </Form.Label>
           <Form.Control>
             <Form.Input type="text" />
@@ -34,27 +32,30 @@ const LoginFormView: React.FC<Props> = () => {
 
         <Form.Field>
           <Form.Label>
-            {t('forms.login.password.label')}
+            {t('forms.register.password.label')}
           </Form.Label>
           <Form.Control>
-            <Form.Input type="text" />
+            <Form.Input type="password" />
+          </Form.Control>
+        </Form.Field>
+
+        <Form.Field>
+          <Form.Label>
+            {t('forms.register.password_confirm.label')}
+          </Form.Label>
+          <Form.Control>
+            <Form.Input type="password" />
           </Form.Control>
         </Form.Field>
 
         <Button.Group align="center">
           <Button color="primary" submit>
-            {t('forms.login.buttons.login.label')}
+            {t('forms.register.buttons.register.label')}
           </Button>
         </Button.Group>
       </form>
-
-      <Block mt={5}>
-        <Link to={PUBLIC_ROUTES.register}>
-          {t('forms.login.extra.register.text')}
-        </Link>
-      </Block>
     </Box>
   );
 };
 
-export default LoginFormView;
+export default RegisterFormView;
