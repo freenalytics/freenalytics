@@ -1,17 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import User, { UserModel } from '../models/user';
-import { UserRegisterBody } from '../schemas/user';
+import { UserRegisterBody, UserRegisterSchema } from '../schemas/user';
 import { createJwtToken } from '../middleware/auth';
 import { ResponseBuilder } from '../utils/http';
-import { AccountLockedError, BadRequestError, InternalServerError, WrongCredentialsError } from '../errors/http';
+import { validate } from '../utils/schema';
+import {
+  AccountLockedError,
+  BadRequestError,
+  HttpError,
+  InternalServerError,
+  WrongCredentialsError
+} from '../errors/http';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
-  const { username, password, locale } = req.body as UserRegisterBody;
+  const registerBody = req.body as UserRegisterBody;
   const createdAt = new Date().toISOString();
 
   try {
-    await User.register(new User({ username, locale, createdAt }), password);
+    const { password, ...restOfUser } = validate(registerBody, UserRegisterSchema);
+    await User.register(new User({ ...restOfUser, createdAt }), password);
+
     const response = new ResponseBuilder()
       .withStatusCode(HttpStatus.OK)
       .withData({
@@ -20,6 +29,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
+    if (error instanceof HttpError) {
+      next(error);
+      return;
+    }
+
     if (error.name === 'MissingPasswordError' || error.name === 'MissingUsernameError' || error.name === 'UserExistsError') {
       next(new BadRequestError(error.message));
     } else if (error.name === 'AttemptTooSoonError' || error.name === 'TooManyAttemptsError') {
