@@ -1,18 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import User, { UserModel } from '../models/user';
+import { UserRegisterBody } from '../schemas/user';
 import { createJwtToken } from '../middleware/auth';
 import { ResponseBuilder } from '../utils/http';
 import { AccountLockedError, BadRequestError, InternalServerError, WrongCredentialsError } from '../errors/http';
 
-export type RegisterBody = {
-  username: string,
-  password: string,
-  locale: string
-}
-
 export const register = async (req: Request, res: Response, next: NextFunction) => {
-  const { username, password, locale } = req.body as RegisterBody;
+  const { username, password, locale } = req.body as UserRegisterBody;
   const createdAt = new Date().toISOString();
 
   try {
