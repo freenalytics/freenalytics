@@ -9,7 +9,8 @@ const useAuth = () => {
     updateToken(token);
   };
 
-  const register = () => {
+  const register = async (username: string, password: string, locale: string) => {
+    console.log(username, password, locale);
     return Promise.resolve();
   };
 

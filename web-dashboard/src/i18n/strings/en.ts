@@ -16,7 +16,8 @@ const FORMS: Record<string, string> = {
   'forms.register.username.label': 'Username',
   'forms.register.password.label': 'Password',
   'forms.register.password_confirm.label': 'Confirm Password',
-  'forms.register.buttons.register.label': 'Register'
+  'forms.register.buttons.register.label': 'Register',
+  'forms.register.errors.header.text': 'Could not complete user registration'
 };
 
 const ERRORS: Record<string, string> = {

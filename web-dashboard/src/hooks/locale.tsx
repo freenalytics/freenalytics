@@ -7,7 +7,8 @@ const useLocale = () => {
 
   return {
     t,
-    isLocaleSupported
+    isLocaleSupported,
+    currentLocale: DEFAULT_LOCALE
   };
 };
 

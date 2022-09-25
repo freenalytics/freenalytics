@@ -1,13 +1,28 @@
 import React from 'react';
 import RegisterFormLogic from './RegisterFormLogic';
+import useAuth from '../../../hooks/auth';
+import useLocale from '../../../hooks/locale';
+import { AuthError } from '../../../errors/auth';
+import { RegistrationData } from './types';
 
-interface Props {
+const RegisterForm: React.FC = () => {
+  const { register } = useAuth();
+  const { t, currentLocale } = useLocale();
 
-}
+  const handleSubmit = async ({ username, password }: RegistrationData) => {
+    try {
+      await register(username, password, currentLocale);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        throw error.getFriendlyMessage(t) ?? error.message;
+      }
 
-const RegisterForm: React.FC<Props> = () => {
+      throw (error as Error).message;
+    }
+  };
+
   return (
-    <RegisterFormLogic />
+    <RegisterFormLogic onSubmit={handleSubmit} />
   );
 };
 
