@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Content } from 'react-bulma-components';
 import Loading from '../../components/common/loading';
-import RequestErrorMessage from '../../components/common/requestErrorMessage';
+import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
 import RegisterForm from '../../components/forms/registerForm';
 import useAuth from '../../hooks/auth';
 import useApi from '../../hooks/api';
@@ -29,9 +29,7 @@ const RegisterPage: React.FC = () => {
 
   if (error) {
     return (
-      <Content className="register-page">
-        <RequestErrorMessage error={error as Error} />
-      </Content>
+      <RequestErrorMessageFullPage error={error as Error} />
     );
   }
 
