@@ -39,3 +39,5 @@ jobs:
 
       - name: Run Tests
         run: npm test
+        env:
+          JWT_SECRET: '123' # Just for testing purposes
