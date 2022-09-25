@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Content } from 'react-bulma-components';
+import Loading from '../../components/common/loading';
 import RegisterForm from '../../components/forms/registerForm';
 import useAuth from '../../hooks/auth';
 import useApi from '../../hooks/api';
@@ -20,7 +21,9 @@ const RegisterPage: React.FC = () => {
   const { isLoading, error, data } = useQuery(request.key, request.fn);
 
   if (isLoading) {
-    return null; // TODO: Loading animation
+    return (
+      <Loading />
+    );
   }
 
   if (error) {

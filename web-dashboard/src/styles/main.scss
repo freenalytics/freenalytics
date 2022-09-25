@@ -2,6 +2,8 @@
 @import 'mixins.scss';
 @import 'global.scss';
 
+@import '../components/common/loading';
+
 @import '../components/forms/loginForm';
 @import '../components/forms/registerForm';
 
