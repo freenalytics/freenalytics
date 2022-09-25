@@ -17,7 +17,17 @@ const FORMS: Record<string, string> = {
   'forms.register.password.label': 'Password',
   'forms.register.password_confirm.label': 'Confirm Password',
   'forms.register.buttons.register.label': 'Register',
-  'forms.register.errors.header.text': 'Could not complete user registration'
+  'forms.register.errors.header.text': 'Could not complete user registration',
+  'forms.register.errors.fields.username.min': 'Username length must be greater than {value}.',
+  'forms.register.errors.fields.username.max': 'Username length must be less than {value}.',
+  'forms.register.errors.fields.username.required': 'Username is required.',
+  'forms.register.errors.fields.password.special_characters': 'Password must have at least one special character.',
+  'forms.register.errors.fields.password.lowercase': 'Password must have at least one lowercase letter.',
+  'forms.register.errors.fields.password.uppercase': 'Password must have at least one uppercase letter.',
+  'forms.register.errors.fields.password.whitespace': 'Password cannot contain spaces.',
+  'forms.register.errors.fields.password.required': 'Password is required.',
+  'forms.register.errors.fields.password_confirm.different': 'Passwords do not match.',
+  'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.'
 };
 
 const ERRORS: Record<string, string> = {
