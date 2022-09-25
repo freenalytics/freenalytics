@@ -21,6 +21,7 @@ const FORMS: Record<string, string> = {
   'forms.register.errors.fields.username.min': 'Username length must be greater than {value}.',
   'forms.register.errors.fields.username.max': 'Username length must be less than {value}.',
   'forms.register.errors.fields.username.required': 'Username is required.',
+  'forms.register.errors.fields.password.min': 'Password length must be greater than {value}.',
   'forms.register.errors.fields.password.special_characters': 'Password must have at least one special character.',
   'forms.register.errors.fields.password.lowercase': 'Password must have at least one lowercase letter.',
   'forms.register.errors.fields.password.uppercase': 'Password must have at least one uppercase letter.',

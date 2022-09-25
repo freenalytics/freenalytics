@@ -32,6 +32,7 @@ const RegisterFormLogic: React.FC<Props> = ({ onSubmit }) => {
       }),
     password: joiPassword.string().min(PASSWORD_MIN_LENGTH).minOfSpecialCharacters(1).minOfLowercase(1).minOfUppercase(1).noWhiteSpaces().required()
       .messages({
+        'string.min': t('forms.register.errors.fields.password.min', { value: PASSWORD_MIN_LENGTH }),
         'password.minOfSpecialCharacters': t('forms.register.errors.fields.password.special_characters'),
         'password.minOfLowercase': t('forms.register.errors.fields.password.lowercase'),
         'password.minOfUppercase': t('forms.register.errors.fields.password.uppercase'),
