@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import User, { UserJwtPayload, UserModel } from '../models/user';
 import { getUserById } from '../services/userService';
 import { UnauthorizedRequestError } from '../errors/http';
-import { JWT_SECRET, JWT_DURATION } from '../config';
+import { JWT_SECRET, JWT_TOKEN_DURATION } from '../config';
 
 passport.use(new LocalStrategy({ session: false }, User.authenticate()));
 passport.serializeUser(User.serializeUser() as any);
@@ -14,7 +14,8 @@ passport.deserializeUser(User.deserializeUser());
 
 const jwtStrategyParams = {
   secretOrKey: JWT_SECRET,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  ignoreExpiration: false
 };
 
 passport.use(new JwtStrategy(jwtStrategyParams, async (payload: UserJwtPayload, done) => {
@@ -26,7 +27,7 @@ passport.use(new JwtStrategy(jwtStrategyParams, async (payload: UserJwtPayload, 
 }));
 
 export const createJwtToken = (payload: UserJwtPayload) => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_DURATION });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_TOKEN_DURATION });
 };
 
 export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
