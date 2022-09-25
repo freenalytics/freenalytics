@@ -30,24 +30,8 @@ export const createJwtToken = (payload: UserJwtPayload) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_TOKEN_DURATION });
 };
 
-export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('jwt', { session: false }, (error: Error, _, info: Error | Error[]) => {
-    if (error || info) {
-      if (error) {
-        return next(new UnauthorizedRequestError(error.message));
-      }
-
-      const infoError = Array.isArray(info) ? info[0] : info;
-      if (infoError) {
-        return next(new UnauthorizedRequestError(infoError.message));
-      }
-    }
-
-    next();
-  })(req, res, next);
-};
-export const localAuthenticate = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', { session: false }, (error: Error, user: UserModel, info: Error | Error[]) => {
+const handleAuthenticate = (req: Request, _: Response, next: NextFunction) => {
+  return (error: Error, user: UserModel, info: Error | Error[]) => {
     if (error || info) {
       if (error) {
         return next(new UnauthorizedRequestError(error.message));
@@ -61,5 +45,12 @@ export const localAuthenticate = (req: Request, res: Response, next: NextFunctio
 
     req.user = user;
     next();
-  })(req, res, next);
+  };
+};
+
+export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate('jwt', { session: false }, handleAuthenticate(req, res, next))(req, res, next);
+};
+export const localAuthenticate = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate('local', { session: false }, handleAuthenticate(req, res, next))(req, res, next);
 };
