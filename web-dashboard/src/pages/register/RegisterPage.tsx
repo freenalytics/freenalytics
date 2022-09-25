@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Content } from 'react-bulma-components';
 import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
+import RegistrationDisabled from '../../components/pageComponents/register/registrationDisabled';
 import RegisterForm from '../../components/forms/registerForm';
 import useAuth from '../../hooks/auth';
 import useApi from '../../hooks/api';
@@ -33,17 +34,13 @@ const RegisterPage: React.FC = () => {
     );
   }
 
-  if (!data?.open) {
-    return (
-      <div>
-        Registration not open.
-      </div>
-    );
-  }
-
   return (
     <Content className="register-page">
-      <RegisterForm />
+      {
+        !data?.open ?
+          <RegistrationDisabled /> :
+          <RegisterForm />
+      }
     </Content>
   );
 };
