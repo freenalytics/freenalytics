@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Content } from 'react-bulma-components';
 import Loading from '../../components/common/loading';
@@ -12,11 +12,12 @@ import { PROTECTED_ROUTES } from '../../constants/routes';
 
 const RegisterPage: React.FC = () => {
   const { loggedIn } = useAuth();
-  const navigate = useNavigate();
   const { client } = useApi();
 
   if (loggedIn) {
-    navigate(PROTECTED_ROUTES.applications, { replace: true });
+    return (
+      <Navigate to={PROTECTED_ROUTES.applications} replace />
+    );
   }
 
   const request = client.auth.getRegistrationOpen();
