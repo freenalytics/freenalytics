@@ -77,10 +77,10 @@ export const registrationOpen = (_: Request, res: Response) => {
 };
 
 export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
-  const { username } = req.user as UserModel;
-  const changePasswordBody = req.body as UserChangePasswordBody;
-
   try {
+    const { username } = req.user as UserModel;
+    const changePasswordBody = req.body as UserChangePasswordBody;
+
     const { old_password, new_password } = validate(changePasswordBody, UserChangePasswordSchema);
     const storedUser = await getUserByUsername(username);
     await storedUser.changePassword(old_password, new_password);
