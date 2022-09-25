@@ -2,15 +2,19 @@ import { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 const useAuth = () => {
-  const { token, me } = useContext(AppContext)!;
+  const { token, me, updateToken, client } = useContext(AppContext)!;
 
-  const login = (username: string, password: string) => {
-    console.log(username, password);
-    return Promise.resolve({ username, password });
+  const login = async (username: string, password: string) => {
+    const { token } = await client.auth.postLogin(username, password);
+    updateToken(token);
   };
 
   const register = () => {
     return Promise.resolve();
+  };
+
+  const logout = () => {
+    updateToken(null);
   };
 
   return {
@@ -19,7 +23,8 @@ const useAuth = () => {
     me,
 
     login,
-    register
+    register,
+    logout
   };
 };
 
