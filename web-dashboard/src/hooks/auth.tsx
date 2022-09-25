@@ -4,8 +4,9 @@ import AppContext from '../context/AppContext';
 const useAuth = () => {
   const { token, me } = useContext(AppContext)!;
 
-  const login = () => {
-    return Promise.resolve();
+  const login = (username: string, password: string) => {
+    console.log(username, password);
+    return Promise.resolve({ username, password });
   };
 
   const register = () => {

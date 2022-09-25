@@ -10,6 +10,7 @@ const FORMS: Record<string, string> = {
   'forms.login.password.label': 'Password',
   'forms.login.buttons.login.label': 'Log in',
   'forms.login.extra.register.text': "Don't have an account yet?",
+  'forms.login.errors.header.text': 'Could not log you in',
 
   'forms.register.header.text': 'Create an Account',
   'forms.register.username.label': 'Username',
