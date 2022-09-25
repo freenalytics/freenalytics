@@ -143,25 +143,9 @@ describe('Schemas: User', () => {
 
   describe('UserChangePasswordSchema', () => {
     const validUser: UserChangePasswordBody = {
-      username: 'moonstar',
       old_password: 'Abc12345!',
       new_password: 'Dce67890!'
     };
-
-    describe('username', () => {
-      it('should error if no username exists.', () => {
-        const userCopy: Partial<UserChangePasswordBody> = { ...validUser };
-        delete userCopy.username;
-
-        const validation = UserChangePasswordSchema.validate(userCopy);
-        expect(validation.error).toBeTruthy();
-      });
-
-      it('should not error if username is valid.', () => {
-        const validation = UserChangePasswordSchema.validate(validUser);
-        expect(validation.error).toBeFalsy();
-      });
-    });
 
     describe('old_password', () => {
       it('should error if no old_password exists.', () => {

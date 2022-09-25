@@ -61,17 +61,11 @@ export const UserRegisterSchema = Joi.object<UserRegisterBody>({
 });
 
 export interface UserChangePasswordBody {
-  username: string
   old_password: string
   new_password: string
 }
 
 export const UserChangePasswordSchema = Joi.object<UserChangePasswordBody>({
-  username: Joi.string().lowercase().trim().required()
-    .messages({
-      'string.empty': 'Username is required.',
-      'any.required': 'Username is required.'
-    }),
   old_password: Joi.string().required()
     .messages({
       'string.empty': 'Old password is required.',
