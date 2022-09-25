@@ -1,6 +1,6 @@
-import { onlySupportedMethods } from './routes';
+import { onlySupportedMethods, routeNotFound } from './routes';
 import { Request, Response } from 'express';
-import { MethodNotAllowedError } from '../errors/http';
+import { MethodNotAllowedError, ResourceNotFoundError } from '../errors/http';
 
 describe('Middleware: Routes', () => {
   const nextMock = jest.fn();
@@ -32,6 +32,17 @@ describe('Middleware: Routes', () => {
       onlySupportedMethods('GET', 'POST')(req, res, nextMock);
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(MethodNotAllowedError);
+    });
+  });
+
+  describe('routeNotFound()', () => {
+    const req = {} as Request;
+    const res = {} as Response;
+
+    it('should call next with a ResourceNotFoundError.', () => {
+      routeNotFound(req, res, nextMock);
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
     });
   });
 });
