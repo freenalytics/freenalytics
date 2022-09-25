@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import AuthService from './AuthService';
+import { RequestError } from '../../errors/http';
 
 interface CommonErrorResponse {
   error: {
@@ -39,7 +40,8 @@ class Client {
 
   public createRequestError(error: unknown): Error {
     const axiosError = error as AxiosError;
-    return new Error((axiosError.response?.data as CommonErrorResponse)?.error?.message ?? axiosError.message);
+    const message = (axiosError.response?.data as CommonErrorResponse)?.error?.message ?? axiosError.message;
+    return new RequestError(axiosError, message);
   }
 
   get instance() {

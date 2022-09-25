@@ -12,8 +12,14 @@ const FORMS: Record<string, string> = {
   'forms.register.buttons.register.label': 'Register'
 };
 
+const ERRORS: Record<string, string> = {
+  'errors.request.header.text': 'Oops!',
+  'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.'
+};
+
 const strings: Record<string, string> = {
-  ...FORMS
+  ...FORMS,
+  ...ERRORS
 };
 
 export default strings;
