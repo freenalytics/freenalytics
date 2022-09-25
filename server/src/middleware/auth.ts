@@ -3,7 +3,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
-import User, { UserJwtPayload } from '../models/user';
+import User, { UserJwtPayload, UserModel } from '../models/user';
 import { getUserById } from '../services/userService';
 import { UnauthorizedRequestError } from '../errors/http';
 import { JWT_SECRET, JWT_DURATION } from '../config';
@@ -45,4 +45,20 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
     next();
   })(req, res, next);
 };
-export const localAuthenticate = passport.authenticate('local', { session: false });
+export const localAuthenticate = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate('local', { session: false }, (error: Error, user: UserModel, info: Error | Error[]) => {
+    if (error || info) {
+      if (error) {
+        return next(new UnauthorizedRequestError(error.message));
+      }
+
+      const infoError = Array.isArray(info) ? info[0] : info;
+      if (infoError) {
+        return next(new UnauthorizedRequestError(infoError.message));
+      }
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
+};
