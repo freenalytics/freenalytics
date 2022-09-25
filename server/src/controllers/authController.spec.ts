@@ -4,6 +4,7 @@ import User from '../models/user';
 import {
   AccountLockedError,
   BadRequestError,
+  ForbiddenRequestError,
   InternalServerError,
   SchemaValidationError,
   WrongCredentialsError
@@ -33,6 +34,14 @@ describe('Controllers: AuthController', () => {
 
     beforeAll(() => {
       registerSpy.mockResolvedValue(null as never);
+    });
+
+    it('should call next with a ForbiddenRequestError if account registration is disabled.', async () => {
+      Object.defineProperty(config, 'REGISTRATION_OPEN', { value: false });
+      await register(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ForbiddenRequestError);
     });
 
     it('should respond with success if user body is correct.', async () => {

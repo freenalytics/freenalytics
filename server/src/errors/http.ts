@@ -67,3 +67,9 @@ export class SchemaValidationError extends HttpError {
     super(message, HttpStatus.BAD_REQUEST, 'The body of this request does not conform to the validation schema.');
   }
 }
+
+export class ForbiddenRequestError extends HttpError {
+  constructor(message: string) {
+    super(message, HttpStatus.FORBIDDEN, 'You do not have access to this resource.');
+  }
+}

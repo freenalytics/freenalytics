@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import User, { UserModel } from '../models/user';
@@ -8,6 +9,7 @@ import { validate } from '../utils/schema';
 import {
   AccountLockedError,
   BadRequestError,
+  ForbiddenRequestError,
   HttpError,
   InternalServerError,
   WrongCredentialsError
@@ -15,6 +17,11 @@ import {
 import { REGISTRATION_OPEN } from '../config';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
+  if (!REGISTRATION_OPEN) {
+    next(new ForbiddenRequestError('Account registration is not enabled.'));
+    return;
+  }
+
   const registerBody = req.body as UserRegisterBody;
   const createdAt = new Date().toISOString();
 
