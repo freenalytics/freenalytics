@@ -1,11 +1,13 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
-import api from './api';
+import logger from '@greencoast/logger';
+import apiRouter from './routes';
 import { logRequests } from './middleware/logging';
 import { handleError } from './middleware/error';
+import { HTTP_PORT, MONGODB_URI } from './config';
 
-const HTTP_PORT = process.env.PORT || 4000;
 const WEB_DASHBOARD_PATH = path.join(__dirname, '../client-build');
 
 const app = express();
@@ -14,7 +16,7 @@ app.use(logRequests);
 
 app.options('*', cors());
 
-app.use('/api', api);
+app.use('/api', apiRouter);
 
 app.use(express.static(WEB_DASHBOARD_PATH));
 app.get('*', (_, res) => {
@@ -23,6 +25,15 @@ app.get('*', (_, res) => {
 
 app.use(handleError);
 
-app.listen(HTTP_PORT, () => {
-  console.info(`Server has started on port ${HTTP_PORT}`);
-});
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      logger.info(`Server has started on port ${HTTP_PORT}`);
+    });
+  })
+  .catch((error) => {
+    logger.error('Something happened when connecting to MongoDB.');
+    logger.error(error);
+    process.exit(1);
+  });
+

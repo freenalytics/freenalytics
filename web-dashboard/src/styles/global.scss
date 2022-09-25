@@ -1,0 +1,4 @@
+html, body, #root {
+  min-height: 100vh;
+  height: 1px; // Weird hack to cascade down height while only having min-height specified.
+}
