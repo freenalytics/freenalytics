@@ -56,7 +56,7 @@ class AuthService {
         throw this.client.createAuthError(error, 'errors.auth.register.user_exists.message');
       }
 
-      if (axiosError.response?.status === 403) {
+      if (axiosError.response?.status === 401) {
         throw this.client.createAuthError(error, 'errors.auth.register.locked.message');
       }
 
