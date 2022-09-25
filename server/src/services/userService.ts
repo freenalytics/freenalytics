@@ -14,3 +14,14 @@ export const getUserById = async (id: string): Promise<UserModel> => {
 
   return user;
 };
+
+export const getUserByUsername = async (username: string): Promise<UserModel> => {
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    throw new ResourceNotFoundError(`User ${username} was not found.`);
+  }
+
+  return user;
+};
+

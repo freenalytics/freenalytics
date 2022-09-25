@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { getAllUsers, getUserById } from './userService';
+import { getAllUsers, getUserById, getUserByUsername } from './userService';
 const mockingoose = require('mockingoose');
 import User from '../models/user';
 
@@ -53,6 +53,31 @@ describe('Services: UserService', () => {
     it('should reject if the user was not found.', async () => {
       try {
         await getUserById('not_found');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+  });
+
+  describe('getUserByUsername()', () => {
+    beforeAll(() => {
+      mockingoose(User).toReturn((query: any) => {
+        return query.getQuery().username === user1.username ? user1 : null;
+      }, 'findOne');
+    });
+
+    afterAll(() => {
+      mockingoose(User).reset('findOne');
+    });
+
+    it('should resolve the correct user.', async () => {
+      const user = await getUserByUsername(user1.username);
+      expect(user.username).toContain('moon');
+    });
+
+    it('should reject if the user was not found.', async () => {
+      try {
+        await getUserByUsername('not_found');
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
       }
