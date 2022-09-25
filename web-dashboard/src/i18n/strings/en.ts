@@ -35,7 +35,10 @@ const ERRORS: Record<string, string> = {
   'errors.request.header.text': 'Oops!',
   'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.',
 
-  'errors.auth.login.message': 'Username or password is incorrect.'
+  'errors.auth.login.default.message': 'Username or password is incorrect.',
+  'errors.auth.register.default.message': 'Something happened when trying to create your account.',
+  'errors.auth.register.user_exists.message': 'This username is already taken.',
+  'errors.auth.register.locked.message': 'You cannot create a new account. Try again later.'
 };
 
 const strings: Record<string, string> = {

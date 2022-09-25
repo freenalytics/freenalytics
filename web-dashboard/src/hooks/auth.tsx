@@ -10,8 +10,7 @@ const useAuth = () => {
   };
 
   const register = async (username: string, password: string, locale: string) => {
-    console.log(username, password, locale);
-    return Promise.resolve();
+    await client.auth.postRegister(username, password, locale);
   };
 
   const logout = () => {
