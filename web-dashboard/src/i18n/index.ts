@@ -27,6 +27,9 @@ export const getMessage = (locale: string, key: string): InlMessageFormat => {
   return new InlMessageFormat(message);
 };
 
-export const translate = (locale: string, key: string, values: TranslateValues = {}): string => {
+export type TranslateFunction = (locale: string, key: string, values?: TranslateValues) => string;
+export type LocalizedTranslateFunction = (key: string, values?: TranslateValues) => string;
+
+export const translate: TranslateFunction = (locale: string, key: string, values: TranslateValues = {}): string => {
   return getMessage(locale, key).format(values) as string;
 };
