@@ -1,7 +1,10 @@
 const PAGES: Record<string, string> = {
   'pages.register.disabled.header.text': 'Account registration is currently disabled.',
   'pages.register.disabled.body.description': "If you're the owner of this server, please make sure that the application has been configured to allow account registration, then try again.",
-  'pages.register.disabled.buttons.login.label': 'Go to log in'
+  'pages.register.disabled.buttons.login.label': 'Go to log in',
+  'pages.register.complete.header.text': 'Your account has been created!',
+  'pages.register.complete.body.description': 'To continue, please log in to your account.',
+  'pages.register.complete.buttons.login.label': 'Go to log in'
 };
 
 const FORMS: Record<string, string> = {

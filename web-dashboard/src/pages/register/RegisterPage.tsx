@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Content } from 'react-bulma-components';
 import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
+import PostRegistration from '../../components/pageComponents/register/postRegistration';
 import RegistrationDisabled from '../../components/pageComponents/register/registrationDisabled';
 import RegisterForm from '../../components/forms/registerForm';
 import useAuth from '../../hooks/auth';
@@ -15,6 +16,11 @@ const RegisterPage: React.FC = () => {
   const { client } = useApi();
   const request = client.auth.getRegistrationOpen();
   const { isLoading, error, data } = useQuery(request.key, request.fn);
+  const [registrationComplete, setRegistrationComplete] = useState<boolean>(false);
+
+  const handleRegistrationComplete = () => {
+    setRegistrationComplete(true);
+  };
 
   if (loggedIn) {
     return (
@@ -37,9 +43,11 @@ const RegisterPage: React.FC = () => {
   return (
     <Content className="register-page">
       {
-        !data?.open ?
-          <RegistrationDisabled /> :
-          <RegisterForm />
+        !registrationComplete ?
+          !data?.open ?
+            <RegistrationDisabled /> :
+            <RegisterForm onRegistrationComplete={handleRegistrationComplete} /> :
+          <PostRegistration />
       }
     </Content>
   );
