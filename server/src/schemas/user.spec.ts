@@ -95,7 +95,7 @@ describe('Schemas: User', () => {
       });
 
       it('should error if there is spaces.', () => {
-        const validation = UserRegisterSchema.validate({ ...validUser, password: 'Abc 12345!'});
+        const validation = UserRegisterSchema.validate({ ...validUser, password: 'Abc 12345!' });
         expect(validation.error).toBeTruthy();
       });
 

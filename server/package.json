@@ -6,7 +6,7 @@
     "dev": "cross-env NODE_ENV=development ts-node-dev ./src/index.ts",
     "dev:watch": "cross-env NODE_ENV=development nodemon ./src/index.ts",
     "lint": "eslint ./src --ext .ts",
-    "lint:fix": "estlint ./src --ext .ts --fix",
+    "lint:fix": "eslint ./src --ext .ts --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "tsc --build",
