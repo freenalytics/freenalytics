@@ -73,3 +73,9 @@ export class ForbiddenRequestError extends HttpError {
     super(message, HttpStatus.FORBIDDEN, 'You do not have access to this resource.');
   }
 }
+
+export class MethodNotAllowedError extends HttpError {
+  constructor(message?: string) {
+    super(message ?? 'The server could not handle the request on this endpoint with this method.', HttpStatus.METHOD_NOT_ALLOWED, 'Check the response headers for a list of supported methods on this endpoint.');
+  }
+}
