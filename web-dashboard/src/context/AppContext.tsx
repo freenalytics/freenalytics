@@ -1,16 +1,20 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { UserPayload } from '../types/user';
+import Client from '../services/api/Client';
 
 interface Context {
+  client: Client
   token: string
   me: UserPayload | null
-  updateToken: (token: string) => void
+  updateToken: (token: string) => void,
 }
 
 interface Props {
   children: React.ReactNode
 }
+
+const client = new Client(process.env.NODE_ENV === 'development' ? 'http://localhost:4000/api' : `${window.location.origin}/api`);
 
 const AppContext = React.createContext<Context | null>(null);
 
@@ -28,6 +32,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
 
     setToken(token);
     localStorage.setItem('token', token);
+    client.setToken(token);
 
     setMe(decoded);
   }, []);
@@ -40,6 +45,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   }, [updateToken]);
 
   const context: Context = {
+    client,
     token,
     me,
     updateToken
