@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import AuthService from './AuthService';
 import { RequestError } from '../../errors/http';
+import { AuthError } from '../../errors/auth';
 
 interface CommonErrorResponse {
   error: {
@@ -27,7 +28,7 @@ class Client {
     this._auth = new AuthService(this);
   }
 
-  public setToken(token: string) {
+  public setToken(token: string | null) {
     this.headers = {
       ...this.headers,
       Authorization: `Bearer ${token}`
@@ -42,6 +43,12 @@ class Client {
     const axiosError = error as AxiosError;
     const message = (axiosError.response?.data as CommonErrorResponse)?.error?.message ?? axiosError.message;
     return new RequestError(axiosError, message);
+  }
+
+  public createAuthError(error: unknown, friendlyMessageKey: string): Error {
+    const axiosError = error as AxiosError;
+    const message = (axiosError.response?.data as CommonErrorResponse)?.error?.message ?? axiosError.message;
+    return new AuthError(axiosError, message, friendlyMessageKey);
   }
 
   get instance() {

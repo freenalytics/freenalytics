@@ -21,7 +21,9 @@ const FORMS: Record<string, string> = {
 
 const ERRORS: Record<string, string> = {
   'errors.request.header.text': 'Oops!',
-  'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.'
+  'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.',
+
+  'errors.auth.login.message': 'Username or password is incorrect.'
 };
 
 const strings: Record<string, string> = {
