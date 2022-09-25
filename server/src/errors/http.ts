@@ -28,19 +28,13 @@ export class InternalServerError extends HttpError {
 
 export class ResourceNotFoundError extends HttpError {
   constructor(message: string) {
-    super(message, HttpStatus.BAD_REQUEST, 'The requested resource was not found by the server.');
+    super(message, HttpStatus.NOT_FOUND, 'The requested resource was not found by the server.');
   }
 }
 
 export class UnauthorizedRequestError extends HttpError {
   constructor(message?: string) {
     super(message ?? 'A bearer token is required to access this endpoint.', HttpStatus.UNAUTHORIZED, 'Please check that you have passed the correct bearer token inside the Authentication header.');
-  }
-}
-
-export class ModelValidationError extends HttpError {
-  constructor(message: string) {
-    super(message, HttpStatus.BAD_REQUEST, 'The data you have provided does not conform with the requirements for this endpoint.');
   }
 }
 
