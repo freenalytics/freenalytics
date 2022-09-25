@@ -21,7 +21,7 @@ npm install
 
 > In both the `server` and `web-dashboard` folders.
 
-Before continuing, make sure to check the [Development Section of the `server`'s README](https://github.com/freenalytics/freenalytics/tree/master/server#development)
+Before continuing, make sure to check the [Development Section of the `server`'s README](https://github.com/freenalytics/freenalytics/blob/master/server/README.md#development)
 to see how to get the API server running.
 
 Finally, start up the development server with:
