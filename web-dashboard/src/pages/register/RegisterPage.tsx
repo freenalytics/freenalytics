@@ -7,11 +7,13 @@ import RequestErrorMessageFullPage from '../../components/common/requestErrorMes
 import PostRegistration from '../../components/pageComponents/register/postRegistration';
 import RegistrationDisabled from '../../components/pageComponents/register/registrationDisabled';
 import RegisterForm from '../../components/forms/registerForm';
+import useTitle from '../../hooks/title';
 import useAuth from '../../hooks/auth';
 import useApi from '../../hooks/api';
 import { PROTECTED_ROUTES } from '../../constants/routes';
 
 const RegisterPage: React.FC = () => {
+  useTitle('pages.register.title');
   const { loggedIn } = useAuth();
   const { client } = useApi();
   const request = client.auth.getRegistrationOpen();
