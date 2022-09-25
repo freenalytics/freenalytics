@@ -17,7 +17,7 @@ interface Props {
 const LoginFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
   const { t } = useLocale();
   const { handleChangeNoValidation } = useFormHelper<LoginData>(form);
-  const { handleSubmit } = form; // TODO: Form loading
+  const { handleSubmit, formState: { isSubmitting } } = form;
 
   return (
     <Box className="login-form">
@@ -47,7 +47,7 @@ const LoginFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
         </Form.Field>
 
         <Button.Group align="center">
-          <Button color="primary" submit>
+          <Button color="primary" submit loading={isSubmitting}>
             {t('forms.login.buttons.login.label')}
           </Button>
         </Button.Group>
