@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 export class RequestError extends Error {
-  private _originalError: AxiosError;
+  private readonly _originalError: AxiosError;
 
   constructor(originalError: AxiosError, message: string) {
     super(message);
