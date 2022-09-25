@@ -2,10 +2,11 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import User, { UserModel } from '../models/user';
-import { UserRegisterBody, UserRegisterSchema } from '../schemas/user';
+import { UserRegisterBody, UserRegisterSchema, UserChangePasswordBody, UserChangePasswordSchema } from '../schemas/user';
+import { getUserByUsername } from '../services/userService';
+import { validate } from '../utils/schema';
 import { createJwtToken } from '../middleware/auth';
 import { ResponseBuilder } from '../utils/http';
-import { validate } from '../utils/schema';
 import {
   AccountLockedError,
   BadRequestError,
@@ -73,4 +74,34 @@ export const registrationOpen = (_: Request, res: Response) => {
     });
 
   res.status(response.statusCode).send(response.build());
+};
+
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+  const { username } = req.user as UserModel;
+  const changePasswordBody = req.body as UserChangePasswordBody;
+
+  try {
+    const { old_password, new_password } = validate(changePasswordBody, UserChangePasswordSchema);
+    const storedUser = await getUserByUsername(username);
+    await storedUser.changePassword(old_password, new_password);
+
+    const response = new ResponseBuilder()
+      .withStatusCode(HttpStatus.OK)
+      .withData({
+        message: 'Password has been changed successfully.'
+      });
+
+    res.status(response.statusCode).send(response.build());
+  } catch (error: any) {
+    if (error instanceof HttpError) {
+      next(error);
+      return;
+    }
+
+    if (error.name === 'IncorrectPasswordError') {
+      next(new WrongCredentialsError(error.message));
+    } else {
+      next(new InternalServerError(error.message));
+    }
+  }
 };
