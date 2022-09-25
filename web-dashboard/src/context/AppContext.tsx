@@ -53,6 +53,10 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
     }
   }, [updateToken]);
 
+  useEffect(() => {
+    client.on('invalidated', deleteToken);
+  }, [deleteToken]);
+
   const context: Context = {
     client,
     token,

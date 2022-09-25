@@ -25,6 +25,7 @@ class AuthService {
       const response = await this.client.instance.get('/auth/registration-open');
       return response.data.data;
     } catch (error) {
+      this.client.handleRequestError(error);
       throw this.client.createRequestError(error);
     }
   }

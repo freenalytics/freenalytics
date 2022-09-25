@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import EventEmitter from 'events';
 import AuthService from './AuthService';
 import { RequestError } from '../../errors/http';
 import { AuthError } from '../../errors/auth';
@@ -11,12 +12,13 @@ interface CommonErrorResponse {
   }
 }
 
-class Client {
+class Client extends EventEmitter {
   private headers: Record<string, string>;
   private readonly _instance: AxiosInstance;
   private readonly _auth: AuthService;
 
   constructor(baseURL: string, config: AxiosRequestConfig = {}) {
+    super();
     this.headers = {};
 
     this._instance = axios.create({
@@ -37,6 +39,14 @@ class Client {
       ...this.instance.defaults.headers,
       ...this.headers
     };
+  }
+
+  public handleRequestError(error: unknown) {
+    const axiosError = error as AxiosError;
+
+    if (axiosError.response?.status === 401) {
+      this.emit('invalidated');
+    }
   }
 
   public createRequestError(error: unknown): Error {
