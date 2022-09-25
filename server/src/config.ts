@@ -11,3 +11,5 @@ export const JWT_DURATION = (
     parseInt(process.env.JWT_DURATION, 10) :
     SEVEN_DAYS_IN_SECONDS
 );
+
+export let REGISTRATION_OPEN = process.env.REGISTRATION_OPEN === 'true';

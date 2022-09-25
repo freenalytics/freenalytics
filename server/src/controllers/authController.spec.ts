@@ -1,4 +1,4 @@
-import { register, login } from './authController';
+import { register, login, registrationOpen } from './authController';
 import { Request, Response } from 'express';
 import User from '../models/user';
 import {
@@ -9,6 +9,7 @@ import {
   WrongCredentialsError
 } from '../errors/http';
 import { ResponseMock } from '../../__mocks__/http_mocks';
+import * as config from '../config';
 
 describe('Controllers: AuthController', () => {
   const req = {
@@ -24,6 +25,7 @@ describe('Controllers: AuthController', () => {
   beforeEach(() => {
     (res.send as jest.Mock).mockClear();
     nextMock.mockClear();
+    Object.defineProperty(config, 'REGISTRATION_OPEN', { value: true });
   });
 
   describe('register()', () => {
@@ -137,6 +139,24 @@ describe('Controllers: AuthController', () => {
 
       expect(res.send).toHaveBeenCalledTimes(1);
       expect((res.send as jest.Mock).mock.calls[0][0].data).toHaveProperty('token');
+    });
+  });
+
+  describe('registrationOpen()', () => {
+    it('should return open true if registration is open.', () => {
+      Object.defineProperty(config, 'REGISTRATION_OPEN', { value: true });
+      registrationOpen(req, res);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject({ open: true });
+    });
+
+    it('should return open false if registration is closed.', () => {
+      Object.defineProperty(config, 'REGISTRATION_OPEN', { value: false });
+      registrationOpen(req, res);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject({ open: false });
     });
   });
 });

@@ -12,6 +12,7 @@ import {
   InternalServerError,
   WrongCredentialsError
 } from '../errors/http';
+import { REGISTRATION_OPEN } from '../config';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   const registerBody = req.body as UserRegisterBody;
@@ -52,6 +53,16 @@ export const login = (req: Request, res: Response) => {
     .withStatusCode(HttpStatus.OK)
     .withData({
       token: createJwtToken({ id, username, locale, createdAt })
+    });
+
+  res.status(response.statusCode).send(response.build());
+};
+
+export const registrationOpen = (_: Request, res: Response) => {
+  const response = new ResponseBuilder()
+    .withStatusCode(HttpStatus.OK)
+    .withData({
+      open: REGISTRATION_OPEN
     });
 
   res.status(response.statusCode).send(response.build());
