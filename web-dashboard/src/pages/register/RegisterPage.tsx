@@ -13,15 +13,14 @@ import { PROTECTED_ROUTES } from '../../constants/routes';
 const RegisterPage: React.FC = () => {
   const { loggedIn } = useAuth();
   const { client } = useApi();
+  const request = client.auth.getRegistrationOpen();
+  const { isLoading, error, data } = useQuery(request.key, request.fn);
 
   if (loggedIn) {
     return (
       <Navigate to={PROTECTED_ROUTES.applications} replace />
     );
   }
-
-  const request = client.auth.getRegistrationOpen();
-  const { isLoading, error, data } = useQuery(request.key, request.fn);
 
   if (isLoading) {
     return (
