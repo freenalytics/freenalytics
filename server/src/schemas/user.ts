@@ -59,3 +59,31 @@ export const UserRegisterSchema = Joi.object<UserRegisterBody>({
       'any.required': 'Locale is required.'
     })
 });
+
+export interface UserChangePasswordBody {
+  username: string
+  old_password: string
+  new_password: string
+}
+
+export const UserChangePasswordSchema = Joi.object<UserChangePasswordBody>({
+  username: Joi.string().lowercase().trim().required()
+    .messages({
+      'string.empty': 'Username is required.',
+      'any.required': 'Username is required.'
+    }),
+  old_password: Joi.string().required()
+    .messages({
+      'string.empty': 'Old password is required.',
+      'any.required': 'Old password is required.'
+    }),
+  new_password: joiPassword.string().min(PASSWORD_MIN_LENGTH).minOfSpecialCharacters(1).minOfLowercase(1).minOfUppercase(1).noWhiteSpaces().required()
+    .messages({
+      'password.minOfSpecialCharacters': 'New password must have at least one special character.',
+      'password.minOfLowercase': 'New password must have at least one lowercase letter.',
+      'password.minOfUppercase': 'New password must have at least one uppercase letter.',
+      'password.noWhiteSpaces': 'New password cannot contain spaces.',
+      'string.empty': 'New password is required.',
+      'any.required': 'New password is required.'
+    })
+});
