@@ -13,7 +13,7 @@ class AuthService {
 
   private async doGetRegistrationOpen(): Promise<GetRegistrationOpenResponse> {
     try {
-      const response = await this.client.instance.get('/auth/registration-opens');
+      const response = await this.client.instance.get('/auth/registration-open');
       return response.data.data;
     } catch (error) {
       throw this.client.createRequestError(error);
