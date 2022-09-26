@@ -25,6 +25,7 @@
     }],
     "no-console": "off",
     "new-cap": "off",
-    "max-params": "off"
+    "max-params": "off",
+    "camelcase": "off"
   }
 }

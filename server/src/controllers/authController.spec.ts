@@ -1,6 +1,6 @@
-import { register, login, registrationOpen } from './authController';
+import { register, login, registrationOpen, changePassword } from './authController';
 import { Request, Response } from 'express';
-import User from '../models/user';
+import User, { UserModel } from '../models/user';
 import {
   AccountLockedError,
   BadRequestError,
@@ -11,6 +11,7 @@ import {
 } from '../errors/http';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as config from '../config';
+import * as userService from '../services/userService';
 
 describe('Controllers: AuthController', () => {
   const req = {
@@ -166,6 +167,74 @@ describe('Controllers: AuthController', () => {
 
       expect(res.send).toHaveBeenCalledTimes(1);
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject({ open: false });
+    });
+  });
+
+  describe('changePassword()', () => {
+    const req = {
+      user: {
+        username: 'moon'
+      },
+      body: {
+        old_password: 'Abc12345!',
+        new_password: 'Dfe67890!'
+      }
+    } as unknown as Request;
+
+    const changePasswordMock = jest.fn();
+    const getUserByUsernameSpy = jest.spyOn(userService as any, 'getUserByUsername')
+      .mockResolvedValue({ changePassword: changePasswordMock } as unknown as UserModel);
+
+    beforeEach(() => {
+      getUserByUsernameSpy.mockClear();
+      changePasswordMock.mockClear();
+    });
+
+    afterAll(() => {
+      getUserByUsernameSpy.mockRestore();
+    });
+
+    it('should call next with a SchemaValidationError if the changePassword body is invalid.', async () => {
+      const req = {
+        user: {
+          username: 'moon'
+        },
+        body: {
+          old_password: 'Abc12345!',
+          new_password: 'invalid'
+        }
+      } as unknown as Request;
+
+      await changePassword(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(SchemaValidationError);
+    });
+
+    it('should call next with a WrongCredentialsError if password is incorrect.', async () => {
+      changePasswordMock.mockRejectedValueOnce({ name: 'IncorrectPasswordError' });
+      await changePassword(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(WrongCredentialsError);
+    });
+
+    it('should call next with a InternalServerError if some other error happens.', async () => {
+      changePasswordMock.mockRejectedValueOnce({ name: 'UnknownError' });
+      await changePassword(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+    });
+
+    it('should respond with a success message if password is changed.', async () => {
+      await changePassword(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+
+      const firstArgument = (res.send as jest.Mock).mock.calls[0][0];
+      expect(firstArgument.data).toHaveProperty('message');
+      expect(firstArgument.data.message).toContain('successfully');
     });
   });
 });
