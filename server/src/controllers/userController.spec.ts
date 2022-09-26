@@ -1,4 +1,4 @@
-import { getAll, getByUsername, updateCurrent } from './userController';
+import { getAll, getByUsername, getCurrent, updateCurrent } from './userController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as userService from '../services/userService';
@@ -84,6 +84,44 @@ describe('Controllers: UserController', () => {
     it('should call next with an InternalServerError if an error occurs.', async () => {
       getUserByUsernameSpy.mockRejectedValueOnce({ message: 'Oops' });
       await getByUsername(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+    });
+  });
+
+  describe('getCurrent()', () => {
+    const req = {
+      user: {
+        username: 'moon'
+      }
+    } as unknown as Request;
+
+    const getUserByUsernameSpy = jest.spyOn(userService as any, 'getUserByUsername')
+      .mockResolvedValue([mockedUsers]);
+
+    beforeEach(() => {
+      getUserByUsernameSpy.mockClear();
+    });
+
+    it('should respond with the fetched user.', async () => {
+      await getCurrent(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
+    });
+
+    it('should call next with the error if an HttpError occurs.', async () => {
+      getUserByUsernameSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+      await getCurrent(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
+    });
+
+    it('should call next with an InternalServerError if an error occurs.', async () => {
+      getUserByUsernameSpy.mockRejectedValueOnce({ message: 'Oops' });
+      await getCurrent(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
