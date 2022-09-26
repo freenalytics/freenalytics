@@ -25,6 +25,7 @@ export const UserLoginSchema = Joi.object<UserLoginBody>({
 const VALID_USERNAME_REGEX = /^[\w._-]*$/;
 const USERNAME_MIN_LENGTH = 3;
 const USERNAME_MAX_LENGTH = 20;
+const DISALLOWED_USERNAMES = ['me'];
 
 const PASSWORD_MIN_LENGTH = 8;
 const VALID_LOCALES = ['en'];
@@ -36,10 +37,11 @@ export interface UserRegisterBody {
 }
 
 export const UserRegisterSchema = Joi.object<UserRegisterBody>({
-  username: Joi.string().min(USERNAME_MIN_LENGTH).max(USERNAME_MAX_LENGTH).pattern(VALID_USERNAME_REGEX).lowercase().trim().required()
+  username: Joi.string().min(USERNAME_MIN_LENGTH).max(USERNAME_MAX_LENGTH).disallow(...DISALLOWED_USERNAMES).pattern(VALID_USERNAME_REGEX).lowercase().trim().required()
     .messages({
       'string.min': `username length must be greater than ${USERNAME_MIN_LENGTH}.`,
       'string.max': `username length must be less than ${USERNAME_MAX_LENGTH}.`,
+      'any.invalid': `username cannot be any of the following: ${DISALLOWED_USERNAMES.join(', ')}.`,
       'string.empty': 'username is required.',
       'any.required': 'username is required.'
     }),

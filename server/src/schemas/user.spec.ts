@@ -63,6 +63,11 @@ describe('Schemas: User', () => {
         expect(secondValidation.error).toBeTruthy();
       });
 
+      it('should error if username is disallowed.', () => {
+        const validation = UserRegisterSchema.validate({ ...validUser, username: 'me' });
+        expect(validation.error).toBeTruthy();
+      });
+
       it('should error if illegal characters are included.', () => {
         const validation = UserRegisterSchema.validate({ ...validUser, username: '@what!?' });
         expect(validation.error).toBeTruthy();
