@@ -1,4 +1,4 @@
-import { getUsers, getByUsername } from './userController';
+import { getAll, getByUsername } from './userController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as userService from '../services/userService';
@@ -18,7 +18,7 @@ describe('Controllers: UserController', () => {
     nextMock.mockClear();
   });
 
-  describe('getUsers()', () => {
+  describe('getAll()', () => {
     const req = {} as Request;
 
     const getAllUsersSpy = jest.spyOn(userService as any, 'getAllUsers')
@@ -29,7 +29,7 @@ describe('Controllers: UserController', () => {
     });
 
     it('should respond with a list of the users.', async () => {
-      await getUsers(req, res, nextMock);
+      await getAll(req, res, nextMock);
 
       expect(res.send).toHaveBeenCalledTimes(1);
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedUsers);
@@ -37,7 +37,7 @@ describe('Controllers: UserController', () => {
 
     it('should call next with an InternalServerError if an error occurs.', async () => {
       getAllUsersSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await getUsers(req, res, nextMock);
+      await getAll(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
