@@ -2,7 +2,7 @@ import { getAll, getByUsername } from './userController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as userService from '../services/userService';
-import { InternalServerError } from '../errors/http';
+import { InternalServerError, ResourceNotFoundError } from '../errors/http';
 
 const mockedUsers = [
   { username: 'moon' },
@@ -35,6 +35,14 @@ describe('Controllers: UserController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedUsers);
     });
 
+    it('should call next with the error if an HttpError occurs.', async () => {
+      getAllUsersSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+      await getAll(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
+    });
+
     it('should call next with an InternalServerError if an error occurs.', async () => {
       getAllUsersSpy.mockRejectedValueOnce({ message: 'Oops' });
       await getAll(req, res, nextMock);
@@ -63,6 +71,14 @@ describe('Controllers: UserController', () => {
 
       expect(res.send).toHaveBeenCalledTimes(1);
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
+    });
+
+    it('should call next with the error if an HttpError occurs.', async () => {
+      getUserByUsernameSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+      await getByUsername(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
     });
 
     it('should call next with an InternalServerError if an error occurs.', async () => {

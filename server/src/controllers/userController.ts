@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import { getAllUsers, getUserByUsername } from '../services/userService';
 import { ResponseBuilder } from '../utils/http';
-import { InternalServerError } from '../errors/http';
+import { HttpError, InternalServerError } from '../errors/http';
 
 export const getAll = async (_: Request, res: Response, next: NextFunction) => {
   try {
@@ -13,7 +13,11 @@ export const getAll = async (_: Request, res: Response, next: NextFunction) => {
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
-    next(new InternalServerError(error.message));
+    if (error instanceof HttpError) {
+      next(error);
+    } else {
+      next(new InternalServerError(error.message));
+    }
   }
 };
 
@@ -28,6 +32,10 @@ export const getByUsername = async (req: Request, res: Response, next: NextFunct
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
-    next(new InternalServerError(error.message));
+    if (error instanceof HttpError) {
+      next(error);
+    } else {
+      next(new InternalServerError(error.message));
+    }
   }
 };
