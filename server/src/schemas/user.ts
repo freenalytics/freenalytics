@@ -81,3 +81,14 @@ export const UserChangePasswordSchema = Joi.object<UserChangePasswordBody>({
       'any.required': 'new_password is required.'
     })
 });
+
+export interface UserUpdateBody {
+  locale: string
+}
+
+export const UserUpdateSchema = Joi.object<UserUpdateBody>({
+  locale: Joi.string().valid(...VALID_LOCALES)
+    .messages({
+      'any.only': `locale must be one of: ${VALID_LOCALES.join(', ')}.`
+    })
+});

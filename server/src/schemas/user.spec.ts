@@ -4,7 +4,9 @@ import {
   UserRegisterSchema,
   UserRegisterBody,
   UserChangePasswordSchema,
-  UserChangePasswordBody
+  UserChangePasswordBody,
+  UserUpdateSchema,
+  UserUpdateBody
 } from './user';
 
 describe('Schemas: User', () => {
@@ -198,6 +200,24 @@ describe('Schemas: User', () => {
 
       it('should not error if new_password is valid.', () => {
         const validation = UserChangePasswordSchema.validate(validUser);
+        expect(validation.error).toBeFalsy();
+      });
+    });
+  });
+
+  describe('UserUpdateSchema', () => {
+    const validUser: UserUpdateBody = {
+      locale: 'en'
+    };
+
+    describe('locale', () => {
+      it('should error if locale is not valid.', () => {
+        const validation = UserUpdateSchema.validate({ ...validUser, locale: 'my_locale' });
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should not error if locale is valid.', () => {
+        const validation = UserUpdateSchema.validate(validUser);
         expect(validation.error).toBeFalsy();
       });
     });
