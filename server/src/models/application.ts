@@ -29,7 +29,8 @@ const applicationSchema = new Schema<ApplicationModel>({
   },
   domain: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   template: {
     raw_schema: {
