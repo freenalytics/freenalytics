@@ -51,7 +51,8 @@ const applicationSchema = new Schema<ApplicationModel>({
       language: {
         type: String,
         required: true
-      }
+      },
+      _id: false
     }],
     default: []
   }
