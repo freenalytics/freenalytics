@@ -85,7 +85,7 @@ export const UserChangePasswordSchema = Joi.object<UserChangePasswordBody>({
 });
 
 export interface UserUpdateBody {
-  locale: string
+  locale?: string
 }
 
 export const UserUpdateSchema = Joi.object<UserUpdateBody>({
