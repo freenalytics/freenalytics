@@ -2,7 +2,6 @@ import { getAll } from './applicationController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as applicationService from '../services/applicationService';
-import { InternalServerError, ResourceNotFoundError } from '../errors/http';
 
 const mockedApps = [
   { name: 'app1' },
@@ -39,20 +38,13 @@ describe('Controllers: ApplicationController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedApps);
     });
 
-    it('should call next with the error if an HttpError occurs.', async () => {
-      getAllApplicationsForUserSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      getAllApplicationsForUserSpy.mockRejectedValueOnce(error);
       await getAll(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
-    it('should call next with an InternalServerError if an error occurs.', async () => {
-      getAllApplicationsForUserSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await getAll(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+      expect(nextMock).toHaveBeenCalledWith(error);
     });
   });
 });

@@ -2,7 +2,7 @@ import { getAll, getByUsername, getCurrent, updateCurrent } from './userControll
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as userService from '../services/userService';
-import { BadRequestError, InternalServerError, ResourceNotFoundError, SchemaValidationError } from '../errors/http';
+import { BadRequestError, SchemaValidationError } from '../errors/http';
 
 const mockedUsers = [
   { username: 'moon' },
@@ -35,20 +35,13 @@ describe('Controllers: UserController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedUsers);
     });
 
-    it('should call next with the error if an HttpError occurs.', async () => {
-      getAllUsersSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      getAllUsersSpy.mockRejectedValueOnce(error);
       await getAll(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
-    it('should call next with an InternalServerError if an error occurs.', async () => {
-      getAllUsersSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await getAll(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+      expect(nextMock).toHaveBeenCalledWith(error);
     });
   });
 
@@ -73,20 +66,13 @@ describe('Controllers: UserController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
     });
 
-    it('should call next with the error if an HttpError occurs.', async () => {
-      getUserByUsernameSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      getUserByUsernameSpy.mockRejectedValueOnce(error);
       await getByUsername(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
-    it('should call next with an InternalServerError if an error occurs.', async () => {
-      getUserByUsernameSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await getByUsername(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+      expect(nextMock).toHaveBeenCalledWith(error);
     });
   });
 
@@ -111,20 +97,13 @@ describe('Controllers: UserController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
     });
 
-    it('should call next with the error if an HttpError occurs.', async () => {
-      getUserByUsernameSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      getUserByUsernameSpy.mockRejectedValueOnce(error);
       await getCurrent(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
-    it('should call next with an InternalServerError if an error occurs.', async () => {
-      getUserByUsernameSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await getCurrent(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+      expect(nextMock).toHaveBeenCalledWith(error);
     });
   });
 
@@ -179,20 +158,13 @@ describe('Controllers: UserController', () => {
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
     });
 
-    it('should call next with the error if an HttpError occurs.', async () => {
-      updateUserByUsernameSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      updateUserByUsernameSpy.mockRejectedValueOnce(error);
       await updateCurrent(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
-    it('should call next with an InternalServerError if an error occurs.', async () => {
-      updateUserByUsernameSpy.mockRejectedValueOnce({ message: 'Oops' });
-      await updateCurrent(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(InternalServerError);
+      expect(nextMock).toHaveBeenCalledWith(error);
     });
   });
 });

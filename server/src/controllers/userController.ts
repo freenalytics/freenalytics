@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import { getAllUsers, getUserByUsername, updateUserByUsername } from '../services/userService';
 import { ResponseBuilder } from '../utils/http';
-import { BadRequestError, HttpError, InternalServerError } from '../errors/http';
+import { BadRequestError } from '../errors/http';
 import { UserUpdateBody, UserUpdateSchema } from '../schemas/user';
 import { validate } from '../utils/schema';
 import { UserModel } from '../models/user';
@@ -16,11 +16,7 @@ export const getAll = async (_: Request, res: Response, next: NextFunction) => {
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
-    if (error instanceof HttpError) {
-      next(error);
-    } else {
-      next(new InternalServerError(error.message));
-    }
+    next(error);
   }
 };
 
@@ -33,11 +29,7 @@ const handleGetByUsername = async (username: string, res: Response, next: NextFu
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
-    if (error instanceof HttpError) {
-      next(error);
-    } else {
-      next(new InternalServerError(error.message));
-    }
+    next(error);
   }
 };
 
@@ -70,10 +62,6 @@ export const updateCurrent = async (req: Request, res: Response, next: NextFunct
 
     res.status(response.statusCode).send(response.build());
   } catch (error: any) {
-    if (error instanceof HttpError) {
-      next(error);
-    } else {
-      next(new InternalServerError(error.message));
-    }
+    next(error);
   }
 };
