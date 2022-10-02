@@ -14,7 +14,7 @@ export const getAll = async (_: Request, res: Response, next: NextFunction) => {
       .withData(users);
 
     res.status(response.statusCode).send(response.build());
-  } catch (error: any) {
+  } catch (error) {
     next(error);
   }
 };
@@ -27,7 +27,7 @@ const handleGetByUsername = async (username: string, res: Response, next: NextFu
       .withData(user);
 
     res.status(response.statusCode).send(response.build());
-  } catch (error: any) {
+  } catch (error) {
     next(error);
   }
 };
@@ -55,7 +55,7 @@ export const updateCurrent = async (req: Request, res: Response, next: NextFunct
       .withData(updatedUser);
 
     res.status(response.statusCode).send(response.build());
-  } catch (error: any) {
+  } catch (error) {
     next(error);
   }
 };

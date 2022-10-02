@@ -1,4 +1,4 @@
-import { getAll, create } from './applicationController';
+import { getAll, create, getByDomain } from './applicationController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as applicationService from '../services/applicationService';
@@ -93,6 +93,40 @@ describe('Controllers: ApplicationController', () => {
       const error = new Error('Oops');
       createApplicationForUserSpy.mockRejectedValueOnce(error);
       await create(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('getByDomain()', () => {
+    const req = {
+      user: {
+        username: 'moon'
+      },
+      params: {
+        domain: 'FD-123'
+      }
+    } as unknown as Request;
+
+    const getApplicationForUserByDomainSpy = jest.spyOn(applicationService as any, 'getApplicationForUserByDomain')
+      .mockResolvedValue(mockedApps[0]);
+
+    beforeEach(() => {
+      getApplicationForUserByDomainSpy.mockClear();
+    });
+
+    it('should respond with the application.', async () => {
+      await getByDomain(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedApps[0]);
+    });
+
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      getApplicationForUserByDomainSpy.mockRejectedValueOnce(error);
+      await getByDomain(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock).toHaveBeenCalledWith(error);
