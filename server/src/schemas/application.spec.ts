@@ -1,6 +1,8 @@
 import {
   ApplicationCreateBody,
-  ApplicationCreateSchema
+  ApplicationCreateSchema,
+  ApplicationUpdateBody,
+  ApplicationUpdateSchema
 } from './application';
 
 describe('Schemas: Application', () => {
@@ -135,6 +137,136 @@ describe('Schemas: Application', () => {
 
       it('should not error if connectors.language is valid.', () => {
         const validation = ApplicationCreateSchema.validate(validApp);
+        expect(validation.error).toBeFalsy();
+      });
+    });
+  });
+
+  describe('ApplicationUpdateSchema', () => {
+    const validApp: ApplicationUpdateBody = {
+      name: 'My app',
+      connectors: [
+        {
+          package_url: 'https://example.com',
+          language: 'JavaScript'
+        },
+        {
+          package_url: 'https://example.com',
+          language: 'TypeScript'
+        }
+      ]
+    };
+
+    describe('name', () => {
+      it('should not error if no name exists.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        delete appCopy.name;
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeFalsy();
+      });
+
+      it('should error if name is empty.', () => {
+        const validation = ApplicationUpdateSchema.validate({ ...validApp, name: '' });
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should not error if name is valid.', () => {
+        const validation = ApplicationUpdateSchema.validate(validApp);
+        expect(validation.error).toBeFalsy();
+      });
+    });
+
+    describe('connectors', () => {
+      it('should not error if no connectors exists.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        delete appCopy.connectors;
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeFalsy();
+      });
+
+      it('should not error if connectors is valid.', () => {
+        const validation = ApplicationUpdateSchema.validate(validApp);
+        expect(validation.error).toBeFalsy();
+      });
+    });
+
+    describe('connectors.package_url', () => {
+      it('should error if no connectors.package_url exists.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        appCopy.connectors = appCopy.connectors!.map((conn) => {
+          const connCopy: any = { ...conn };
+          delete connCopy.package_url;
+
+          return connCopy;
+        });
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should error if connectors.package_url is empty.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        appCopy.connectors = appCopy!.connectors!.map((conn) => {
+          return {
+            ...conn,
+            package_url: ''
+          };
+        });
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should error if connectors.package_url is not a URI.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        appCopy.connectors = appCopy!.connectors!.map((conn) => {
+          return {
+            ...conn,
+            package_url: 'not_a_uri'
+          };
+        });
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should not error if connectors.package_url is valid.', () => {
+        const validation = ApplicationUpdateSchema.validate(validApp);
+        expect(validation.error).toBeFalsy();
+      });
+    });
+
+    describe('connectors.language', () => {
+      it('should error if no connectors.language exists.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        appCopy.connectors = appCopy.connectors!.map((conn) => {
+          const connCopy: any = { ...conn };
+          delete connCopy.language;
+
+          return connCopy;
+        });
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should error if connectors.language is empty.', () => {
+        const appCopy: Partial<ApplicationUpdateBody> = { ...validApp };
+        appCopy.connectors = appCopy!.connectors!.map((conn) => {
+          return {
+            ...conn,
+            language: ''
+          };
+        });
+
+        const validation = ApplicationUpdateSchema.validate(appCopy);
+        expect(validation.error).toBeTruthy();
+      });
+
+      it('should not error if connectors.language is valid.', () => {
+        const validation = ApplicationUpdateSchema.validate(validApp);
         expect(validation.error).toBeFalsy();
       });
     });
