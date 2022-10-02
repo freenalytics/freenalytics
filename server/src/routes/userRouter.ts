@@ -6,14 +6,17 @@ import * as userController from '../controllers/userController';
 
 const router = express.Router();
 
-router.get('/', verifyUser, userController.getAll);
-router.all('/', onlySupportedMethods('GET'));
+router.route('/')
+  .get(verifyUser, userController.getAll)
+  .all(onlySupportedMethods('GET'));
 
-router.get('/me', verifyUser, userController.getCurrent);
-router.patch('/me', verifyUser, jsonBodyRequired, userController.updateCurrent);
-router.all('/me', onlySupportedMethods('GET', 'PATCH'));
+router.route('/me')
+  .get(verifyUser, userController.getCurrent)
+  .patch(verifyUser, jsonBodyRequired, userController.updateCurrent)
+  .all(onlySupportedMethods('GET', 'PATCH'));
 
-router.get('/:username', verifyUser, userController.getByUsername);
-router.all('/:username', onlySupportedMethods('GET'));
+router.route('/:username')
+  .get(verifyUser, userController.getByUsername)
+  .all(onlySupportedMethods('GET'));
 
 export default router;

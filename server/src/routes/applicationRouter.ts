@@ -6,12 +6,14 @@ import * as applicationController from '../controllers/applicationController';
 
 const router = express.Router();
 
-router.get('/', verifyUser, applicationController.getAll);
-router.post('/', verifyUser, jsonBodyRequired, applicationController.create);
-router.all('/', onlySupportedMethods('GET', 'POST'));
+router.route('/')
+  .get(verifyUser, applicationController.getAll)
+  .post(verifyUser, jsonBodyRequired, applicationController.create)
+  .all(onlySupportedMethods('GET', 'POST'));
 
-router.get('/:domain', verifyUser, applicationController.getByDomain);
-router.delete('/:domain', verifyUser, applicationController.deleteByDomain);
-router.all('/:domain', onlySupportedMethods('GET', 'DELETE'));
+router.route('/:domain')
+  .get(verifyUser, applicationController.getByDomain)
+  .delete(verifyUser, applicationController.deleteByDomain)
+  .all(onlySupportedMethods('GET', 'DELETE'));
 
 export default router;
