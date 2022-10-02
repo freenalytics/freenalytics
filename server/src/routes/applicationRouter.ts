@@ -10,4 +10,8 @@ router.get('/', verifyUser, applicationController.getAll);
 router.post('/', verifyUser, jsonBodyRequired, applicationController.create);
 router.all('/', onlySupportedMethods('GET', 'POST'));
 
+router.get('/:domain', verifyUser, applicationController.getByDomain);
+router.delete('/:domain', verifyUser, applicationController.deleteByDomain);
+router.all('/:domain', onlySupportedMethods('GET', 'DELETE'));
+
 export default router;
