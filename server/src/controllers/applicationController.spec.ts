@@ -1,4 +1,4 @@
-import { getAll, create, getByDomain } from './applicationController';
+import { getAll, create, getByDomain, deleteByDomain } from './applicationController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as applicationService from '../services/applicationService';
@@ -127,6 +127,41 @@ describe('Controllers: ApplicationController', () => {
       const error = new Error('Oops');
       getApplicationForUserByDomainSpy.mockRejectedValueOnce(error);
       await getByDomain(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('deleteByDomain()', () => {
+    const req = {
+      user: {
+        username: 'moon'
+      },
+      params: {
+        domain: 'FD-123'
+      }
+    } as unknown as Request;
+
+    const deleteApplicationForUserByDomainSpy = jest.spyOn(applicationService, 'deleteApplicationForUserByDomain')
+      .mockResolvedValue();
+
+    beforeEach(() => {
+      deleteApplicationForUserByDomainSpy.mockClear();
+    });
+
+    it('should respond with a deleted message.', async () => {
+      await deleteByDomain(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toHaveProperty('message');
+      expect((res.send as jest.Mock).mock.calls[0][0].data.message).toContain('deleted');
+    });
+
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      deleteApplicationForUserByDomainSpy.mockRejectedValueOnce(error);
+      await deleteByDomain(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock).toHaveBeenCalledWith(error);

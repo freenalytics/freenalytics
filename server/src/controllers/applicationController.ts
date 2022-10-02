@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
-import { getAllApplicationsForUser, createApplicationForUser, getApplicationForUserByDomain } from '../services/applicationService';
+import { getAllApplicationsForUser, createApplicationForUser, getApplicationForUserByDomain, deleteApplicationForUserByDomain } from '../services/applicationService';
 import { ResponseBuilder } from '../utils/http';
 import { ApplicationCreateBody, ApplicationCreateSchema } from '../schemas/application';
 import { validate } from '../utils/schema';
@@ -53,3 +53,22 @@ export const getByDomain = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const deleteByDomain = async (req: Request, res: Response, next: NextFunction) => {
+  const { username } = req.user as UserModel;
+  const { domain } = req.params;
+
+  try {
+    await deleteApplicationForUserByDomain(username, domain);
+    const response = new ResponseBuilder()
+      .withStatusCode(HttpStatus.OK)
+      .withData({
+        message: `Application ${domain} has been deleted.`
+      });
+
+    res.status(response.statusCode).send(response.build());
+  } catch (error) {
+    next(error);
+  }
+};
+
