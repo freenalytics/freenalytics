@@ -10,18 +10,12 @@ export interface ConnectorModel {
   language: string
 }
 
-export interface AgentModel {
-  name: string
-  security: string
-}
-
 export interface ApplicationModel {
   name: string
   owner: string
   domain: string
   template: TemplateModel
   connectors: ConnectorModel[]
-  agents: AgentModel[]
 }
 
 const applicationSchema = new Schema<ApplicationModel>({
@@ -56,19 +50,6 @@ const applicationSchema = new Schema<ApplicationModel>({
       language: {
         type: String,
         required: true
-      }
-    }],
-    default: []
-  },
-  agents: {
-    type: [{
-      name: {
-        type: String,
-        required: true
-      },
-      security: {
-        type: String,
-        default: null
       }
     }],
     default: []
