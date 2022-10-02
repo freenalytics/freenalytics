@@ -1,4 +1,4 @@
-import { getAllApplicationsForUser } from './applicationService';
+import { getAllApplicationsForUser, createApplicationForUser } from './applicationService';
 const mockingoose = require('mockingoose');
 import Application from '../models/application';
 
@@ -57,6 +57,25 @@ describe('Services: ApplicationService', () => {
 
       expect(owners).toContain('moonstar');
       expect(owners).not.toContain(app3.owner);
+    });
+  });
+
+  describe('createApplicationForUser()', () => {
+    beforeAll(() => {
+      mockingoose(Application).toReturn(app1, 'save');
+    });
+
+    afterAll(() => {
+      mockingoose(Application).reset('save');
+    });
+
+    it('should resolve with the created application.', async () => {
+      const created = await createApplicationForUser('moonstar', {
+        name: 'app',
+        schema: 'schema'
+      });
+
+      expect(created).toMatchObject(app1);
     });
   });
 });
