@@ -36,3 +36,11 @@ export const getApplicationForUserByDomain = async (owner: string, domain: strin
 
   return application;
 };
+
+export const deleteApplicationForUserByDomain = async (owner: string, domain: string): Promise<void> => {
+  const result = await Application.deleteOne({ owner, domain });
+
+  if (result.deletedCount < 1) {
+    throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+};

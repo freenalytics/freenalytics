@@ -1,7 +1,8 @@
 import {
   getAllApplicationsForUser,
   createApplicationForUser,
-  getApplicationForUserByDomain
+  getApplicationForUserByDomain,
+  deleteApplicationForUserByDomain
 } from './applicationService';
 const mockingoose = require('mockingoose');
 import Application from '../models/application';
@@ -134,6 +135,36 @@ describe('Services: ApplicationService', () => {
       expect(application).toHaveProperty('name', app1.name);
       expect(application).toHaveProperty('owner', app1.owner);
       expect(application).toHaveProperty('domain', app1.domain);
+    });
+  });
+
+  describe('deleteApplicationForUserByDomain()', () => {
+    beforeAll(() => {
+      mockingoose(Application).toReturn((query: any) => {
+        return {
+          deletedCount: [app1, app2, app3].filter((a) => {
+            return query.getQuery().owner === a.owner && query.getQuery().domain === a.domain;
+          }).length
+        };
+      }, 'deleteOne');
+    });
+
+    afterAll(() => {
+      mockingoose(Application).reset('deleteOne');
+    });
+
+    it('should reject if nothing was deleted.', async () => {
+      try {
+        await deleteApplicationForUserByDomain('moonstar', 'FD-789');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+
+    it('should resolve if an application was deleted.', async () => {
+      expect(async () => {
+        await deleteApplicationForUserByDomain('moonstar', 'FD-123');
+      }).not.toThrow();
     });
   });
 });
