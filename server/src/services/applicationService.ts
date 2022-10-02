@@ -1,6 +1,6 @@
 import uniqid from 'uniqid';
 import Application, { ApplicationModel } from '../models/application';
-import { ApplicationCreateBody } from '../schemas/application';
+import { ApplicationCreateBody, ApplicationUpdateBody } from '../schemas/application';
 import { ResourceNotFoundError } from '../errors/http';
 import { generateSchema } from '../utils/template';
 
@@ -43,4 +43,22 @@ export const deleteApplicationForUserByDomain = async (owner: string, domain: st
   if (result.deletedCount < 1) {
     throw new ResourceNotFoundError(`Application ${domain} was not found.`);
   }
+};
+
+export const updateApplicationForUserByDomain = async (
+  owner: string,
+  domain: string,
+  updatedFields: ApplicationUpdateBody
+): Promise<ApplicationModel> => {
+  const updatedApplication = await Application.findOneAndUpdate({ owner, domain }, { $set: updatedFields }, {
+    returnDocument: 'after',
+    upsert: false,
+    projection: { _id: 0, __v: 0 }
+  });
+
+  if (!updatedApplication) {
+    throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+
+  return updatedApplication;
 };
