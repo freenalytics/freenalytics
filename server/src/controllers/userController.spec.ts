@@ -2,7 +2,7 @@ import { getAll, getByUsername, getCurrent, updateCurrent } from './userControll
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as userService from '../services/userService';
-import { BadRequestError, SchemaValidationError } from '../errors/http';
+import { SchemaValidationError } from '../errors/http';
 
 const mockedUsers = [
   { username: 'moon' },
@@ -122,18 +122,6 @@ describe('Controllers: UserController', () => {
 
     beforeEach(() => {
       updateUserByUsernameSpy.mockClear();
-    });
-
-    it('should call next with a BadRequestError if no body is provided.', async () => {
-      const req = {
-        user: {
-          username: 'moon'
-        }
-      } as unknown as Request;
-      await updateCurrent(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
     });
 
     it('should call next with a SchemaValidationError if the body provided is invalid.', async () => {

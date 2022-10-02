@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
 import { getAllUsers, getUserByUsername, updateUserByUsername } from '../services/userService';
 import { ResponseBuilder } from '../utils/http';
-import { BadRequestError } from '../errors/http';
 import { UserUpdateBody, UserUpdateSchema } from '../schemas/user';
 import { validate } from '../utils/schema';
 import { UserModel } from '../models/user';
@@ -46,11 +45,6 @@ export const getCurrent = async (req: Request, res: Response, next: NextFunction
 export const updateCurrent = async (req: Request, res: Response, next: NextFunction) => {
   const { username } = req.user as UserModel;
   const updateBody = req.body as UserUpdateBody;
-
-  if (!updateBody) {
-    next(new BadRequestError('A JSON body is required.'));
-    return;
-  }
 
   try {
     const updatedFields = validate(updateBody, UserUpdateSchema);
