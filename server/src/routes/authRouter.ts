@@ -5,16 +5,20 @@ import * as authController from '../controllers/authController';
 
 const router = express.Router();
 
-router.post('/register', authController.register);
-router.all('/register', onlySupportedMethods('POST'));
+router.route('/register')
+  .post(authController.register)
+  .all(onlySupportedMethods('POST'));
 
-router.post('/login', localAuthenticate, authController.login);
-router.all('/login', onlySupportedMethods('POST'));
+router.route('/login')
+  .post(localAuthenticate, authController.login)
+  .all(onlySupportedMethods('POST'));
 
-router.get('/registration-open', authController.registrationOpen);
-router.all('/registration-open', onlySupportedMethods('GET'));
+router.route('/registration-open')
+  .get(authController.registrationOpen)
+  .all(onlySupportedMethods('GET'));
 
-router.put('/change-password', verifyUser, authController.changePassword);
-router.all('/change-password', onlySupportedMethods('PUT'));
+router.route('/change-password')
+  .put(verifyUser, authController.changePassword)
+  .all(onlySupportedMethods('PUT'));
 
 export default router;
