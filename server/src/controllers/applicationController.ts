@@ -1,8 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
-import { getAllApplicationsForUser, createApplicationForUser, getApplicationForUserByDomain, deleteApplicationForUserByDomain } from '../services/applicationService';
+import {
+  getAllApplicationsForUser,
+  createApplicationForUser,
+  getApplicationForUserByDomain,
+  deleteApplicationForUserByDomain,
+  updateApplicationForUserByDomain
+} from '../services/applicationService';
 import { ResponseBuilder } from '../utils/http';
-import { ApplicationCreateBody, ApplicationCreateSchema } from '../schemas/application';
+import { ApplicationCreateBody, ApplicationCreateSchema, ApplicationUpdateBody, ApplicationUpdateSchema } from '../schemas/application';
 import { validate } from '../utils/schema';
 import { UserModel } from '../models/user';
 
@@ -72,3 +78,21 @@ export const deleteByDomain = async (req: Request, res: Response, next: NextFunc
   }
 };
 
+export const updateByDomain = async (req: Request, res: Response, next: NextFunction) => {
+  const { username } = req.user as UserModel;
+  const { domain } = req.params;
+  const updateBody = req.body as ApplicationUpdateBody;
+
+  try {
+    const updatedFields = validate(updateBody, ApplicationUpdateSchema);
+    const updatedApplication = await updateApplicationForUserByDomain(username, domain, updatedFields);
+
+    const response = new ResponseBuilder()
+      .withStatusCode(HttpStatus.OK)
+      .withData(updatedApplication);
+
+    res.status(response.statusCode).send(response.build());
+  } catch (error) {
+    next(error);
+  }
+};

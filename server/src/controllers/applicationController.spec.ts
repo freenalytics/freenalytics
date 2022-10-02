@@ -1,4 +1,4 @@
-import { getAll, create, getByDomain, deleteByDomain } from './applicationController';
+import { getAll, create, getByDomain, deleteByDomain, updateByDomain } from './applicationController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as applicationService from '../services/applicationService';
@@ -162,6 +162,61 @@ describe('Controllers: ApplicationController', () => {
       const error = new Error('Oops');
       deleteApplicationForUserByDomainSpy.mockRejectedValueOnce(error);
       await deleteByDomain(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('updateByDomain()', () => {
+    const req = {
+      user: {
+        username: 'moon'
+      },
+      params: {
+        domain: 'FD-123'
+      },
+      body: {
+        name: 'new_name'
+      }
+    } as unknown as Request;
+
+    const updateApplicationForUserByDomainSpy = jest.spyOn(applicationService as any, 'updateApplicationForUserByDomain')
+      .mockResolvedValue(mockedApps[0]);
+
+    beforeEach(() => {
+      updateApplicationForUserByDomainSpy.mockClear();
+    });
+
+    it('should call next with a SchemaValidationError if the body provided is invalid.', async () => {
+      const req = {
+        user: {
+          username: 'moon'
+        },
+        params: {
+          domain: 'FD-123'
+        },
+        body: {
+          illegal: 'yes'
+        }
+      } as unknown as Request;
+      await updateByDomain(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(SchemaValidationError);
+    });
+
+    it('should respond with the updated application.', async () => {
+      await updateByDomain(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledTimes(1);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedApps[0]);
+    });
+
+    it('should call next with the error if it occurs.', async () => {
+      const error = new Error('Oops');
+      updateApplicationForUserByDomainSpy.mockRejectedValueOnce(error);
+      await updateByDomain(req, res, nextMock);
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock).toHaveBeenCalledWith(error);
