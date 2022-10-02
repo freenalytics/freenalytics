@@ -1,6 +1,7 @@
 import uniqid from 'uniqid';
 import Application, { ApplicationModel } from '../models/application';
 import { ApplicationCreateBody } from '../schemas/application';
+import { ResourceNotFoundError } from '../errors/http';
 import { generateSchema } from '../utils/template';
 
 export const getAllApplicationsForUser = (owner: string): Promise<ApplicationModel[]> => {
@@ -23,5 +24,15 @@ const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody):
 export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<ApplicationModel> => {
   const application = prepareApplicationFromBody(owner, body);
   await new Application(application).save();
+  return application;
+};
+
+export const getApplicationForUserByDomain = async (owner: string, domain: string): Promise<ApplicationModel> => {
+  const application = await Application.findOne({ owner, domain }, { _id: 0, __v: 0 }).exec();
+
+  if (!application) {
+    throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+
   return application;
 };

@@ -1,4 +1,8 @@
-import { getAllApplicationsForUser, createApplicationForUser } from './applicationService';
+import {
+  getAllApplicationsForUser,
+  createApplicationForUser,
+  getApplicationForUserByDomain
+} from './applicationService';
 const mockingoose = require('mockingoose');
 import Application from '../models/application';
 
@@ -77,6 +81,59 @@ describe('Services: ApplicationService', () => {
 
       expect(created).toHaveProperty('name', 'app');
       expect(created).toHaveProperty('template.schema', 'schema');
+    });
+  });
+
+  describe('getApplicationForUserByDomain()', () => {
+    beforeAll(() => {
+      mockingoose(Application).toReturn((query: any) => {
+        return [app1, app2, app3].find((a) => {
+          return query.getQuery().owner === a.owner && query.getQuery().domain === a.domain;
+        });
+      }, 'findOne');
+    });
+
+    afterAll(() => {
+      mockingoose(Application).reset('findOne');
+    });
+
+    it('should reject if the owner and domain do not exist.', async () => {
+      try {
+        await getApplicationForUserByDomain('no_owner', 'no_domain');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+
+    it('should reject if the domain exists but owner does not.', async () => {
+      try {
+        await getApplicationForUserByDomain('no_owner', 'FD-123');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+
+    it('should reject if the owner exists but the domain does not.', async () => {
+      try {
+        await getApplicationForUserByDomain('moonstar', 'no_domain');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+
+    it('should reject if the application with a domain is not owned by the requested user.', async () => {
+      try {
+        await getApplicationForUserByDomain('moonstar', 'FD-789');
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+      }
+    });
+
+    it('should resolve the application.', async () => {
+      const application = await getApplicationForUserByDomain('moonstar', 'FD-123');
+      expect(application).toHaveProperty('name', app1.name);
+      expect(application).toHaveProperty('owner', app1.owner);
+      expect(application).toHaveProperty('domain', app1.domain);
     });
   });
 });
