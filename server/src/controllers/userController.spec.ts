@@ -118,7 +118,7 @@ describe('Controllers: UserController', () => {
     } as unknown as Request;
 
     const updateUserByUsernameSpy = jest.spyOn(userService as any, 'updateUserByUsername')
-      .mockResolvedValue([mockedUsers]);
+      .mockResolvedValue(mockedUsers[0]);
 
     beforeEach(() => {
       updateUserByUsernameSpy.mockClear();
@@ -155,7 +155,7 @@ describe('Controllers: UserController', () => {
       await updateCurrent(req, res, nextMock);
 
       expect(res.send).toHaveBeenCalledTimes(1);
-      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedUsers]);
+      expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject(mockedUsers[0]);
     });
 
     it('should call next with the error if it occurs.', async () => {
