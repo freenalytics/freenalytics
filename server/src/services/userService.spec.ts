@@ -51,11 +51,7 @@ describe('Services: UserService', () => {
     });
 
     it('should reject if the user was not found.', async () => {
-      try {
-        await getUserById('not_found');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getUserById('not_found')).rejects.toThrow(Error);
     });
   });
 
@@ -76,15 +72,11 @@ describe('Services: UserService', () => {
     });
 
     it('should reject if the user was not found.', async () => {
-      try {
-        await getUserByUsername('not_found');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getUserByUsername('not_found')).rejects.toThrow(Error);
     });
   });
 
-  describe('updateUSerByUsername()', () => {
+  describe('updateUserByUsername()', () => {
     beforeAll(() => {
       mockingoose(User).toReturn((query: any) => {
         return query.getQuery().username === user1.username ? user1 : null;
@@ -101,11 +93,7 @@ describe('Services: UserService', () => {
     });
 
     it('should reject if the user was not found.', async () => {
-      try {
-        await updateUserByUsername('not_found', { locale: 'fr' });
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(updateUserByUsername('not_found', { locale: 'fr' })).rejects.toThrow(Error);
     });
   });
 });

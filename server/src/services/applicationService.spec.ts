@@ -100,35 +100,19 @@ describe('Services: ApplicationService', () => {
     });
 
     it('should reject if the owner and domain do not exist.', async () => {
-      try {
-        await getApplicationForUserByDomain('no_owner', 'no_domain');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getApplicationForUserByDomain('no_owner', 'no_domain')).rejects.toThrow(Error);
     });
 
     it('should reject if the domain exists but owner does not.', async () => {
-      try {
-        await getApplicationForUserByDomain('no_owner', 'FD-123');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getApplicationForUserByDomain('no_owner', 'FD-123')).rejects.toThrow(Error);
     });
 
     it('should reject if the owner exists but the domain does not.', async () => {
-      try {
-        await getApplicationForUserByDomain('moonstar', 'no_domain');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getApplicationForUserByDomain('moonstar', 'no_domain')).rejects.toThrow(Error);
     });
 
     it('should reject if the application with a domain is not owned by the requested user.', async () => {
-      try {
-        await getApplicationForUserByDomain('moonstar', 'FD-789');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(getApplicationForUserByDomain('moonstar', 'FD-789')).rejects.toThrow(Error);
     });
 
     it('should resolve the application.', async () => {
@@ -155,11 +139,7 @@ describe('Services: ApplicationService', () => {
     });
 
     it('should reject if nothing was deleted.', async () => {
-      try {
-        await deleteApplicationForUserByDomain('moonstar', 'FD-789');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
+      await expect(deleteApplicationForUserByDomain('moonstar', 'FD-789')).rejects.toThrow(Error);
     });
 
     it('should resolve if an application was deleted.', async () => {
@@ -189,7 +169,7 @@ describe('Services: ApplicationService', () => {
     });
 
     it('should reject if the application was not found.', async () => {
-      await expect(updateApplicationForUserByDomain('moonstar', 'FD-789', { name: 'new' })).rejects.toBe(Error);
+      await expect(updateApplicationForUserByDomain('moonstar', 'FD-789', { name: 'new' })).rejects.toThrow(Error);
     });
   });
 });
