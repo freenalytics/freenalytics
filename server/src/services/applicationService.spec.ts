@@ -75,7 +75,8 @@ describe('Services: ApplicationService', () => {
         schema: 'schema'
       });
 
-      expect(created).toMatchObject(app1);
+      expect(created).toHaveProperty('name', 'app');
+      expect(created).toHaveProperty('template.schema', 'schema');
     });
   });
 });

@@ -20,6 +20,8 @@ const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody):
   };
 };
 
-export const createApplicationForUser = (owner: string, body: ApplicationCreateBody): Promise<ApplicationModel> => {
-  return new Application(prepareApplicationFromBody(owner, body)).save();
+export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<ApplicationModel> => {
+  const application = prepareApplicationFromBody(owner, body);
+  await new Application(application).save();
+  return application;
 };

@@ -6,6 +6,7 @@ import * as applicationController from '../controllers/applicationController';
 const router = express.Router();
 
 router.get('/', verifyUser, applicationController.getAll);
-router.all('/', onlySupportedMethods('GET'));
+router.post('/', verifyUser, applicationController.create);
+router.all('/', onlySupportedMethods('GET', 'POST'));
 
 export default router;
