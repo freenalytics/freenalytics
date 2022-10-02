@@ -13,7 +13,8 @@ router.route('/')
 
 router.route('/:domain')
   .get(verifyUser, applicationController.getByDomain)
+  .patch(verifyUser, jsonBodyRequired, applicationController.updateByDomain)
   .delete(verifyUser, applicationController.deleteByDomain)
-  .all(onlySupportedMethods('GET', 'DELETE'));
+  .all(onlySupportedMethods('GET', 'PATCH', 'DELETE'));
 
 export default router;
