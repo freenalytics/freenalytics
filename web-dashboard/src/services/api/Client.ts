@@ -44,7 +44,7 @@ class Client extends EventEmitter {
   public handleRequestError(error: unknown) {
     const axiosError = error as AxiosError;
 
-    if (axiosError.response?.status === 401) {
+    if (axiosError.response?.status === 401 && (axiosError.response?.data as CommonErrorResponse).error?.message === 'jwt expired') {
       this.emit('invalidated');
     }
   }
