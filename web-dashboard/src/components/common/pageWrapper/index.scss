@@ -1,3 +1,15 @@
+@use "sass:map";
+
 .page-wrapper {
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .page {
+    width: 100%;
+
+    @media (max-width: map.get($breakpoints, "tablet-max")) {
+      padding: 0 20px;
+    }
+  }
 }
