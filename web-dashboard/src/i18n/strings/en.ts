@@ -1,6 +1,8 @@
 const PAGES: Record<string, string> = {
   'pages.applications.title': 'Applications',
 
+  'pages.application.dashboard.title': 'Dashboard | {app}',
+
   'pages.login.title': 'Login',
 
   'pages.register.title': 'Register',

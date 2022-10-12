@@ -8,5 +8,5 @@ export const PROTECTED_ROUTES = {
 };
 
 export const DYNAMIC_PROTECTED_ROUTES = {
-  application: (domain: string) => `/application/${domain}`
+  applicationDashboard: (domain: string) => `/application/${domain}`
 };

@@ -16,7 +16,7 @@ const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
   const { t } = useLocale();
 
   return (
-    <Link to={DYNAMIC_PROTECTED_ROUTES.application(domain)} className="application-card">
+    <Link to={DYNAMIC_PROTECTED_ROUTES.applicationDashboard(domain)} className="application-card">
       <Card>
         <Card.Content>
           <Media>
