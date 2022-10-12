@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Container } from 'react-bulma-components';
 import Navbar from '../navbar';
+import Footer from '../footer';
 
 interface Props {
   className: string,
@@ -14,6 +15,7 @@ const PageWrapper: React.FC<Props> = ({ className = '', children }) => {
       <Container className={`page-wrapper ${className}`.trimEnd()}>
         {children}
       </Container>
+      <Footer />
     </Fragment>
   );
 };

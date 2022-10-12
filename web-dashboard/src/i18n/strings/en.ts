@@ -17,7 +17,9 @@ const PAGES: Record<string, string> = {
 const COMMON: Record<string, string> = {
   'common.navbar.items.applications.text': 'My Applications',
   'common.navbar.items.login.text': 'Login',
-  'common.navbar.items.sign_out.text': 'Sign Out'
+  'common.navbar.items.sign_out.text': 'Sign Out',
+
+  'common.footer.text': 'Freenalytics was made as a final college project. Found a bug or have a suggestion? Check out the <e>GitHub repository</e>.'
 };
 
 const FORMS: Record<string, string> = {
