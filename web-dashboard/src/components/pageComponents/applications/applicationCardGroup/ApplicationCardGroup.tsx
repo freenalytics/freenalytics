@@ -1,6 +1,7 @@
 import React from 'react';
 import { Columns } from 'react-bulma-components';
 import ApplicationCard from '../../../common/applicationCard';
+import EmptyContentAlert from '../../../common/emptyContentAlert';
 import { ApplicationModel } from '../../../../services/api/ApplicationService';
 
 interface Props {
@@ -8,6 +9,12 @@ interface Props {
 }
 
 const ApplicationCardGroup: React.FC<Props> = ({ applications }) => {
+  if (applications.length < 1) {
+    return (
+      <EmptyContentAlert />
+    );
+  }
+
   return (
     <Columns>
       {
