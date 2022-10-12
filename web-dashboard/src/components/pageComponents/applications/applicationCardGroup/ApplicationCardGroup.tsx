@@ -1,4 +1,5 @@
 import React from 'react';
+import { Columns } from 'react-bulma-components';
 import ApplicationCard from '../../../common/applicationCard';
 import { ApplicationModel } from '../../../../services/api/ApplicationService';
 
@@ -7,22 +8,23 @@ interface Props {
 }
 
 const ApplicationCardGroup: React.FC<Props> = ({ applications }) => {
-  if (applications.length < 1) {
-    return (
-      <div>
-        empty
-      </div>
-    );
-  }
-
   return (
-    <div>
+    <Columns>
       {
         applications.map((application) => (
-          <ApplicationCard key={application.domain} {...application} />
+          <Columns.Column
+            key={application.domain}
+            mobile={{ size: 12 }}
+            tablet={{ size: 6 }}
+            desktop={{ size: 4 }}
+            widescreen={{ size: 4 }}
+            fullhd={{ size: 3 }}
+          >
+            <ApplicationCard {...application} />
+          </Columns.Column>
         ))
       }
-    </div>
+    </Columns>
   );
 };
 
