@@ -1,5 +1,10 @@
 const PAGES: Record<string, string> = {
   'pages.applications.title': 'Applications',
+  'pages.applications.buttons.create.label': 'Create New',
+
+  'pages.create_application.title': 'Create New Application',
+
+  'pages.application.dashboard.title': 'Dashboard | {app}',
 
   'pages.login.title': 'Login',
 
@@ -12,6 +17,19 @@ const PAGES: Record<string, string> = {
   'pages.register.complete.buttons.login.label': 'Go to log in',
 
   'pages.not_found.title': 'Not Found'
+};
+
+const COMMON: Record<string, string> = {
+  'common.navbar.items.applications.text': 'My Applications',
+  'common.navbar.items.login.text': 'Login',
+  'common.navbar.items.sign_out.text': 'Sign Out',
+
+  'common.footer.text': 'Freenalytics was made as a final college project. Found a bug or have a suggestion? Check out the <e>GitHub repository</e>.',
+
+  'common.application.card.created_at.text': 'Created: {time}',
+  'common.application.card.last_modified.text': 'Last modified: {time}',
+
+  'common.alerts.empty.description.text': 'No content is available at the moment for this section.'
 };
 
 const FORMS: Record<string, string> = {
@@ -53,6 +71,7 @@ const ERRORS: Record<string, string> = {
 
 const strings: Record<string, string> = {
   ...PAGES,
+  ...COMMON,
   ...FORMS,
   ...ERRORS
 };

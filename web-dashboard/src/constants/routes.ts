@@ -4,5 +4,10 @@ export const PUBLIC_ROUTES = {
 };
 
 export const PROTECTED_ROUTES = {
-  applications: '/'
+  applications: '/',
+  createApplication: '/create'
+};
+
+export const DYNAMIC_PROTECTED_ROUTES = {
+  applicationDashboard: (domain: string) => `/application/${domain}`
 };
