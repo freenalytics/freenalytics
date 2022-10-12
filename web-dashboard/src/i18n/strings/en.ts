@@ -1,5 +1,6 @@
 const PAGES: Record<string, string> = {
   'pages.applications.title': 'Applications',
+  'pages.applications.buttons.create.label': 'Create New',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
 
