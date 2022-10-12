@@ -1,6 +1,9 @@
+import { ReactElement } from 'react';
 import InlMessageFormat, { PrimitiveType, FormatXMLElementFn } from 'intl-messageformat';
 import strings from './strings';
 
+export type ReactFormatFunction = (s: string) => ReactElement;
+export type TranslateValuesForReact = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]> | ReactFormatFunction>;
 export type TranslateValues = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]>>;
 
 export const DEFAULT_LOCALE = 'en';
@@ -27,9 +30,9 @@ export const getMessage = (locale: string, key: string): InlMessageFormat => {
   return new InlMessageFormat(message);
 };
 
-export type TranslateFunction = (locale: string, key: string, values?: TranslateValues) => string;
-export type LocalizedTranslateFunction = (key: string, values?: TranslateValues) => string;
+export type TranslateFunction = (locale: string, key: string, values?: TranslateValuesForReact) => string;
+export type LocalizedTranslateFunction = (key: string, values?: TranslateValuesForReact) => string;
 
-export const translate: TranslateFunction = (locale: string, key: string, values: TranslateValues = {}): string => {
-  return getMessage(locale, key).format(values) as string;
+export const translate: TranslateFunction = (locale: string, key: string, values: TranslateValuesForReact = {}): string => {
+  return getMessage(locale, key).format(values as TranslateValues) as string;
 };
