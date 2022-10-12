@@ -19,7 +19,10 @@ const COMMON: Record<string, string> = {
   'common.navbar.items.login.text': 'Login',
   'common.navbar.items.sign_out.text': 'Sign Out',
 
-  'common.footer.text': 'Freenalytics was made as a final college project. Found a bug or have a suggestion? Check out the <e>GitHub repository</e>.'
+  'common.footer.text': 'Freenalytics was made as a final college project. Found a bug or have a suggestion? Check out the <e>GitHub repository</e>.',
+
+  'common.application.card.created_at.text': 'Created: {time}',
+  'common.application.card.last_modified.text': 'Last modified: {time}'
 };
 
 const FORMS: Record<string, string> = {
