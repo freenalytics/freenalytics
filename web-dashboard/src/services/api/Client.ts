@@ -1,8 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import EventEmitter from 'events';
-import AuthService from './AuthService';
 import { RequestError } from '../../errors/http';
 import { AuthError } from '../../errors/auth';
+import AuthService from './AuthService';
+import ApplicationService from './ApplicationService';
 
 interface CommonErrorResponse {
   error: {
@@ -16,6 +17,7 @@ class Client extends EventEmitter {
   private headers: Record<string, string>;
   private readonly _instance: AxiosInstance;
   private readonly _auth: AuthService;
+  private readonly _application: ApplicationService;
 
   constructor(baseURL: string, config: AxiosRequestConfig = {}) {
     super();
@@ -28,6 +30,7 @@ class Client extends EventEmitter {
     });
 
     this._auth = new AuthService(this);
+    this._application = new ApplicationService(this);
   }
 
   public setToken(token: string | null) {
@@ -67,6 +70,10 @@ class Client extends EventEmitter {
 
   get auth() {
     return this._auth;
+  }
+
+  get application() {
+    return this._application;
   }
 }
 
