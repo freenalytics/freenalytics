@@ -24,7 +24,9 @@ const COMMON: Record<string, string> = {
   'common.footer.text': 'Freenalytics was made as a final college project. Found a bug or have a suggestion? Check out the <e>GitHub repository</e>.',
 
   'common.application.card.created_at.text': 'Created: {time}',
-  'common.application.card.last_modified.text': 'Last modified: {time}'
+  'common.application.card.last_modified.text': 'Last modified: {time}',
+
+  'common.alerts.empty.description.text': 'No content is available at the moment for this section.'
 };
 
 const FORMS: Record<string, string> = {
