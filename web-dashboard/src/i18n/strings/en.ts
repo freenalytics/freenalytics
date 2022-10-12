@@ -14,6 +14,12 @@ const PAGES: Record<string, string> = {
   'pages.not_found.title': 'Not Found'
 };
 
+const COMMON: Record<string, string> = {
+  'common.navbar.items.applications.text': 'My Applications',
+  'common.navbar.items.login.text': 'Login',
+  'common.navbar.items.sign_out.text': 'Sign Out'
+};
+
 const FORMS: Record<string, string> = {
   'forms.login.header.text': 'Log in to Freenalytics',
   'forms.login.username.label': 'Username',
@@ -53,6 +59,7 @@ const ERRORS: Record<string, string> = {
 
 const strings: Record<string, string> = {
   ...PAGES,
+  ...COMMON,
   ...FORMS,
   ...ERRORS
 };

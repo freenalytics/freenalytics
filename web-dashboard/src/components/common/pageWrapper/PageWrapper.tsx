@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Container } from 'react-bulma-components';
+import Navbar from '../navbar';
 
 interface Props {
   className: string,
@@ -8,9 +9,12 @@ interface Props {
 
 const PageWrapper: React.FC<Props> = ({ className = '', children }) => {
   return (
-    <Container className={`page-wrapper ${className}`.trimEnd()}>
-      {children}
-    </Container>
+    <Fragment>
+      <Navbar />
+      <Container className={`page-wrapper ${className}`.trimEnd()}>
+        {children}
+      </Container>
+    </Fragment>
   );
 };
 
