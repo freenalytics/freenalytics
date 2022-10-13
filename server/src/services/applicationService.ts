@@ -8,7 +8,7 @@ export const getAllApplicationsForUser = (owner: string): Promise<ApplicationMod
   return Application.find({ owner }, { _id: 0, __v: 0 }).exec();
 };
 
-const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody): ApplicationModel => {
+const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody): Partial<ApplicationModel> => {
   return {
     name: body.name,
     owner,
@@ -21,7 +21,7 @@ const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody):
   };
 };
 
-export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<ApplicationModel> => {
+export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<Partial<ApplicationModel>> => {
   const application = prepareApplicationFromBody(owner, body);
   await new Application(application).save();
   return application;

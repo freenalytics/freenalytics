@@ -16,6 +16,8 @@ export interface ApplicationModel {
   domain: string
   template: TemplateModel
   connectors: ConnectorModel[]
+  createdAt: Date
+  lastModifiedAt: Date
 }
 
 const applicationSchema = new Schema<ApplicationModel>({
@@ -55,6 +57,11 @@ const applicationSchema = new Schema<ApplicationModel>({
       _id: false
     }],
     default: []
+  }
+}, {
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'lastModifiedAt'
   }
 });
 
