@@ -25,7 +25,7 @@ const ApplicationCardGroup: React.FC<Props> = ({ applications }) => {
             tablet={{ size: 6 }}
             desktop={{ size: 4 }}
             widescreen={{ size: 4 }}
-            fullhd={{ size: 3 }}
+            fullhd={{ size: 4 }}
           >
             <ApplicationCard {...application} />
           </Columns.Column>

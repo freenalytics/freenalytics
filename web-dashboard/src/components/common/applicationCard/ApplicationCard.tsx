@@ -6,13 +6,11 @@ import useLocale from '../../../hooks/locale';
 import { ApplicationModel } from '../../../services/api/ApplicationService';
 import { DYNAMIC_PROTECTED_ROUTES } from '../../../constants/routes';
 
-const EXAMPLE_DATE = '2022-09-22T19:25:37.751Z';
-
 interface Props extends ApplicationModel {
 
 }
 
-const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
+const ApplicationCard: React.FC<Props> = ({ name, domain, createdAt, lastModifiedAt }) => {
   const { t } = useLocale();
 
   return (
@@ -34,13 +32,13 @@ const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
           </Media>
           <Content>
             <p>
-              <time dateTime={EXAMPLE_DATE}>
-                {t('common.application.card.created_at.text', { time: new Date(EXAMPLE_DATE).toLocaleString() })}
+              <time dateTime={createdAt}>
+                {t('common.application.card.created_at.text', { time: new Date(createdAt).toLocaleString() })}
               </time>
             </p>
             <p>
-              <time dateTime={EXAMPLE_DATE}>
-                {t('common.application.card.last_modified.text', { time: new Date(EXAMPLE_DATE).toLocaleString() })}
+              <time dateTime={lastModifiedAt}>
+                {t('common.application.card.last_modified.text', { time: new Date(lastModifiedAt).toLocaleString() })}
               </time>
             </p>
           </Content>
