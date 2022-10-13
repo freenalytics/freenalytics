@@ -1,5 +1,8 @@
 import { Schema, model } from 'mongoose';
 
+export const VALID_APPLICATION_TYPES = ['mobile', 'web', 'server', 'desktop', 'other'] as const;
+export type ApplicationType = typeof VALID_APPLICATION_TYPES[number];
+
 export interface TemplateModel {
   raw_schema: string
   schema: object
@@ -14,6 +17,7 @@ export interface ApplicationModel {
   name: string
   owner: string
   domain: string
+  type: ApplicationType
   template: TemplateModel
   connectors: ConnectorModel[]
   createdAt: Date
@@ -33,6 +37,10 @@ const applicationSchema = new Schema<ApplicationModel>({
     type: String,
     required: true,
     unique: true
+  },
+  type: {
+    type: String,
+    required: true
   },
   template: {
     raw_schema: {

@@ -12,6 +12,7 @@ const app1 = {
   name: 'app1',
   owner: 'moonstar',
   domain: 'FD-123',
+  type: 'mobile',
   template: {
     raw_schema: 'schema1',
     schema: {}
@@ -25,6 +26,7 @@ const app2 = {
   name: 'app2',
   owner: 'moonstar',
   domain: 'FD-456',
+  type: 'desktop',
   template: {
     raw_schema: 'schema2',
     schema: {}
@@ -38,6 +40,7 @@ const app3 = {
   name: 'app3',
   owner: 'not_me',
   domain: 'FD-789',
+  type: 'web',
   template: {
     raw_schema: 'schema3',
     schema: {}
@@ -78,7 +81,8 @@ describe('Services: ApplicationService', () => {
     it('should resolve with the created application.', async () => {
       const created = await createApplicationForUser('moonstar', {
         name: 'app',
-        schema: 'schema'
+        schema: 'schema',
+        type: 'web'
       });
 
       expect(created).toHaveProperty('name', 'app');

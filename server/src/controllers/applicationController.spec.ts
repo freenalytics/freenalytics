@@ -5,8 +5,8 @@ import * as applicationService from '../services/applicationService';
 import { SchemaValidationError } from '../errors/http';
 
 const mockedApps = [
-  { name: 'app1' },
-  { name: 'app2' }
+  { name: 'app1', type: 'web' },
+  { name: 'app2', type: 'desktop' }
 ];
 
 describe('Controllers: ApplicationController', () => {
@@ -56,7 +56,8 @@ describe('Controllers: ApplicationController', () => {
       },
       body: {
         name: 'app1',
-        schema: 'schema'
+        schema: 'schema',
+        type: 'web'
       }
     } as unknown as Request;
 
