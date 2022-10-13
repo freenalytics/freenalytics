@@ -24,11 +24,10 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   }
 
   const registerBody = req.body as UserRegisterBody;
-  const createdAt = new Date().toISOString();
 
   try {
     const { password, ...restOfUser } = validate(registerBody, UserRegisterSchema);
-    await User.register(new User({ ...restOfUser, createdAt }), password);
+    await User.register(new User({ ...restOfUser }), password);
 
     const response = new ResponseBuilder()
       .withStatusCode(HttpStatus.OK)
@@ -56,11 +55,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 };
 
 export const login = (req: Request, res: Response) => {
-  const { _id: id, username, locale, createdAt } = req.user as UserModel;
+  const { _id: id, username, locale } = req.user as UserModel;
   const response = new ResponseBuilder()
     .withStatusCode(HttpStatus.OK)
     .withData({
-      token: createJwtToken({ id, username, locale, createdAt })
+      token: createJwtToken({ id, username, locale })
     });
 
   res.status(response.statusCode).send(response.build());

@@ -4,15 +4,15 @@ import passportLocalMongoose from 'passport-local-mongoose';
 export interface UserJwtPayload {
   id: string
   username: string
-  createdAt: string
   locale: string
 }
 
 export interface UserModel extends PassportLocalDocument {
   _id: string
   username: string
-  createdAt: string
   locale: string
+  createdAt: Date
+  lastModifiedAt: Date
 }
 
 const userSchema = new Schema({
@@ -20,13 +20,14 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: String,
-    required: true
-  },
   locale: {
     type: String,
     required: true
+  }
+}, {
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'lastModifiedAt'
   }
 }) as PassportLocalSchema<UserModel, any>;
 
