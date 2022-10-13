@@ -10,6 +10,7 @@ describe('Schemas: Application', () => {
     const validApp: ApplicationCreateBody = {
       name: 'My app',
       schema: 'needs updating cause I need to implement the validator for this',
+      type: 'web',
       connectors: [
         {
           package_url: 'https://example.com',

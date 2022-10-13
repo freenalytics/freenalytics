@@ -1,5 +1,8 @@
 import Client from './Client';
 
+export const VALID_APPLICATION_TYPES = ['mobile', 'web', 'server', 'desktop', 'other'] as const;
+export type ApplicationType = typeof VALID_APPLICATION_TYPES[number];
+
 export interface TemplateModel {
   raw_schema: string
   schema: object
@@ -13,9 +16,12 @@ export interface ConnectorModel {
 export interface ApplicationModel {
   name: string
   owner: string
+  type: ApplicationType
   domain: string
   template: TemplateModel
   connectors: ConnectorModel[]
+  createdAt: string
+  lastModifiedAt: string
 }
 
 class ApplicationService {

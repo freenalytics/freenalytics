@@ -139,8 +139,7 @@ describe('Controllers: AuthController', () => {
       user: {
         _id: '123',
         username: 'moon',
-        locale: 'en',
-        createdAt: 'date'
+        locale: 'en'
       }
     } as unknown as Request;
 

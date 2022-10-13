@@ -2,17 +2,24 @@ import React from 'react';
 import { Card, Media, Heading, Content } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import useLocale from '../../../hooks/locale';
-import { ApplicationModel } from '../../../services/api/ApplicationService';
+import { ApplicationModel, ApplicationType } from '../../../services/api/ApplicationService';
 import { DYNAMIC_PROTECTED_ROUTES } from '../../../constants/routes';
 
-const EXAMPLE_DATE = '2022-09-22T19:25:37.751Z';
+const TYPE_ICONS: Record<ApplicationType, IconProp> = {
+  mobile: 'mobile-screen',
+  web: 'earth-americas',
+  server: 'server',
+  desktop: 'desktop',
+  other: 'robot'
+};
 
 interface Props extends ApplicationModel {
 
 }
 
-const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
+const ApplicationCard: React.FC<Props> = ({ name, domain, type, createdAt, lastModifiedAt }) => {
   const { t } = useLocale();
 
   return (
@@ -21,7 +28,7 @@ const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
         <Card.Content>
           <Media>
             <Media.Item align="left">
-              <FontAwesomeIcon size="3x" icon="server" />
+              <FontAwesomeIcon size="3x" icon={TYPE_ICONS[type]} />
             </Media.Item>
             <Media.Item>
               <Heading size={4}>
@@ -34,13 +41,13 @@ const ApplicationCard: React.FC<Props> = ({ name, domain }) => {
           </Media>
           <Content>
             <p>
-              <time dateTime={EXAMPLE_DATE}>
-                {t('common.application.card.created_at.text', { time: new Date(EXAMPLE_DATE).toLocaleString() })}
+              <time dateTime={createdAt}>
+                {t('common.application.card.created_at.text', { time: new Date(createdAt).toLocaleString() })}
               </time>
             </p>
             <p>
-              <time dateTime={EXAMPLE_DATE}>
-                {t('common.application.card.last_modified.text', { time: new Date(EXAMPLE_DATE).toLocaleString() })}
+              <time dateTime={lastModifiedAt}>
+                {t('common.application.card.last_modified.text', { time: new Date(lastModifiedAt).toLocaleString() })}
               </time>
             </p>
           </Content>

@@ -8,11 +8,12 @@ export const getAllApplicationsForUser = (owner: string): Promise<ApplicationMod
   return Application.find({ owner }, { _id: 0, __v: 0 }).exec();
 };
 
-const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody): ApplicationModel => {
+const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody): Omit<ApplicationModel, 'createdAt' | 'lastModifiedAt'> => {
   return {
     name: body.name,
     owner,
     domain: uniqid('FD-'),
+    type: body.type,
     template: {
       raw_schema: body.schema,
       schema: generateSchema(body.schema)
@@ -21,7 +22,7 @@ const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody):
   };
 };
 
-export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<ApplicationModel> => {
+export const createApplicationForUser = async (owner: string, body: ApplicationCreateBody): Promise<Omit<ApplicationModel, 'createdAt' | 'lastModifiedAt'>> => {
   const application = prepareApplicationFromBody(owner, body);
   await new Application(application).save();
   return application;
