@@ -22,7 +22,7 @@ passport.use(new JwtStrategy(jwtStrategyParams, async (payload: UserJwtPayload, 
   try {
     return done(null, await getUserById(payload.id));
   } catch (error) {
-    return done(error, null);
+    return done(error);
   }
 }));
 
