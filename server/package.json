@@ -17,9 +17,6 @@
   },
   "dependencies": {
     "@greencoast/logger": "^1.1.0",
-    "@hookform/resolvers": "^2.9.8",
-    "@tanstack/react-query": "^4.6.0",
-    "@tanstack/react-query-devtools": "^4.6.0",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
@@ -35,10 +32,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^7.1.2",
-    "react-hook-form": "^7.36.1",
     "redis": "^4.3.1",
-    "uniqid": "^5.4.0",
-    "yaml": "^2.1.1"
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
