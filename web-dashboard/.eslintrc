@@ -33,6 +33,7 @@
     "max-statements": "off",
     "no-console": "off",
     "no-undefined": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
