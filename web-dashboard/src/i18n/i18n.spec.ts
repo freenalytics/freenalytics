@@ -1,4 +1,4 @@
-import { isLocaleSupported, translate } from './';
+import { isLocaleSupported, translate, ValidLocale, MessageKey } from './';
 
 const mockedStrings = {
   en: {
@@ -36,27 +36,27 @@ describe('i18n', () => {
   describe('translate()', () => {
     it('should throw if locale does not exist.', () => {
       expect(() => {
-        translate('fr', 'one');
+        translate('fr' as ValidLocale, 'one' as MessageKey);
       }).toThrow();
     });
 
     it('should throw if key does not exist.', () => {
       expect(() => {
-        translate('en', 'nope');
+        translate('en', 'nope' as MessageKey);
       }).toThrow();
     });
 
     it('should return the translated text.', () => {
-      expect(translate('en', 'one')).toBe(mockedStrings.en.one);
-      expect(translate('es', 'one')).toBe(mockedStrings.es.one);
+      expect(translate('en', 'one' as MessageKey)).toBe(mockedStrings.en.one);
+      expect(translate('es' as ValidLocale, 'one' as MessageKey)).toBe(mockedStrings.es.one);
     });
 
     it('should return text in default language if key does not exist on requested language.', () => {
-      expect(translate('es', 'three')).toBe(mockedStrings.en.three);
+      expect(translate('es' as ValidLocale, 'three' as MessageKey)).toBe(mockedStrings.en.three);
     });
 
     it('should return the translated text with values inserted.', () => {
-      expect(translate('en', 'four', { value: 'hi' }))
+      expect(translate('en', 'four' as MessageKey, { value: 'hi' }))
         .toBe(mockedStrings.en.four.replace('{value}', 'hi'));
     });
   });
