@@ -16,7 +16,9 @@ export const ApplicationCreateSchema = Joi.object<ApplicationCreateBody>({
     }),
   type: Joi.string().valid(...VALID_APPLICATION_TYPES).required()
     .messages({
-      'any.only': `type must be one of: ${VALID_APPLICATION_TYPES.join(', ')}`
+      'any.only': `type must be one of: ${VALID_APPLICATION_TYPES.join(', ')}`,
+      'string.empty': 'type is required.',
+      'any.required': 'type is required.'
     }),
   schema: Joi.string().trim().required()
     .messages({
