@@ -9,7 +9,8 @@ const getFieldName = (field: string, index: number) => {
 };
 
 const getError = (errors: any, field: string, index: number) => {
-  return errors.connectors && errors.connectors.at(index)[field]?.message;
+  const indexError = errors.connectors && errors.connectors.at(index);
+  return indexError && indexError[field]?.message;
 };
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 
 const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
   const { t } = useLocale();
-  const { control, formState: { errors } } = form;
+  const { getValues, control, formState: { errors } } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'connectors'
@@ -53,8 +54,8 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
               <Form.Control>
                 <Form.Input
                   type="url"
-                  required
                   name={getFieldName('package_url', index)}
+                  placeholder={getValues(getFieldName('package_url', index))}
                   onChange={handleChangeWithValidation}
                 />
               </Form.Control>
@@ -70,8 +71,8 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
               <Form.Control>
                 <Form.Input
                   type="text"
-                  required
                   name={getFieldName('language', index)}
+                  placeholder={getValues(getFieldName('language', index))}
                   onChange={handleChangeWithValidation}
                 />
               </Form.Control>
