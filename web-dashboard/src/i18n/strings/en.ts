@@ -12,6 +12,7 @@ const PAGES = {
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
   'pages.application.settings.title': 'Settings | {app}',
+  'pages.application.settings.header.text': 'Settings',
 
   'pages.login.title': 'Login',
 
@@ -91,7 +92,18 @@ const FORMS = {
   'forms.create_application.errors.fields.schema.required': 'Application schema is required.',
   'forms.create_application.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',
   'forms.create_application.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
-  'forms.create_application.errors.fields.connectors.language.required': 'Connector language is required.'
+  'forms.create_application.errors.fields.connectors.language.required': 'Connector language is required.',
+
+  'forms.application_settings.name.label': 'Application Name',
+  'forms.application_settings.type.label': 'Application Type',
+  'forms.application_settings.buttons.save.label': 'Save',
+  'forms.application_settings.errors.header.text': 'Could not save your application settings',
+  'forms.application_settings.errors.fields.name.min': 'Application name cannot be empty.',
+  'forms.application_settings.errors.fields.type.valid': 'Invalid application type, can only be one of: {types}',
+  'forms.application_settings.errors.fields.type.required': 'Application type is required.',
+  'forms.application_settings.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',
+  'forms.application_settings.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
+  'forms.application_settings.errors.fields.connectors.language.required': 'Connector language is required.'
 };
 
 const ERRORS = {
