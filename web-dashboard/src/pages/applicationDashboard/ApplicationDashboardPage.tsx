@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
 import PageWrapper from '../../components/common/pageWrapper';
+import ApplicationSidebar from '../../components/common/applicationSidebar';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
 
@@ -29,9 +30,12 @@ const ApplicationDashboardPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      <Heading>
-        {application!.name}
-      </Heading>
+      <ApplicationSidebar active="dashboard">
+        <Heading>
+          {application!.name}
+        </Heading>
+        <div style={{ width: '100%', backgroundColor: '#ddd', height: '500px' }} />
+      </ApplicationSidebar>
     </PageWrapper>
   );
 };
