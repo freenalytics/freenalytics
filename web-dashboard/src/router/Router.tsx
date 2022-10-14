@@ -7,6 +7,7 @@ import RegisterPage from '../pages/register';
 import ApplicationsPage from '../pages/applications';
 import CreateApplicationPage from '../pages/createApplication';
 import ApplicationDashboardPage from '../pages/applicationDashboard';
+import ApplicationSettingsPage from '../pages/applicationSettings';
 import NotFoundPage from '../pages/notFound';
 import { PUBLIC_ROUTES, PROTECTED_ROUTES, DYNAMIC_PROTECTED_ROUTES } from '../constants/routes';
 
@@ -23,6 +24,7 @@ const Router: React.FC = () => {
           <Route path={PROTECTED_ROUTES.applications} element={<ApplicationsPage />} />
           <Route path={PROTECTED_ROUTES.createApplication} element={<CreateApplicationPage />} />
           <Route path={DYNAMIC_PROTECTED_ROUTES.applicationDashboard(':domain')} element={<ApplicationDashboardPage />} />
+          <Route path={DYNAMIC_PROTECTED_ROUTES.applicationSettings(':domain')} element={<ApplicationSettingsPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

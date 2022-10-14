@@ -11,6 +11,7 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+  'pages.application.settings.title': 'Settings | {app}',
 
   'pages.login.title': 'Login',
 
