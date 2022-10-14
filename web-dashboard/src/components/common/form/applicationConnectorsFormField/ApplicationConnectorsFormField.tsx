@@ -3,14 +3,17 @@ import { Button, Form, Box } from 'react-bulma-components';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import useLocale from '../../../../hooks/locale';
 import useFormHelper from '../../../../hooks/formHelper';
-import { CreateApplicationData } from '../../../forms/createApplicationForm/types';
 
 const getFieldName = (field: string, index: number) => {
   return `connectors.${index}.${field}`;
 };
 
+const getError = (errors: any, field: string, index: number) => {
+  return errors.connectors && errors.connectors.at(index)[field]?.message;
+};
+
 interface Props {
-  form: UseFormReturn<CreateApplicationData>
+  form: UseFormReturn<any>
 }
 
 const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
@@ -56,7 +59,7 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                 />
               </Form.Control>
               <Form.Help color="danger">
-                {errors.connectors && errors.connectors[index]?.package_url?.message}
+                {getError(errors, 'package_url', index)}
               </Form.Help>
             </Form.Field>
 
@@ -73,7 +76,7 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                 />
               </Form.Control>
               <Form.Help color="danger">
-                {errors.connectors && errors.connectors[index]?.language?.message}
+                {getError(errors, 'language', index)}
               </Form.Help>
             </Form.Field>
           </Box>
