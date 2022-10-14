@@ -1,7 +1,7 @@
 import uniqid from 'uniqid';
 import Application, { ApplicationModel } from '../models/application';
 import { ApplicationCreateBody, ApplicationUpdateBody } from '../schemas/application';
-import { ResourceNotFoundError } from '../errors/http';
+import { ResourceNotFoundError, SchemaValidationError } from '../errors/http';
 import { generateSchema } from '../utils/template';
 
 export const getAllApplicationsForUser = (owner: string): Promise<ApplicationModel[]> => {
@@ -9,6 +9,14 @@ export const getAllApplicationsForUser = (owner: string): Promise<ApplicationMod
 };
 
 const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody): Omit<ApplicationModel, 'createdAt' | 'lastModifiedAt'> => {
+  let schema;
+
+  try {
+    schema = generateSchema(body.schema);
+  } catch (error) {
+    throw new SchemaValidationError((error as Error).message);
+  }
+
   return {
     name: body.name,
     owner,
@@ -16,7 +24,7 @@ const prepareApplicationFromBody = (owner: string, body: ApplicationCreateBody):
     type: body.type,
     template: {
       raw_schema: body.schema,
-      schema: generateSchema(body.schema)
+      schema
     },
     connectors: body.connectors || []
   };
