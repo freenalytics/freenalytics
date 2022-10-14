@@ -1,7 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import jwtDecode from 'jwt-decode';
 import { UserPayload } from '../types/user';
 import Client from '../services/api/Client';
+
+const getInitialMe = (token: string) => {
+  try {
+    return jwtDecode<UserPayload>(token);
+  } catch (_) {
+    return null;
+  }
+};
 
 interface Context {
   client: Client
@@ -19,13 +27,14 @@ const client = new Client(process.env.NODE_ENV === 'development' ? 'http://local
 const AppContext = React.createContext<Context | null>(null);
 
 const AppContextProvider: React.FC<Props> = ({ children }) => {
-  const [token, setToken] = useState<string>('');
-  const [me, setMe] = useState<UserPayload | null>(null);
+  const [token, setToken] = useState<string>(localStorage.getItem('token') ?? '');
+  const [me, setMe] = useState<UserPayload | null>(getInitialMe(token));
+  client.setToken(token);
 
   const deleteToken = useCallback(() => {
     localStorage.removeItem('token');
-    setToken('');
     client.setToken(null);
+    setToken('');
     setMe(null);
   }, []);
 
@@ -35,27 +44,17 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
     }
 
     const decoded = jwtDecode<UserPayload>(token);
-
     if (Date.now() >= decoded.exp * 1000) {
       return deleteToken();
     }
 
-    setToken(token);
     localStorage.setItem('token', token);
     client.setToken(token);
+    setToken(token);
     setMe(decoded);
   }, [deleteToken]);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      updateToken(storedToken);
-    }
-  }, [updateToken]);
-
-  useEffect(() => {
-    client.on('invalidated', deleteToken);
-  }, [deleteToken]);
+  client.once('invalidated', deleteToken);
 
   const context: Context = {
     client,
