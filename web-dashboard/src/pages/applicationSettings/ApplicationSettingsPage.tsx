@@ -9,12 +9,12 @@ import ApplicationSidebar from '../../components/common/applicationSidebar';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
 
-const ApplicationDashboardPage: React.FC = () => {
+const ApplicationSettingsPage: React.FC = () => {
   const { domain } = useParams();
   const { client } = useApi();
   const request = client.application.getApplicationByDomain(domain!);
   const { isLoading, error, data: application } = useQuery(request.key, request.fn);
-  useTitle('pages.application.dashboard.title', { app: application?.name ?? 'Loading...' });
+  useTitle('pages.application.settings.title', { app: application?.name ?? 'Loading...' });
 
   if (isLoading) {
     return (
@@ -30,13 +30,13 @@ const ApplicationDashboardPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      <ApplicationSidebar active="dashboard" domain={domain!}>
+      <ApplicationSidebar active="settings" domain={domain!}>
         <Heading>
-          {application!.name}
+          SETTINGS (TO MAKE)
         </Heading>
       </ApplicationSidebar>
     </PageWrapper>
   );
 };
 
-export default ApplicationDashboardPage;
+export default ApplicationSettingsPage;

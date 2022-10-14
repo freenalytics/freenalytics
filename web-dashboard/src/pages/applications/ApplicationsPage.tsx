@@ -32,7 +32,7 @@ const ApplicationsPage: React.FC = () => {
   }
 
   return (
-    <PageWrapper className="applications-page">
+    <PageWrapper>
       <SharedHeading heading={t('pages.applications.title')}>
         <Button color="primary" renderAs={Link} to={PROTECTED_ROUTES.createApplication}>
           {t('pages.applications.buttons.create.label')}

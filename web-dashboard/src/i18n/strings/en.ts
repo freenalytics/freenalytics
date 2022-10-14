@@ -11,6 +11,7 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+  'pages.application.settings.title': 'Settings | {app}',
 
   'pages.login.title': 'Login',
 
@@ -34,6 +35,9 @@ const COMMON = {
 
   'common.application.card.created_at.text': 'Created: {time}',
   'common.application.card.last_modified.text': 'Last modified: {time}',
+
+  'common.application_sidebar.items.dashboard.text': 'Dashboard',
+  'common.application_sidebar.items.settings.text': 'Settings',
 
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
 
