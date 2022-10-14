@@ -17,7 +17,7 @@ interface Props {
 const ApplicationSettingsFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
   const { t } = useLocale();
   const { handleChangeNoValidation, handleBlurValidate, handleChangeWithValidation } = useFormHelper<UpdateApplicationData>(form);
-  const { handleSubmit, formState: { isSubmitting, errors } } = form;
+  const { handleSubmit, getValues, formState: { isSubmitting, errors } } = form;
 
   return (
     <Box>
@@ -29,7 +29,7 @@ const ApplicationSettingsFormView: React.FC<Props> = ({ form, onSubmit, error })
             {t('forms.application_settings.name.label')}
           </Form.Label>
           <Form.Control>
-            <Form.Input type="text" name="name" onChange={handleChangeNoValidation} onBlur={handleBlurValidate} />
+            <Form.Input type="text" name="name" onChange={handleChangeNoValidation} onBlur={handleBlurValidate} placeholder={getValues('name')} />
           </Form.Control>
           <Form.Help color="danger">
             {errors.name?.message}
@@ -41,7 +41,7 @@ const ApplicationSettingsFormView: React.FC<Props> = ({ form, onSubmit, error })
             {t('forms.application_settings.type.label')}
           </Form.Label>
           <Form.Control>
-            <ApplicationTypePicker name="type" required onChange={handleChangeWithValidation} />
+            <ApplicationTypePicker name="type" onChange={handleChangeWithValidation} defaultValue={getValues('type')} />
           </Form.Control>
           <Form.Help color="danger">
             {errors.type?.message}

@@ -98,7 +98,7 @@ const FORMS = {
   'forms.application_settings.type.label': 'Application Type',
   'forms.application_settings.buttons.save.label': 'Save',
   'forms.application_settings.errors.header.text': 'Could not save your application settings',
-  'forms.application_settings.errors.fields.name.min': 'Application name cannot be empty.',
+  'forms.application_settings.errors.fields.name.required': 'Application name cannot be empty.',
   'forms.application_settings.errors.fields.type.valid': 'Invalid application type, can only be one of: {types}',
   'forms.application_settings.errors.fields.type.required': 'Application type is required.',
   'forms.application_settings.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',

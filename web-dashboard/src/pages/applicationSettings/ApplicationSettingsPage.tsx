@@ -41,8 +41,8 @@ const ApplicationSettingsPage: React.FC = () => {
         <Heading>
           {t('pages.application.settings.header.text')}
         </Heading>
-        
-        <ApplicationSettingsForm onComplete={handleComplete} />
+
+        <ApplicationSettingsForm domain={domain!} onComplete={handleComplete} />
       </ApplicationSidebar>
     </PageWrapper>
   );

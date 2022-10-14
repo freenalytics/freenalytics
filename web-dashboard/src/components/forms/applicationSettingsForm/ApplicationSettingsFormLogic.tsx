@@ -4,20 +4,22 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import ApplicationSettingsFormView from './ApplicationSettingsFormView';
 import useLocale from '../../../hooks/locale';
-import { VALID_APPLICATION_TYPES } from '../../../services/api/ApplicationService';
+import { VALID_APPLICATION_TYPES, ApplicationModel } from '../../../services/api/ApplicationService';
 import { UpdateApplicationData } from './types';
 
 interface Props {
   onSubmit: SubmitHandler<UpdateApplicationData>
+  initialData: ApplicationModel
 }
 
-const ApplicationSettingsFormLogic: React.FC<Props> = ({ onSubmit }) => {
+const ApplicationSettingsFormLogic: React.FC<Props> = ({ onSubmit, initialData }) => {
   const { t } = useLocale();
 
   const UpdateApplicationSchema = Joi.object<UpdateApplicationData>({
     name: Joi.string().min(1).trim()
       .messages({
-        'string.min': t('forms.application_settings.errors.fields.name.min')
+        'string.min': t('forms.application_settings.errors.fields.name.required'),
+        'string.empty': t('forms.application_settings.errors.fields.name.required')
       }),
     type: Joi.string().valid(...VALID_APPLICATION_TYPES)
       .messages({
@@ -42,7 +44,12 @@ const ApplicationSettingsFormLogic: React.FC<Props> = ({ onSubmit }) => {
 
   const form = useForm<UpdateApplicationData>({
     mode: 'onSubmit',
-    resolver: joiResolver(UpdateApplicationSchema)
+    resolver: joiResolver(UpdateApplicationSchema),
+    defaultValues: {
+      name: initialData.name,
+      type: initialData.type,
+      connectors: initialData.connectors
+    }
   });
   const [error, setError] = useState<Error | null>(null);
 
