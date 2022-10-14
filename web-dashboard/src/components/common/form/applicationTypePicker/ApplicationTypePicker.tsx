@@ -23,7 +23,7 @@ const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChan
   const { t } = useLocale();
 
   useEffect(() => {
-    onChange({ currentTarget: { name, value: VALID_APPLICATION_TYPES[0] } } as unknown as ChangeEvent<any>);
+    onChange({ currentTarget: { name, value: defaultValue ?? VALID_APPLICATION_TYPES[0] } } as unknown as ChangeEvent<any>);
   }, []);
 
   return (
