@@ -22,7 +22,9 @@ const CreateApplicationFormLogic: React.FC<Props> = ({ onSubmit }) => {
       }),
     type: Joi.string().valid(...VALID_APPLICATION_TYPES).required()
       .messages({
-        'any.only': t('forms.create_application.errors.fields.type.valid', { types: VALID_APPLICATION_TYPES.join(', ') })
+        'any.only': t('forms.create_application.errors.fields.type.valid', { types: VALID_APPLICATION_TYPES.join(', ') }),
+        'string.empty': t('forms.create_application.errors.fields.type.required'),
+        'any.required': t('forms.create_application.errors.fields.type.required')
       }),
     schema: Joi.string().trim().required()
       .messages({
@@ -48,13 +50,13 @@ const CreateApplicationFormLogic: React.FC<Props> = ({ onSubmit }) => {
     mode: 'onSubmit',
     resolver: joiResolver(CreateApplicationSchema)
   });
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<Error | null>(null);
 
   const handleSubmit = async (data: CreateApplicationData) => {
     try {
       await onSubmit(data);
     } catch (error) {
-      setError(error as string);
+      setError(error as Error);
     }
   };
 

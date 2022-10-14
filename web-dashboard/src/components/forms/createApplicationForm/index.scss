@@ -1,0 +1,23 @@
+.create-application-form {
+
+  .code-editor {
+    font-size: 12px;
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace;
+
+    // Bulma has a .number class that breaks the code-editor.
+    .token.number {
+      align-items: initial;
+      background-color: initial;
+      border-radius: initial;
+      display: initial;
+      font-size: inherit;
+      height: initial;
+      justify-content: initial;
+      margin-right: initial;
+      min-width: initial;
+      padding: initial;
+      text-align: initial;
+      vertical-align: initial;
+    }
+  }
+}

@@ -35,7 +35,18 @@ const COMMON = {
   'common.application.card.created_at.text': 'Created: {time}',
   'common.application.card.last_modified.text': 'Last modified: {time}',
 
-  'common.alerts.empty.description.text': 'No content is available at the moment for this section.'
+  'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
+
+  'common.form.application_type_picker.mobile.text': 'Mobile',
+  'common.form.application_type_picker.web.text': 'Web',
+  'common.form.application_type_picker.server.text': 'Server',
+  'common.form.application_type_picker.desktop.text': 'Desktop',
+  'common.form.application_type_picker.other.text': 'Other',
+
+  'common.form.application_connectors_form_field.label': 'Connectors',
+  'common.form.application_connectors_form_field.package_url.label': 'Package URL',
+  'common.form.application_connectors_form_field.language.label': 'Language',
+  'common.form.application_connectors_form_field.buttons.add.label': 'Add Connector'
 };
 
 const FORMS = {
@@ -64,8 +75,15 @@ const FORMS = {
   'forms.register.errors.fields.password_confirm.different': 'Passwords do not match.',
   'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.',
 
+  'forms.create_application.name.label': 'Application Name',
+  'forms.create_application.type.label': 'Application Type',
+  'forms.create_application.schema.label': 'Template Schema',
+  'forms.create_application.schema.placeholder': 'Write your JSONSchema in YML here.',
+  'forms.create_application.buttons.create.label': 'Create',
+  'forms.create_application.errors.header.text': 'Could not create your application',
   'forms.create_application.errors.fields.name.required': 'Application name is required.',
   'forms.create_application.errors.fields.type.valid': 'Invalid application type, can only be one of: {types}',
+  'forms.create_application.errors.fields.type.required': 'Application type is required.',
   'forms.create_application.errors.fields.schema.required': 'Application schema is required.',
   'forms.create_application.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',
   'forms.create_application.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
