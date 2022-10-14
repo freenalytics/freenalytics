@@ -14,7 +14,7 @@ const app1 = {
   domain: 'FD-123',
   type: 'mobile',
   template: {
-    raw_schema: 'schema1',
+    raw_schema: 'schema1: hello',
     schema: {}
   },
   connectors: [{
@@ -28,7 +28,7 @@ const app2 = {
   domain: 'FD-456',
   type: 'desktop',
   template: {
-    raw_schema: 'schema2',
+    raw_schema: 'schema2: hello',
     schema: {}
   },
   connectors: [{
@@ -42,7 +42,7 @@ const app3 = {
   domain: 'FD-789',
   type: 'web',
   template: {
-    raw_schema: 'schema3',
+    raw_schema: 'schema3: hello',
     schema: {}
   },
   connectors: []
@@ -81,12 +81,13 @@ describe('Services: ApplicationService', () => {
     it('should resolve with the created application.', async () => {
       const created = await createApplicationForUser('moonstar', {
         name: 'app',
-        schema: 'schema',
+        schema: 'type: object',
         type: 'web'
       });
 
       expect(created).toHaveProperty('name', 'app');
-      expect(created).toHaveProperty('template.schema', 'schema');
+      expect(created).toHaveProperty('template.raw_schema', 'type: object');
+      expect(created).toHaveProperty('type', 'web');
     });
   });
 
