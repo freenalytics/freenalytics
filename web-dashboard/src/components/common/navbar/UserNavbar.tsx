@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from 'react-bulma-components';
+import { Link } from 'react-router-dom';
 import NavbarBase from './NavbarBase';
 import useAuth from '../../../hooks/auth';
 import useLocale from '../../../hooks/locale';
@@ -16,7 +17,7 @@ const UserNavbar = () => {
   return (
     <NavbarBase>
       <Navbar.Container>
-        <Navbar.Item href={PROTECTED_ROUTES.applications}>
+        <Navbar.Item renderAs={Link} to={PROTECTED_ROUTES.applications}>
           {t('common.navbar.items.applications.text')}
         </Navbar.Item>
       </Navbar.Container>
