@@ -13,6 +13,7 @@ const PAGES = {
   'pages.application.dashboard.title': 'Dashboard | {app}',
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',
+  'pages.application.settings.success.description.text': 'Your application has updated successfully.',
 
   'pages.login.title': 'Login',
 
