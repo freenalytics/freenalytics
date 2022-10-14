@@ -35,6 +35,9 @@ const COMMON = {
   'common.application.card.created_at.text': 'Created: {time}',
   'common.application.card.last_modified.text': 'Last modified: {time}',
 
+  'common.application_sidebar.items.dashboard.text': 'Dashboard',
+  'common.application_sidebar.items.settings.text': 'Settings',
+
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
 
   'common.form.application_type_picker.mobile.text': 'Mobile',
