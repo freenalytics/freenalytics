@@ -62,7 +62,14 @@ const FORMS = {
   'forms.register.errors.fields.password.whitespace': 'Password cannot contain spaces.',
   'forms.register.errors.fields.password.required': 'Password is required.',
   'forms.register.errors.fields.password_confirm.different': 'Passwords do not match.',
-  'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.'
+  'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.',
+
+  'forms.create_application.errors.fields.name.required': 'Application name is required.',
+  'forms.create_application.errors.fields.type.valid': 'Invalid application type, can only be one of: {types}',
+  'forms.create_application.errors.fields.schema.required': 'Application schema is required.',
+  'forms.create_application.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',
+  'forms.create_application.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
+  'forms.create_application.errors.fields.connectors.language.required': 'Connector language is required.'
 };
 
 const ERRORS = {

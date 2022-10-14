@@ -32,6 +32,7 @@
     "react/require-default-props": "off",
     "max-statements": "off",
     "no-console": "off",
-    "no-undefined": "off"
+    "no-undefined": "off",
+    "camelcase": "off"
   }
 }
