@@ -30,11 +30,10 @@ const ApplicationDashboardPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      <ApplicationSidebar active="dashboard">
+      <ApplicationSidebar active="dashboard" domain={domain!}>
         <Heading>
           {application!.name}
         </Heading>
-        <div style={{ width: '100%', backgroundColor: '#ddd', height: '500px' }} />
       </ApplicationSidebar>
     </PageWrapper>
   );
