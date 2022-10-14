@@ -6,8 +6,10 @@ export type ReactFormatFunction = (s: string) => ReactElement;
 export type TranslateValuesForReact = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]> | ReactFormatFunction>;
 export type TranslateValues = Record<string, PrimitiveType | FormatXMLElementFn<string, string | string[]>>;
 
-export const DEFAULT_LOCALE = 'en';
+export type ValidLocale = keyof typeof strings;
+export type MessageKey = keyof typeof strings.en; // en is the default locale, so it should have all keys.
 
+export const DEFAULT_LOCALE = 'en';
 export const AVAILABLE_LOCALES = {
   en: 'English'
 };
@@ -16,7 +18,7 @@ export const isLocaleSupported = (locale: string): boolean => {
   return Object.keys(AVAILABLE_LOCALES).includes(locale);
 };
 
-export const getMessage = (locale: string, key: string): InlMessageFormat => {
+export const getMessage = (locale: ValidLocale, key: MessageKey): InlMessageFormat => {
   const messagesForLocale = strings[locale];
   if (!messagesForLocale) {
     throw new Error(`No messages for locale ${locale} exist.`);
@@ -30,9 +32,9 @@ export const getMessage = (locale: string, key: string): InlMessageFormat => {
   return new InlMessageFormat(message);
 };
 
-export type TranslateFunction = (locale: string, key: string, values?: TranslateValuesForReact) => string;
-export type LocalizedTranslateFunction = (key: string, values?: TranslateValuesForReact) => string;
+export type TranslateFunction = (locale: ValidLocale, key: MessageKey, values?: TranslateValuesForReact) => string;
+export type LocalizedTranslateFunction = (key: MessageKey, values?: TranslateValuesForReact) => string;
 
-export const translate: TranslateFunction = (locale: string, key: string, values: TranslateValuesForReact = {}): string => {
+export const translate: TranslateFunction = (locale: ValidLocale, key: MessageKey, values: TranslateValuesForReact = {}): string => {
   return getMessage(locale, key).format(values as TranslateValues) as string;
 };

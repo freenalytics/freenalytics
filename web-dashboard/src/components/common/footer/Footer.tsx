@@ -12,7 +12,7 @@ const Footer = () => {
         <Content>
           {t('common.footer.text', {
             e: (text: string) => (
-              <a href={REPO_URL}>{text}</a>
+              <a href={REPO_URL} key="footer-url">{text}</a>
             )
           })}
         </Content>

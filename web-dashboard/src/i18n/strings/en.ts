@@ -1,8 +1,14 @@
-const PAGES: Record<string, string> = {
+const PAGES = {
   'pages.applications.title': 'Applications',
   'pages.applications.buttons.create.label': 'Create New',
 
   'pages.create_application.title': 'Create New Application',
+  'pages.create_application.instructions.header.text': 'Some Information',
+  'pages.create_application.instructions.description.1.text': 'Fill out this form to create an application to track the information you specify in the template section.',
+  'pages.create_application.instructions.description.2.text': 'The template should be a JSONSchema written in YML. The idea is that you define the structure of the data that will be uploaded in the future. This schema will be used for validation when uploading data to the platform.',
+  'pages.create_application.instructions.description.3.text': 'Keep in mind that the template cannot be updated once you create the application. If for some reason you need to update the template then create a new application. Updating the template implies that the previously saved data will be invalid and hence defeat the purpose of the schema validation.',
+  'pages.create_application.instructions.description.4.text': 'The connectors section corresponds to pre-made libraries that can be used to interface with your application schema. Since you are the one that needs to implement the client to upload the data to the platform, it makes sense to create a reusable solution for multiple applications that make use of the same template.',
+  'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
 
@@ -19,7 +25,7 @@ const PAGES: Record<string, string> = {
   'pages.not_found.title': 'Not Found'
 };
 
-const COMMON: Record<string, string> = {
+const COMMON = {
   'common.navbar.items.applications.text': 'My Applications',
   'common.navbar.items.login.text': 'Login',
   'common.navbar.items.sign_out.text': 'Sign Out',
@@ -29,10 +35,21 @@ const COMMON: Record<string, string> = {
   'common.application.card.created_at.text': 'Created: {time}',
   'common.application.card.last_modified.text': 'Last modified: {time}',
 
-  'common.alerts.empty.description.text': 'No content is available at the moment for this section.'
+  'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
+
+  'common.form.application_type_picker.mobile.text': 'Mobile',
+  'common.form.application_type_picker.web.text': 'Web',
+  'common.form.application_type_picker.server.text': 'Server',
+  'common.form.application_type_picker.desktop.text': 'Desktop',
+  'common.form.application_type_picker.other.text': 'Other',
+
+  'common.form.application_connectors_form_field.label': 'Connectors',
+  'common.form.application_connectors_form_field.package_url.label': 'Package URL',
+  'common.form.application_connectors_form_field.language.label': 'Language',
+  'common.form.application_connectors_form_field.buttons.add.label': 'Add Connector'
 };
 
-const FORMS: Record<string, string> = {
+const FORMS = {
   'forms.login.header.text': 'Log in to Freenalytics',
   'forms.login.username.label': 'Username',
   'forms.login.password.label': 'Password',
@@ -56,10 +73,24 @@ const FORMS: Record<string, string> = {
   'forms.register.errors.fields.password.whitespace': 'Password cannot contain spaces.',
   'forms.register.errors.fields.password.required': 'Password is required.',
   'forms.register.errors.fields.password_confirm.different': 'Passwords do not match.',
-  'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.'
+  'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.',
+
+  'forms.create_application.name.label': 'Application Name',
+  'forms.create_application.type.label': 'Application Type',
+  'forms.create_application.schema.label': 'Template Schema',
+  'forms.create_application.schema.placeholder': 'Write your JSONSchema in YML here.',
+  'forms.create_application.buttons.create.label': 'Create',
+  'forms.create_application.errors.header.text': 'Could not create your application',
+  'forms.create_application.errors.fields.name.required': 'Application name is required.',
+  'forms.create_application.errors.fields.type.valid': 'Invalid application type, can only be one of: {types}',
+  'forms.create_application.errors.fields.type.required': 'Application type is required.',
+  'forms.create_application.errors.fields.schema.required': 'Application schema is required.',
+  'forms.create_application.errors.fields.connectors.package_url.uri': 'Connector package URL must be a valid URL.',
+  'forms.create_application.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
+  'forms.create_application.errors.fields.connectors.language.required': 'Connector language is required.'
 };
 
-const ERRORS: Record<string, string> = {
+const ERRORS = {
   'errors.request.header.text': 'Oops!',
   'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.',
 
@@ -69,7 +100,7 @@ const ERRORS: Record<string, string> = {
   'errors.auth.register.locked.message': 'You cannot create a new account. Try again later.'
 };
 
-const strings: Record<string, string> = {
+const strings = {
   ...PAGES,
   ...COMMON,
   ...FORMS,

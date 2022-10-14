@@ -12,8 +12,10 @@
 
 @import '../components/forms/loginForm';
 @import '../components/forms/registerForm';
+@import '../components/forms/createApplicationForm';
 
 @import '../components/pageComponents/register/registrationDisabled';
+@import '../components/pageComponents/createApplication/createInstructions';
 
 @import '../pages/login';
 @import '../pages/register';

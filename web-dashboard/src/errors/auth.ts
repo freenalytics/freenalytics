@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { LocalizedTranslateFunction } from '../i18n';
+import { LocalizedTranslateFunction, MessageKey } from '../i18n';
 
 export class AuthError extends Error {
   private readonly _originalError: AxiosError;
@@ -14,7 +14,7 @@ export class AuthError extends Error {
 
   public getFriendlyMessage(t: LocalizedTranslateFunction): string | null {
     try {
-      return t(this._friendlyMessageKey);
+      return t(this._friendlyMessageKey as MessageKey);
     } catch (error) {
       return null;
     }

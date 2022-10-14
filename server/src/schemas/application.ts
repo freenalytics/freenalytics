@@ -1,14 +1,11 @@
 import Joi from 'joi';
-import { ApplicationType, VALID_APPLICATION_TYPES } from '../models/application';
+import { ApplicationType, ConnectorModel, VALID_APPLICATION_TYPES } from '../models/application';
 
 export interface ApplicationCreateBody {
   name: string
   type: ApplicationType
   schema: string
-  connectors?: {
-    package_url: string,
-    language: string
-  }[]
+  connectors?: ConnectorModel[]
 }
 
 export const ApplicationCreateSchema = Joi.object<ApplicationCreateBody>({
@@ -19,7 +16,9 @@ export const ApplicationCreateSchema = Joi.object<ApplicationCreateBody>({
     }),
   type: Joi.string().valid(...VALID_APPLICATION_TYPES).required()
     .messages({
-      'any.only': `type must be one of: ${VALID_APPLICATION_TYPES.join(', ')}`
+      'any.only': `type must be one of: ${VALID_APPLICATION_TYPES.join(', ')}`,
+      'string.empty': 'type is required.',
+      'any.required': 'type is required.'
     }),
   schema: Joi.string().trim().required()
     .messages({
@@ -44,10 +43,7 @@ export const ApplicationCreateSchema = Joi.object<ApplicationCreateBody>({
 export interface ApplicationUpdateBody {
   name?: string
   type?: ApplicationType
-  connectors?: {
-    package_url: string,
-    language: string
-  }[]
+  connectors?: ConnectorModel[]
 }
 
 export const ApplicationUpdateSchema = Joi.object<ApplicationUpdateBody>({

@@ -1,7 +1,7 @@
-import { DEFAULT_LOCALE, isLocaleSupported, translate, TranslateValuesForReact, LocalizedTranslateFunction } from '../i18n';
+import { DEFAULT_LOCALE, isLocaleSupported, translate, TranslateValuesForReact, LocalizedTranslateFunction, MessageKey } from '../i18n';
 
 const useLocale = () => {
-  const t: LocalizedTranslateFunction = (key: string, values: TranslateValuesForReact = {}): string => {
+  const t: LocalizedTranslateFunction = (key: MessageKey, values: TranslateValuesForReact = {}): string => {
     return translate(DEFAULT_LOCALE, key, values);
   };
 

@@ -1,6 +1,6 @@
 import en from './en';
 
-const strings: Record<string, Record<string, string>> = {
+const strings = {
   en
 };
 

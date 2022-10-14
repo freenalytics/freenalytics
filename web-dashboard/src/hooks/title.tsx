@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import useLocale from './locale';
-import { TranslateValuesForReact } from '../i18n';
+import { TranslateValuesForReact, MessageKey } from '../i18n';
 
 const BASE_TITLE = 'Freenalytics';
 
-const useTitle = (titleKey: string, values?: TranslateValuesForReact) => {
+const useTitle = (titleKey: MessageKey, values?: TranslateValuesForReact) => {
   const { t } = useLocale();
 
   useEffect(() => {
