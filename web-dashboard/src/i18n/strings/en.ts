@@ -1,4 +1,4 @@
-const PAGES: Record<string, string> = {
+const PAGES = {
   'pages.applications.title': 'Applications',
   'pages.applications.buttons.create.label': 'Create New',
 
@@ -25,7 +25,7 @@ const PAGES: Record<string, string> = {
   'pages.not_found.title': 'Not Found'
 };
 
-const COMMON: Record<string, string> = {
+const COMMON = {
   'common.navbar.items.applications.text': 'My Applications',
   'common.navbar.items.login.text': 'Login',
   'common.navbar.items.sign_out.text': 'Sign Out',
@@ -38,7 +38,7 @@ const COMMON: Record<string, string> = {
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.'
 };
 
-const FORMS: Record<string, string> = {
+const FORMS = {
   'forms.login.header.text': 'Log in to Freenalytics',
   'forms.login.username.label': 'Username',
   'forms.login.password.label': 'Password',
@@ -65,7 +65,7 @@ const FORMS: Record<string, string> = {
   'forms.register.errors.fields.password_confirm.required': 'Password confirmation is required.'
 };
 
-const ERRORS: Record<string, string> = {
+const ERRORS = {
   'errors.request.header.text': 'Oops!',
   'errors.request.body.description': 'An error has occurred while talking to the server. Try refreshing the page.',
 
@@ -75,7 +75,7 @@ const ERRORS: Record<string, string> = {
   'errors.auth.register.locked.message': 'You cannot create a new account. Try again later.'
 };
 
-const strings: Record<string, string> = {
+const strings = {
   ...PAGES,
   ...COMMON,
   ...FORMS,
