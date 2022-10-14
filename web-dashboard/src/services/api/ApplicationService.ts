@@ -1,5 +1,6 @@
 import Client from './Client';
 import { CreateApplicationData } from '../../components/forms/createApplicationForm/types';
+import { UpdateApplicationData } from '../../components/forms/applicationSettingsForm/types';
 
 export const VALID_APPLICATION_TYPES = ['mobile', 'web', 'server', 'desktop', 'other'] as const;
 export type ApplicationType = typeof VALID_APPLICATION_TYPES[number];
@@ -80,6 +81,23 @@ class ApplicationService {
     return {
       key: ['applications', domain],
       fn: () => this.doGetApplicationByDomain(domain)
+    };
+  }
+
+  private async doPatchApplicationByDomain(domain: string, data: UpdateApplicationData): Promise<ApplicationModel> {
+    try {
+      const response = await this.client.instance.patch(`/applications/${domain}`, data);
+      return response.data.data;
+    } catch (error) {
+      this.client.handleRequestError(error);
+      throw this.client.createRequestError(error);
+    }
+  }
+
+  public patchApplicationByDomain(domain: string) {
+    return {
+      key: ['applications', domain],
+      fn: (data: UpdateApplicationData) => this.doPatchApplicationByDomain(domain, data)
     };
   }
 }
