@@ -3,19 +3,23 @@ import { Button, Form, Box } from 'react-bulma-components';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import useLocale from '../../../../hooks/locale';
 import useFormHelper from '../../../../hooks/formHelper';
-import { CreateApplicationData } from '../../../forms/createApplicationForm/types';
 
 const getFieldName = (field: string, index: number) => {
   return `connectors.${index}.${field}`;
 };
 
+const getError = (errors: any, field: string, index: number) => {
+  const indexError = errors.connectors && errors.connectors.at(index);
+  return indexError && indexError[field]?.message;
+};
+
 interface Props {
-  form: UseFormReturn<CreateApplicationData>
+  form: UseFormReturn<any>
 }
 
 const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
   const { t } = useLocale();
-  const { control, formState: { errors } } = form;
+  const { getValues, control, formState: { errors } } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'connectors'
@@ -50,13 +54,13 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
               <Form.Control>
                 <Form.Input
                   type="url"
-                  required
                   name={getFieldName('package_url', index)}
+                  placeholder={getValues(getFieldName('package_url', index))}
                   onChange={handleChangeWithValidation}
                 />
               </Form.Control>
               <Form.Help color="danger">
-                {errors.connectors && errors.connectors[index]?.package_url?.message}
+                {getError(errors, 'package_url', index)}
               </Form.Help>
             </Form.Field>
 
@@ -67,13 +71,13 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
               <Form.Control>
                 <Form.Input
                   type="text"
-                  required
                   name={getFieldName('language', index)}
+                  placeholder={getValues(getFieldName('language', index))}
                   onChange={handleChangeWithValidation}
                 />
               </Form.Control>
               <Form.Help color="danger">
-                {errors.connectors && errors.connectors[index]?.language?.message}
+                {getError(errors, 'language', index)}
               </Form.Help>
             </Form.Field>
           </Box>
