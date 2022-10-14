@@ -1,5 +1,7 @@
 import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import CreateApplicationFormLogic from './CreateApplicationFormLogic';
+import useApi from '../../../hooks/api';
 import { CreateApplicationData } from './types';
 
 interface Props {
@@ -7,9 +9,13 @@ interface Props {
 }
 
 const CreateApplicationForm: React.FC<Props> = ({ onComplete }) => {
-  const handleSubmit = (data: CreateApplicationData) => {
-    console.log(data);
-    onComplete('123');
+  const { client } = useApi();
+  const request = client.application.postApplication();
+  const createMutation = useMutation(request.key, request.fn);
+
+  const handleSubmit = async (data: CreateApplicationData) => {
+    const application = await createMutation.mutateAsync(data);
+    onComplete(application.domain);
   };
 
   return (
