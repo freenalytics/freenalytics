@@ -3,6 +3,12 @@ const PAGES: Record<string, string> = {
   'pages.applications.buttons.create.label': 'Create New',
 
   'pages.create_application.title': 'Create New Application',
+  'pages.create_application.instructions.header.text': 'Some Information',
+  'pages.create_application.instructions.description.1.text': 'Fill out this form to create an application to track the information you specify in the template section.',
+  'pages.create_application.instructions.description.2.text': 'The template should be a JSONSchema written in YML. The idea is that you define the structure of the data that will be uploaded in the future. This schema will be used for validation when uploading data to the platform.',
+  'pages.create_application.instructions.description.3.text': 'Keep in mind that the template cannot be updated once you create the application. If for some reason you need to update the template then create a new application. Updating the template implies that the previously saved data will be invalid and hence defeat the purpose of the schema validation.',
+  'pages.create_application.instructions.description.4.text': 'The connectors section corresponds to pre-made libraries that can be used to interface with your application schema. Since you are the one that needs to implement the client to upload the data to the platform, it makes sense to create a reusable solution for multiple applications that make use of the same template.',
+  'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
 
