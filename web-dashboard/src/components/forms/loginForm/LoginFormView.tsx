@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Form, Button, Heading, Block } from 'react-bulma-components';
+import { Box, Form, Button, Heading, Block, Icon } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UseFormReturn, SubmitHandler } from 'react-hook-form';
 import FormErrorMessage from '../../common/formErrorMessage';
 import useLocale from '../../../hooks/locale';
@@ -34,6 +35,9 @@ const LoginFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           </Form.Label>
           <Form.Control>
             <Form.Input type="text" name="username" onChange={handleChangeNoValidation} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="user" />
+            </Icon>
           </Form.Control>
         </Form.Field>
 
@@ -43,6 +47,9 @@ const LoginFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           </Form.Label>
           <Form.Control>
             <Form.Input type="password" name="password" onChange={handleChangeNoValidation} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="key" />
+            </Icon>
           </Form.Control>
         </Form.Field>
 
