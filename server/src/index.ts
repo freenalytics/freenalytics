@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 import logger from '@greencoast/logger';
+import redisClient from './redis/client';
 import apiRouter from './routes';
 import { logRequests } from './middleware/logging';
 import { handleError } from './middleware/error';
@@ -27,9 +28,17 @@ app.use(handleError);
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
-    app.listen(HTTP_PORT, () => {
-      logger.info(`Server has started on port ${HTTP_PORT}`);
-    });
+    redisClient.connect()
+      .then(() => {
+        app.listen(HTTP_PORT, () => {
+          logger.info(`Server has started on port ${HTTP_PORT}`);
+        });
+      })
+      .catch((error) => {
+        logger.error('Something happened when connecting to Redis.');
+        logger.error(error);
+        process.exit(1);
+      });
   })
   .catch((error) => {
     logger.error('Something happened when connecting to MongoDB.');
