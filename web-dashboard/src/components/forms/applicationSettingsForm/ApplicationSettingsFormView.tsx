@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Form, Button } from 'react-bulma-components';
+import { Box, Form, Button, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import RequestErrorMessage from '../../common/requestErrorMessage';
 import ApplicationTypePicker from '../../common/form/applicationTypePicker';
@@ -30,6 +31,9 @@ const ApplicationSettingsFormView: React.FC<Props> = ({ form, onSubmit, error })
           </Form.Label>
           <Form.Control>
             <Form.Input type="text" name="name" onChange={handleChangeNoValidation} onBlur={handleBlurValidate} placeholder={getValues('name')} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="font" />
+            </Icon>
           </Form.Control>
           <Form.Help color="danger">
             {errors.name?.message}

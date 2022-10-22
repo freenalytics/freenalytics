@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Form, Button } from 'react-bulma-components';
+import { Box, Form, Button, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import RequestErrorMessage from '../../common/requestErrorMessage';
@@ -31,6 +32,9 @@ const CreateApplicationFormView: React.FC<Props> = ({ form, onSubmit, error }) =
           </Form.Label>
           <Form.Control>
             <Form.Input type="text" name="name" required onChange={handleChangeNoValidation} onBlur={handleBlurValidate} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="font" />
+            </Icon>
           </Form.Control>
           <Form.Help color="danger">
             {errors.name?.message}
