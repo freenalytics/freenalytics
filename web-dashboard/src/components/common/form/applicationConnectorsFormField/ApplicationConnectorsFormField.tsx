@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Form, Box } from 'react-bulma-components';
+import { Button, Form, Box, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import useLocale from '../../../../hooks/locale';
 import useFormHelper from '../../../../hooks/formHelper';
@@ -58,6 +59,9 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                   placeholder={getValues(getFieldName('package_url', index))}
                   onChange={handleChangeWithValidation}
                 />
+                <Icon align="left">
+                  <FontAwesomeIcon icon="earth-americas" />
+                </Icon>
               </Form.Control>
               <Form.Help color="danger">
                 {getError(errors, 'package_url', index)}
@@ -75,6 +79,9 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                   placeholder={getValues(getFieldName('language', index))}
                   onChange={handleChangeWithValidation}
                 />
+                <Icon align="left">
+                  <FontAwesomeIcon icon="code" />
+                </Icon>
               </Form.Control>
               <Form.Help color="danger">
                 {getError(errors, 'language', index)}
