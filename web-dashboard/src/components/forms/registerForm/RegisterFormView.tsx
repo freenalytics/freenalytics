@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Form, Button, Heading } from 'react-bulma-components';
+import { Box, Form, Button, Heading, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UseFormReturn, SubmitHandler } from 'react-hook-form';
 import FormErrorMessage from '../../common/formErrorMessage';
 import useLocale from '../../../hooks/locale';
@@ -36,6 +37,9 @@ const RegisterFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           </Form.Label>
           <Form.Control>
             <Form.Input type="text" name="username" required onChange={handleChangeNoValidation} onBlur={handleBlurValidate} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="user" />
+            </Icon>
           </Form.Control>
           <Form.Help color="danger">{errors.username?.message}</Form.Help>
         </Form.Field>
@@ -46,6 +50,9 @@ const RegisterFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           </Form.Label>
           <Form.Control>
             <Form.Input type="password" name="password" required onChange={handleChangeWithMultiFieldValidation('passwordConfirm')} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="key" />
+            </Icon>
           </Form.Control>
           <Form.Help color="danger">{errors.password?.message}</Form.Help>
         </Form.Field>
@@ -56,6 +63,9 @@ const RegisterFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           </Form.Label>
           <Form.Control>
             <Form.Input type="password" name="passwordConfirm" required onChange={handleChangeWithMultiFieldValidation('password')} />
+            <Icon align="left">
+              <FontAwesomeIcon icon="key" />
+            </Icon>
           </Form.Control>
           <Form.Help color="danger">{errors.passwordConfirm?.message}</Form.Help>
         </Form.Field>
