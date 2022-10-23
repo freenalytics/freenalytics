@@ -3,6 +3,7 @@ import { verifyUser } from '../middleware/auth';
 import { onlySupportedMethods } from '../middleware/routes';
 import { jsonBodyRequired } from '../middleware/controller';
 import * as applicationController from '../controllers/applicationController';
+import * as dataController from '../controllers/dataController';
 
 const router = express.Router();
 
@@ -16,5 +17,10 @@ router.route('/:domain')
   .patch(verifyUser, jsonBodyRequired, applicationController.updateByDomain)
   .delete(verifyUser, applicationController.deleteByDomain)
   .all(onlySupportedMethods('GET', 'PATCH', 'DELETE'));
+
+router.route('/:domain/data')
+  .get(verifyUser, dataController.get)
+  .post(jsonBodyRequired, dataController.create)
+  .all(onlySupportedMethods('GET', 'POST'));
 
 export default router;
