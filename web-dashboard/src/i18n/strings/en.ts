@@ -11,7 +11,12 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+
   'pages.application.information.title': 'Information | {app}',
+  'pages.application.information.header.text': 'Some Information',
+  'pages.application.information.upload.header.text': 'Uploading Data',
+  'pages.application.information.upload.description.text': "Your application's schema has the following structure.",
+
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',
   'pages.application.settings.success.description.text': 'Your application has updated successfully.',
