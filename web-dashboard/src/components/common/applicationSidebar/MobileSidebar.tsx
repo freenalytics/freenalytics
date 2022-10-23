@@ -27,6 +27,11 @@ const MobileSidebar: React.FC<SidebarProps> = ({ active, domain, children }) => 
             {t('common.application_sidebar.items.dashboard.text')}
           </Menu.List.Item>
 
+          <Menu.List.Item renderAs={Link} to={DYNAMIC_PROTECTED_ROUTES.applicationInformation(domain)} active={active === 'information'}>
+            <FontAwesomeIcon className="svg-icon" icon="circle-info" />
+            {t('common.application_sidebar.items.information.text')}
+          </Menu.List.Item>
+
           <Menu.List.Item renderAs={Link} to={DYNAMIC_PROTECTED_ROUTES.applicationSettings(domain)} active={active === 'settings'}>
             <FontAwesomeIcon className="svg-icon" icon="wrench" />
             {t('common.application_sidebar.items.settings.text')}
