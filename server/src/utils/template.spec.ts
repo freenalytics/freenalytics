@@ -1,4 +1,5 @@
-import { generateSchema } from './template';
+import { generateSchema, validateDataWithTemplate } from './template';
+import { SchemaValidationError } from '../errors/http';
 
 describe('Utils: Template', () => {
   describe('generateSchema()', () => {
@@ -11,10 +12,9 @@ describe('Utils: Template', () => {
         generateSchema('key: value');
       }).toThrow();
     });
-  });
 
-  describe('should return the JSONSchema object.', () => {
-    const ymlString = `
+    it('should return the JSONSchema object.', () => {
+      const ymlString = `
 type: object
 properties:
   name:
@@ -24,21 +24,45 @@ properties:
     items:
       type: string
     `;
-    const expected = {
+      const expected = {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string'
+          },
+          arr: {
+            type: 'array',
+            items: {
+              type: 'string'
+            }
+          }
+        }
+      };
+
+      expect(generateSchema(ymlString)).toMatchObject(expected);
+    });
+  });
+
+  describe('validateDataWithTemplate()', () => {
+    const template = {
       type: 'object',
       properties: {
-        name: {
+        key: {
           type: 'string'
-        },
-        arr: {
-          type: 'array',
-          items: {
-            type: 'string'
-          }
         }
       }
     };
 
-    expect(generateSchema(ymlString)).toMatchObject(expected);
+    it('should not throw if data is valid.', () => {
+      expect(() => {
+        validateDataWithTemplate({ key: 'v' }, template);
+      }).not.toThrow();
+    });
+
+    it('should throw if data is invalid.', () => {
+      expect(() => {
+        validateDataWithTemplate({ key: 123 }, template);
+      }).toThrow(SchemaValidationError);
+    });
   });
 });
