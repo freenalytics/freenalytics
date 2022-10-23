@@ -7,7 +7,10 @@ interface Props {
 }
 
 const DataExamplePreview: React.FC<Props> = ({ schema }) => {
-  const example = jsf(schema);
+  const example = jsf({
+    ...schema,
+    additionalProperties: false
+  });
 
   return (
     <CodeBlock
