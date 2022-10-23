@@ -19,7 +19,8 @@ router.route('/:domain')
   .all(onlySupportedMethods('GET', 'PATCH', 'DELETE'));
 
 router.route('/:domain/data')
+  .get(verifyUser, dataController.get)
   .post(jsonBodyRequired, dataController.create)
-  .all(onlySupportedMethods('POST'));
+  .all(onlySupportedMethods('GET', 'POST'));
 
 export default router;
