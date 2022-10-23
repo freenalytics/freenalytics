@@ -53,7 +53,7 @@ const ApplicationInformationPage = () => {
           <p>
             {t('pages.application.information.upload.data_example.text')}
           </p>
-          <ApiUrlBlock method="POST" path={`/applications/${domain}/data`} />
+          <ApiUrlBlock method="POST" path={`applications/${domain}/data`} />
           <DataExamplePreview schema={application!.template.schema} />
         </Content>
       </ApplicationSidebar>
