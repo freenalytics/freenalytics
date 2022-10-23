@@ -1,7 +1,13 @@
 import redisClient from '../redis/client';
 import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
-import { ResourceNotFoundError } from '../errors/http';
+import { BadRequestError, ResourceNotFoundError } from '../errors/http';
+import { WithPagination } from '../models/types';
+
+export interface GetDataOptions {
+  limit: number
+  start: number
+}
 
 export const getApplicationSchema = async (domain: string): Promise<object> => {
   const key = `${domain}:schema`;
@@ -26,4 +32,28 @@ export const createDataForApplication = async (domain: string, validData: object
   const data = { domain, payload: validData } as DataModel;
   await new Data(data).save();
   return data;
+};
+
+export const getDataForApplication = async (domain: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
+  const numOfDocuments = await Data.countDocuments();
+
+  if (options.start < 0 || options.start >= numOfDocuments) {
+    throw new BadRequestError(`Start index out of bounds. There are only ${numOfDocuments} data entries.`);
+  }
+
+  const result = await Data.find({ domain }, { _id: 0, __v: 0 })
+    .sort({ createdAt: -1 })
+    .skip(options.start)
+    .limit(options.limit)
+    .exec();
+
+  return {
+    result,
+    pagination: {
+      limit: options.limit,
+      current: options.start,
+      previous: Math.max(0, options.start - options.limit),
+      next: Math.min(numOfDocuments - 1, options.start + options.limit)
+    }
+  };
 };

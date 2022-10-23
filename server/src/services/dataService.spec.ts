@@ -1,9 +1,10 @@
-import { createDataForApplication, getApplicationSchema } from './dataService';
+import { createDataForApplication, getApplicationSchema, getDataForApplication } from './dataService';
 import { promisify } from 'util';
 const mockingoose = require('mockingoose');
 import Data from '../models/data';
 import Application from '../models/application';
 import redisClient from '../redis/client';
+import { BadRequestError } from '../errors/http';
 
 jest.mock('redis', () => jest.requireActual('redis-mock'));
 Object.defineProperty(redisClient, 'exists', {
@@ -41,11 +42,26 @@ const app = {
   },
   connectors: []
 };
-const data = {
+const data1 = {
   domain: 'FD-123',
   payload: {
-    key: 'value'
-  }
+    key: 'value1'
+  },
+  createdAt: new Date('2022-10-14T04:24:22.951Z')
+};
+const data2 = {
+  domain: 'FD-123',
+  payload: {
+    key: 'value2'
+  },
+  createdAt: new Date('2022-11-14T04:24:22.951Z')
+};
+const data3 = {
+  domain: 'FD-123',
+  payload: {
+    key: 'value3'
+  },
+  createdAt: new Date('2022-12-14T04:24:22.951Z')
 };
 
 describe('Services: DataService', () => {
@@ -92,7 +108,7 @@ describe('Services: DataService', () => {
 
   describe('createDataForApplication()', () => {
     beforeAll(() => {
-      mockingoose(Data).toReturn(data, 'save');
+      mockingoose(Data).toReturn(data1, 'save');
     });
 
     afterAll(() => {
@@ -104,6 +120,40 @@ describe('Services: DataService', () => {
 
       expect(created).toHaveProperty('domain', 'FD-123');
       expect(created).toHaveProperty('payload');
+    });
+  });
+
+  describe('getDataForApplication()', () => {
+    beforeAll(() => {
+      mockingoose(Data).toReturn([data1, data2, data3], 'find');
+      mockingoose(Data).toReturn(3, 'countDocuments');
+    });
+
+    afterAll(() => {
+      mockingoose(Data).reset('find');
+      mockingoose(Data).reset('countDocuments');
+    });
+
+    it('should reject if the start pointer is out of bounds.', async () => {
+      await expect(getDataForApplication('FD-123', { start: 5, limit: 5 })).rejects.toThrow(BadRequestError);
+      await expect(getDataForApplication('FD-123', { start: -1, limit: 5 })).rejects.toThrow(BadRequestError);
+    });
+
+    it('should resolve the adequate data.', async () => {
+      mockingoose(Data).toReturn([data1], 'find');
+      const result = await getDataForApplication('FD-123', { start: 0, limit: 1 });
+      const expected = {
+        result: [data1],
+        pagination: {
+          limit: 1,
+          current: 0,
+          previous: 0,
+          next: 1
+        }
+      };
+
+      expect(result).toMatchObject(expected);
+      mockingoose(Data).toReturn([data1, data2, data3], 'find');
     });
   });
 });
