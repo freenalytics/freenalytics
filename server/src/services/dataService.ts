@@ -3,6 +3,7 @@ import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
 import { BadRequestError, ResourceNotFoundError } from '../errors/http';
 import { WithPagination } from '../models/types';
+import { PAGINATION_MAX_LIMIT } from '../constants/pagination';
 
 export interface GetDataOptions {
   limit: number
@@ -36,6 +37,10 @@ export const createDataForApplication = async (domain: string, validData: object
 
 export const getDataForApplication = async (domain: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
   const numOfDocuments = await Data.countDocuments();
+
+  if (options.limit > PAGINATION_MAX_LIMIT) {
+    throw new BadRequestError(`Limit can only be up to ${PAGINATION_MAX_LIMIT}.`);
+  }
 
   if (options.start < 0 || options.start >= numOfDocuments) {
     throw new BadRequestError(`Start index out of bounds. There are only ${numOfDocuments} data entries.`);
