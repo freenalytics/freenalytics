@@ -11,6 +11,13 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+
+  'pages.application.information.title': 'Information | {app}',
+  'pages.application.information.header.text': 'Some Information',
+  'pages.application.information.upload.header.text': 'Uploading Data',
+  'pages.application.information.upload.schema_preview.text': "Your application's schema has the following structure.",
+  'pages.application.information.upload.data_example.text': 'To upload data for this application, you should make a request to the following URL with the following JSON payload.',
+
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',
   'pages.application.settings.success.description.text': 'Your application has updated successfully.',
@@ -39,6 +46,7 @@ const COMMON = {
   'common.application.card.last_modified.text': 'Last modified: {time}',
 
   'common.application_sidebar.items.dashboard.text': 'Dashboard',
+  'common.application_sidebar.items.information.text': 'Some Information',
   'common.application_sidebar.items.settings.text': 'Settings',
 
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',

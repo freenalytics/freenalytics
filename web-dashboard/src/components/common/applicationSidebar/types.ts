@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type SidebarActiveItem = 'dashboard' | 'settings';
+export type SidebarActiveItem = 'dashboard' | 'information' | 'settings';
 
 export interface SidebarProps {
   active: SidebarActiveItem

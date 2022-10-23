@@ -15,6 +15,7 @@ interface CommonErrorResponse {
 
 class Client extends EventEmitter {
   private headers: Record<string, string>;
+  private readonly _baseURL: string;
   private readonly _instance: AxiosInstance;
   private readonly _auth: AuthService;
   private readonly _application: ApplicationService;
@@ -22,6 +23,7 @@ class Client extends EventEmitter {
   constructor(baseURL: string, config: AxiosRequestConfig = {}) {
     super();
     this.headers = {};
+    this._baseURL = baseURL;
 
     this._instance = axios.create({
       ...config,
@@ -62,6 +64,10 @@ class Client extends EventEmitter {
     const axiosError = error as AxiosError;
     const message = (axiosError.response?.data as CommonErrorResponse)?.error?.message ?? axiosError.message;
     return new AuthError(axiosError, message, friendlyMessageKey);
+  }
+
+  get baseURL() {
+    return this._baseURL;
   }
 
   get instance() {
