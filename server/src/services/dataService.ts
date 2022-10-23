@@ -23,5 +23,7 @@ export const getApplicationSchema = async (domain: string): Promise<object> => {
 };
 
 export const createDataForApplication = async (domain: string, validData: object): Promise<DataModel> => {
-  return await new Data({ domain, payload: validData }).save();
+  const data = { domain, payload: validData } as DataModel;
+  await new Data(data).save();
+  return data;
 };
