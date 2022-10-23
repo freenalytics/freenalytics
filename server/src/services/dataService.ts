@@ -58,7 +58,9 @@ export const getDataForApplication = async (domain: string, options: GetDataOpti
       limit: options.limit,
       current: options.start,
       previous: Math.max(0, options.start - options.limit),
-      next: Math.min(numOfDocuments - 1, options.start + options.limit)
+      next: Math.min(numOfDocuments - 1, options.start + options.limit),
+      total: numOfDocuments,
+      isLast: options.start + options.limit >= numOfDocuments
     }
   };
 };

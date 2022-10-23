@@ -4,6 +4,8 @@ export interface WithPagination<T> {
     limit: number
     current: number
     previous: number
-    next: number
+    next: number,
+    total: number,
+    isLast: boolean
   }
 }

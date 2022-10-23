@@ -153,7 +153,9 @@ describe('Services: DataService', () => {
           limit: 1,
           current: 0,
           previous: 0,
-          next: 1
+          next: 1,
+          total: 3,
+          isLast: false
         }
       };
 
