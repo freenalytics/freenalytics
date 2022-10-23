@@ -15,7 +15,8 @@ const PAGES = {
   'pages.application.information.title': 'Information | {app}',
   'pages.application.information.header.text': 'Some Information',
   'pages.application.information.upload.header.text': 'Uploading Data',
-  'pages.application.information.upload.description.text': "Your application's schema has the following structure.",
+  'pages.application.information.upload.schema_preview.text': "Your application's schema has the following structure.",
+  'pages.application.information.upload.data_example.text': 'To upload data for this application, you should make a request to the following URL with the following JSON payload.',
 
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',

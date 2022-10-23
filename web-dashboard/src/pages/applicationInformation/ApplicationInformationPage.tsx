@@ -6,10 +6,12 @@ import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
 import PageWrapper from '../../components/common/pageWrapper';
 import ApplicationSidebar from '../../components/common/applicationSidebar';
+import SchemaPreview from '../../components/pageComponents/applicationInformation/schemaPreview';
+import ApiUrlBlock from '../../components/common/apiUrlBlock';
+import DataExamplePreview from '../../components/pageComponents/applicationInformation/dataExamplePreview';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
 import useLocale from '../../hooks/locale';
-import SchemaPreview from '../../components/pageComponents/applicationInformation/schemaPreview';
 
 const ApplicationInformationPage = () => {
   const { domain } = useParams();
@@ -44,9 +46,15 @@ const ApplicationInformationPage = () => {
             {t('pages.application.information.upload.header.text')}
           </h2>
           <p>
-            {t('pages.application.information.upload.description.text')}
+            {t('pages.application.information.upload.schema_preview.text')}
           </p>
           <SchemaPreview rawSchema={application!.template.raw_schema} />
+
+          <p>
+            {t('pages.application.information.upload.data_example.text')}
+          </p>
+          <ApiUrlBlock method="POST" path={`/applications/${domain}/data`} />
+          <DataExamplePreview schema={application!.template.schema} />
         </Content>
       </ApplicationSidebar>
     </PageWrapper>
