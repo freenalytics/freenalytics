@@ -1,0 +1,18 @@
+.code-block-container {
+  width: 100%;
+
+  & > span {
+    border-radius: 8px !important;
+    padding: 1rem 2rem;
+  }
+
+  code {
+    flex: 1;
+
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    padding: inherit;
+  }
+}
