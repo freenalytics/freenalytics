@@ -17,7 +17,10 @@ export const generateSchema = (ymlSchema: string): object => {
 
 export const validateDataWithTemplate = (data: object, template: object) => {
   const ajv = new Ajv();
-  const validate = ajv.compile(template);
+  const validate = ajv.compile({
+    ...template,
+    additionalProperties: false
+  });
   const valid = validate(data);
 
   if (!valid) {

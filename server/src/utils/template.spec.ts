@@ -64,5 +64,11 @@ properties:
         validateDataWithTemplate({ key: 123 }, template);
       }).toThrow(SchemaValidationError);
     });
+
+    it('should throw if data has unknown keys.', () => {
+      expect(() => {
+        validateDataWithTemplate({ unknown: 123 }, template);
+      }).toThrow(SchemaValidationError);
+    });
   });
 });
