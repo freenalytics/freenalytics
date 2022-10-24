@@ -7,7 +7,7 @@ interface Props extends PaginationData {
   onPageChange: (n: number) => void
 }
 
-const PageSelector: React.FC<Props> = ({ onPageChange, previous, next, isLast }) => {
+const PageSelector: React.FC<Props> = ({ onPageChange, current, previous, next, isLast }) => {
   const handlePreviousClick = () => {
     onPageChange(previous);
   };
@@ -19,7 +19,7 @@ const PageSelector: React.FC<Props> = ({ onPageChange, previous, next, isLast })
   return (
     <Block>
       <Button.Group align="center">
-        <Button onClick={handlePreviousClick} disabled={previous === 0}>
+        <Button onClick={handlePreviousClick} disabled={previous === current}>
           <FontAwesomeIcon icon="arrow-left" />
         </Button>
         <Button onClick={handleNextClick} disabled={isLast}>
