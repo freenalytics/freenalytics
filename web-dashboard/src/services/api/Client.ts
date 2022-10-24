@@ -5,11 +5,23 @@ import { AuthError } from '../../errors/auth';
 import AuthService from './AuthService';
 import ApplicationService from './ApplicationService';
 
-interface CommonErrorResponse {
+export interface CommonErrorResponse {
   error: {
     name: string
     description: string
     message: string
+  }
+}
+
+export interface ResponseWithPagination<T> {
+  result: T
+  pagination: {
+    limit: number
+    current: number
+    previous: number
+    next: number
+    total: number
+    isLast: boolean
   }
 }
 
