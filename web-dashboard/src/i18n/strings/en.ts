@@ -13,6 +13,7 @@ const PAGES = {
   'pages.application.dashboard.title': 'Dashboard | {app}',
 
   'pages.application.entries.title': 'Data Entries | {app}',
+  'pages.application.entries.header.text': 'Data Entries',
 
   'pages.application.information.title': 'Information | {app}',
   'pages.application.information.header.text': 'Some Information',

@@ -8,9 +8,11 @@ import PageWrapper from '../../components/common/pageWrapper';
 import ApplicationSidebar from '../../components/common/applicationSidebar';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
+import useLocale from '../../hooks/locale';
 
 const ApplicationEntryTablePage: React.FC = () => {
   const { domain } = useParams();
+  const { t } = useLocale();
   const { client } = useApi();
   const request = client.application.getApplicationByDomain(domain!);
   const { isLoading, error, data: application } = useQuery(request.key, request.fn);
@@ -32,7 +34,7 @@ const ApplicationEntryTablePage: React.FC = () => {
     <PageWrapper>
       <ApplicationSidebar active="entries" domain={domain!}>
         <Heading>
-          Data Entries
+          {t('pages.application.entries.header.text')}
         </Heading>
       </ApplicationSidebar>
     </PageWrapper>

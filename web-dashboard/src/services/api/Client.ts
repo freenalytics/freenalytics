@@ -13,16 +13,18 @@ export interface CommonErrorResponse {
   }
 }
 
+export interface PaginationData {
+  limit: number
+  current: number
+  previous: number
+  next: number
+  total: number
+  isLast: boolean
+}
+
 export interface ResponseWithPagination<T> {
   result: T
-  pagination: {
-    limit: number
-    current: number
-    previous: number
-    next: number
-    total: number
-    isLast: boolean
-  }
+  pagination: PaginationData
 }
 
 class Client extends EventEmitter {
