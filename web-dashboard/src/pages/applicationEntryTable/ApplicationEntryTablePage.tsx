@@ -38,7 +38,7 @@ const ApplicationEntryTablePage: React.FC = () => {
           {t('pages.application.entries.header.text')}
         </Heading>
 
-        <EntryTable domain={domain!} />
+        <EntryTable domain={domain!} schema={application!.template.schema} />
       </ApplicationSidebar>
     </PageWrapper>
   );

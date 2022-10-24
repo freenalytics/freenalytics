@@ -7,9 +7,10 @@ import useApi from '../../../hooks/api';
 
 interface Props {
   domain: string
+  schema: object
 }
 
-const EntryTable: React.FC<Props> = ({ domain }) => {
+const EntryTable: React.FC<Props> = ({ domain, schema }) => {
   const [start] = useState<number>(0);
   const { client } = useApi();
   const request = client.application.getApplicationDataByDomain(domain, { start, limit: 10 });
@@ -28,7 +29,7 @@ const EntryTable: React.FC<Props> = ({ domain }) => {
   }
 
   return (
-    <EntryTableView {...data!.pagination} data={data!.result} />
+    <EntryTableView data={data!.result} schema={schema} startIndex={start} />
   );
 };
 

@@ -55,6 +55,8 @@ const COMMON = {
 
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
 
+  'common.data_vis.entry_table.columns.createdAt.text': 'Creation Date',
+
   'common.form.application_type_picker.mobile.text': 'Mobile',
   'common.form.application_type_picker.web.text': 'Web',
   'common.form.application_type_picker.server.text': 'Server',
