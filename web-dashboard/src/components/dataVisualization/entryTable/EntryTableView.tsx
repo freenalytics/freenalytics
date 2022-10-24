@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Table } from 'react-bulma-components';
+import { Block, Table } from 'react-bulma-components';
 import objectPath from 'object-path';
 import { ApplicationDataModel } from '../../../services/api/ApplicationService';
 import useLocale from '../../../hooks/locale';
@@ -19,7 +19,7 @@ const EntryTableView: React.FC<Props> = ({ data, schema, startIndex }) => {
   const columns = ['#', t('common.data_vis.entry_table.columns.createdAt.text'), ...schemaPaths];
 
   return (
-    <Box>
+    <Block>
       <Table.Container>
         <Table striped>
           <thead>
@@ -60,7 +60,7 @@ const EntryTableView: React.FC<Props> = ({ data, schema, startIndex }) => {
           </tbody>
         </Table>
       </Table.Container>
-    </Box>
+    </Block>
   );
 };
 
