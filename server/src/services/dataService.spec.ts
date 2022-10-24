@@ -4,8 +4,6 @@ const mockingoose = require('mockingoose');
 import Data from '../models/data';
 import Application from '../models/application';
 import redisClient from '../redis/client';
-import { BadRequestError } from '../errors/http';
-import { PAGINATION_MAX_LIMIT } from '../constants/pagination';
 
 jest.mock('redis', () => jest.requireActual('redis-mock'));
 Object.defineProperty(redisClient, 'exists', {
@@ -133,15 +131,6 @@ describe('Services: DataService', () => {
     afterAll(() => {
       mockingoose(Data).reset('find');
       mockingoose(Data).reset('countDocuments');
-    });
-
-    it('should reject if the limit is over 50.', async () => {
-      await expect(getDataForApplication('FD-123', { start: 0, limit: PAGINATION_MAX_LIMIT + 5 })).rejects.toThrow(BadRequestError);
-    });
-
-    it('should reject if the start pointer is out of bounds.', async () => {
-      await expect(getDataForApplication('FD-123', { start: 5, limit: 5 })).rejects.toThrow(BadRequestError);
-      await expect(getDataForApplication('FD-123', { start: -1, limit: 5 })).rejects.toThrow(BadRequestError);
     });
 
     it('should resolve the adequate data.', async () => {

@@ -12,6 +12,9 @@ const PAGES = {
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
 
+  'pages.application.entries.title': 'Data Entries | {app}',
+  'pages.application.entries.header.text': 'Data Entries',
+
   'pages.application.information.title': 'Information | {app}',
   'pages.application.information.header.text': 'Some Information',
   'pages.application.information.upload.header.text': 'Uploading Data',
@@ -46,10 +49,13 @@ const COMMON = {
   'common.application.card.last_modified.text': 'Last modified: {time}',
 
   'common.application_sidebar.items.dashboard.text': 'Dashboard',
+  'common.application_sidebar.items.entries.text': 'Data Entries',
   'common.application_sidebar.items.information.text': 'Some Information',
   'common.application_sidebar.items.settings.text': 'Settings',
 
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
+
+  'common.data_vis.entry_table.columns.createdAt.text': 'Creation Date',
 
   'common.form.application_type_picker.mobile.text': 'Mobile',
   'common.form.application_type_picker.web.text': 'Web',
