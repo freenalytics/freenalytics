@@ -21,6 +21,11 @@ const SidebarItems: React.FC<Props> = ({ domain, active }) => {
         {t('common.application_sidebar.items.dashboard.text')}
       </Menu.List.Item>
 
+      <Menu.List.Item renderAs={Link} to={DYNAMIC_PROTECTED_ROUTES.applicationEntryTable(domain)} active={active === 'entries'}>
+        <FontAwesomeIcon className="svg-icon" icon="table-list" />
+        {t('common.application_sidebar.items.entries.text')}
+      </Menu.List.Item>
+
       <Menu.List.Item renderAs={Link} to={DYNAMIC_PROTECTED_ROUTES.applicationInformation(domain)} active={active === 'information'}>
         <FontAwesomeIcon className="svg-icon" icon="circle-info" />
         {t('common.application_sidebar.items.information.text')}
