@@ -36,7 +36,7 @@ export const createDataForApplication = async (domain: string, validData: object
 };
 
 export const getDataForApplication = async (domain: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
-  const numOfDocuments = await Data.countDocuments();
+  const numOfDocuments = await Data.countDocuments({ domain });
 
   if (options.limit > PAGINATION_MAX_LIMIT) {
     throw new BadRequestError(`Limit can only be up to ${PAGINATION_MAX_LIMIT}.`);
