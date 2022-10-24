@@ -114,7 +114,7 @@ class ApplicationService {
 
   private async doGetApplicationDataByDomain(
     domain: string, options: GetApplicationDataOptions
-  ): Promise<ResponseWithPagination<ApplicationDataModel>> {
+  ): Promise<ResponseWithPagination<ApplicationDataModel[]>> {
     try {
       const response = await this.client.instance.get(`/applications/${domain}/data`, { params: options });
       return response.data.data;

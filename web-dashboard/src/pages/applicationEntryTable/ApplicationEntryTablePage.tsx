@@ -6,6 +6,7 @@ import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
 import PageWrapper from '../../components/common/pageWrapper';
 import ApplicationSidebar from '../../components/common/applicationSidebar';
+import EntryTable from '../../components/dataVisualization/entryTable';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
 import useLocale from '../../hooks/locale';
@@ -36,6 +37,8 @@ const ApplicationEntryTablePage: React.FC = () => {
         <Heading>
           {t('pages.application.entries.header.text')}
         </Heading>
+
+        <EntryTable domain={domain!} />
       </ApplicationSidebar>
     </PageWrapper>
   );
