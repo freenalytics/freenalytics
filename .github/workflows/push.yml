@@ -103,7 +103,7 @@ jobs:
           personal_token: ${{ secrets.REPO_ACCESS_TOKEN }}
           external_repository: freenalytics/api-docs
           publish_branch: public
-          publish_dir: ./build-docs
+          publish_dir: ./server/build-docs
           enable_jekyll: false
           allow_empty_commit: true
           commit_message: ${{ github.event.head_commit.message }}
