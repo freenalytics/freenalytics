@@ -14,7 +14,13 @@ const info: DocumentationInfo = {
   version: pkg.version
 };
 
-export default {
+const documentationData = {
   metadata,
-  info
+  info,
+  paths: {
+
+  }
 };
+
+export default documentationData;
+export type DocumentationData = typeof documentationData;

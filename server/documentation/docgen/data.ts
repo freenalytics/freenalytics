@@ -2,13 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import yml from 'yaml';
 import documentation from '../documentation';
+import { generateTags } from './openapi/tags';
 
 export const generateSpec = () => {
   return {
     openapi: documentation.metadata.openapi,
     servers: documentation.metadata.servers,
     info: documentation.info,
-    tags: {},
+    tags: generateTags(documentation),
     paths: {},
     components: {}
   };
