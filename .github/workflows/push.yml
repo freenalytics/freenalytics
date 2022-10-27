@@ -96,14 +96,14 @@ jobs:
         run: npm run docgen:full
 
       - name: Publish Documentation
-          uses: peaceiris/actions-gh-pages@v3
-          if: github.ref == 'refs/heads/master'
-          with:
-            personal_token: ${{ secrets.REPO_ACCESS_TOKEN }}
-            external_repository: freenalytics/api-docs
-            publish_branch: public
-            publish_dir: ./build-docs
-            destination_dir: /
-            enable_jekyll: false
-            allow_empty_commit: true
-            commit_message: ${{ github.event.head_commit.message }}
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          personal_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          external_repository: freenalytics/api-docs
+          publish_branch: public
+          publish_dir: ./build-docs
+          destination_dir: /
+          enable_jekyll: false
+          allow_empty_commit: true
+          commit_message: ${{ github.event.head_commit.message }}
