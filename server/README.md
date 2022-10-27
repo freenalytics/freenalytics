@@ -94,3 +94,20 @@ Create the application's production build.
 
 Starts up the server in production mode. This runs from the production build, meaning you should run `npm run build`
 before running this.
+
+#### `npm run docgen:spec`
+
+Generate the spec file for the API documentation. Run this whenever you have made documentation updates and wish
+to preview the changes locally.
+
+#### `npm run docgen:serve`
+
+Starts up a watch server that reloads whenever the documentation spec file is updated.
+
+#### `npm run docgen:build`
+
+Builds the documentation site to the `build-docs` folder.
+
+#### `npm run docgen:full`
+
+Builds the documentation spec file and site to the `build-docs` folder.
