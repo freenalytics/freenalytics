@@ -2,8 +2,12 @@
 .github
 .git
 
-**/build/
-**/client-build/
-**/dev/
+server/__mocks__/
+server/build/
+server/client-build/
+server/build-docs/
+server/dev/
 
-*.env
+web-dashboard/build/
+
+**/*.env
