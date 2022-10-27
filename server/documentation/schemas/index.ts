@@ -14,6 +14,7 @@ export {
 export {
   ApplicationCreateRequestSchema,
   ApplicationUpdateRequestSchema,
+  ApplicationDeleteResponseSchema,
   ApplicationResponseSchema,
   ApplicationDataRequestSchema,
   ApplicationDataResponseSchema,

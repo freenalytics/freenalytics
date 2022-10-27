@@ -11,6 +11,12 @@ import getCurrentUser from './routes/users/getCurrentUser';
 import updateCurrentUser from './routes/users/updateCurrentUser';
 import getUserByUsername from './routes/users/getUserByUsername';
 
+import getAllApplicationsForUser from './routes/applications/getAllApplicationsForUser';
+import createApplicationForUser from './routes/applications/createApplicationForUser';
+import getApplicationByDomain from './routes/applications/getApplicationByDomain';
+import updateApplicationByDomain from './routes/applications/updateApplicationByDomain';
+import deleteApplicationByDomain from './routes/applications/deleteApplicationByDomain';
+
 const metadata: DocumentationMetadata = {
   openapi: '3.0.2',
   servers: [
@@ -40,6 +46,14 @@ const documentationData = {
       getCurrentUser,
       updateCurrentUser,
       getUserByUsername
+    },
+
+    Application: {
+      getAllApplicationsForUser,
+      createApplicationForUser,
+      getApplicationByDomain,
+      updateApplicationByDomain,
+      deleteApplicationByDomain
     }
   }
 };

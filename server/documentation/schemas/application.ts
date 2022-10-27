@@ -21,6 +21,10 @@ export const ApplicationUpdateRequestSchema = Joi.object({
   }))
 });
 
+export const ApplicationDeleteResponseSchema = Joi.object({
+  message: Joi.string().required()
+});
+
 export const ApplicationResponseSchema = Joi.object({
   name: Joi.string().required(),
   owner: Joi.string().required(),
