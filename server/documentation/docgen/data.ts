@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import yml from 'yaml';
 import documentation from '../documentation';
+import * as Schemas from '../schemas';
 import { generateTags } from './openapi/tags';
+import { generateComponents } from './openapi/components';
 
 export const generateSpec = () => {
   return {
@@ -11,7 +13,7 @@ export const generateSpec = () => {
     info: documentation.info,
     tags: generateTags(documentation),
     paths: {},
-    components: {}
+    components: generateComponents(Schemas)
   };
 };
 
