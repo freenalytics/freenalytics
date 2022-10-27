@@ -1,6 +1,11 @@
 import pkg from '../../package.json';
 import { DocumentationMetadata, DocumentationInfo } from './types';
 
+import registrationOpen from './routes/auth/registrationOpen';
+import register from './routes/auth/register';
+import login from './routes/auth/login';
+import changePassword from './routes/auth/changePassword';
+
 const metadata: DocumentationMetadata = {
   openapi: '3.0.2',
   servers: [
@@ -18,7 +23,12 @@ const documentationData = {
   metadata,
   info,
   paths: {
-
+    Auth: {
+      registrationOpen,
+      register,
+      login,
+      changePassword
+    }
   }
 };
 

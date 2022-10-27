@@ -20,11 +20,11 @@ export interface RouteData {
   path: string,
   method: 'get' | 'put' | 'post' | 'delete' | 'patch',
   summary: string,
-  description?: string
+  description: string
   throws?: HttpError[],
   success: {
     code: number,
-    schema?: SchemaName,
+    schema: SchemaName,
     isArray?: boolean
   },
   pathParams?: {

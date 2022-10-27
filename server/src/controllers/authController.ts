@@ -30,7 +30,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     await User.register(new User({ ...restOfUser }), password);
 
     const response = new ResponseBuilder()
-      .withStatusCode(HttpStatus.OK)
+      .withStatusCode(HttpStatus.CREATED)
       .withData({
         message: 'Account creation successful. Please login to get your access token.'
       });
