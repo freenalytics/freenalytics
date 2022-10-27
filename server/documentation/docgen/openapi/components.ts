@@ -5,7 +5,7 @@ import { ResponseBuilder } from '../../../src/utils/http';
 import { schemaRef } from './refs';
 import { SchemaName } from '../../types';
 
-const APPLICATION_JSON = 'application/json';
+export const APPLICATION_JSON = 'application/json';
 
 export const SECURITY_JWT_NAME = 'bearer_token';
 export const SECURITY_JWT_SCHEME = {
@@ -58,7 +58,7 @@ export const generateExampleComponents = (Schemas: Record<SchemaName, Joi.Schema
         value: new ResponseBuilder().withData(Felicity.example(Schema)).build()
       },
       [`${key}-arr`]: {
-        value: new ResponseBuilder().withData(Felicity.example(Schema)).build()
+        value: new ResponseBuilder().withData([Felicity.example(Schema), Felicity.example(Schema), Felicity.example(Schema)]).build()
       }
     };
   }, {});
