@@ -4,6 +4,7 @@ import yml from 'yaml';
 import documentation from '../documentation';
 import * as Schemas from '../schemas';
 import { generateTags } from './openapi/tags';
+import { generatePaths } from './openapi/paths';
 import { generateComponents } from './openapi/components';
 
 export const generateSpec = () => {
@@ -12,7 +13,7 @@ export const generateSpec = () => {
     servers: documentation.metadata.servers,
     info: documentation.info,
     tags: generateTags(documentation),
-    paths: {},
+    paths: generatePaths(documentation),
     components: generateComponents(Schemas)
   };
 };
