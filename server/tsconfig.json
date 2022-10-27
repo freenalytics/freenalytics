@@ -1,9 +1,10 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "documentation/**/*"],
   "exclude": [
     "build",
     "node_modules",
-    "src/**/*.spec.*"
+    "src/**/*.spec.*",
+    "documentation/**/*.spec.*"
   ],
 
   "compilerOptions": {

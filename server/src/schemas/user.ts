@@ -22,13 +22,13 @@ export const UserLoginSchema = Joi.object<UserLoginBody>({
     })
 });
 
-const VALID_USERNAME_REGEX = /^[\w._-]*$/;
-const USERNAME_MIN_LENGTH = 3;
-const USERNAME_MAX_LENGTH = 20;
-const DISALLOWED_USERNAMES = ['me'];
+export const VALID_USERNAME_REGEX = /^[\w._-]*$/;
+export const USERNAME_MIN_LENGTH = 3;
+export const USERNAME_MAX_LENGTH = 20;
+export const DISALLOWED_USERNAMES = ['me'];
 
-const PASSWORD_MIN_LENGTH = 8;
-const VALID_LOCALES = ['en'];
+export const PASSWORD_MIN_LENGTH = 8;
+export const VALID_LOCALES = ['en'];
 
 export interface UserRegisterBody {
   username: string
