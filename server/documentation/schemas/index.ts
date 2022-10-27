@@ -7,3 +7,7 @@ export {
   ChangePasswordRequestSchema,
   ChangePasswordResponseSchema
 } from './auth';
+export {
+  UserResponseSchema,
+  UserUpdateRequestSchema
+} from './user';
