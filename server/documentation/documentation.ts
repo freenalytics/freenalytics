@@ -17,6 +17,9 @@ import getApplicationByDomain from './routes/applications/getApplicationByDomain
 import updateApplicationByDomain from './routes/applications/updateApplicationByDomain';
 import deleteApplicationByDomain from './routes/applications/deleteApplicationByDomain';
 
+import createApplicationData from './routes/applications/createApplicationData';
+import getApplicationData from './routes/applications/getApplicationData';
+
 const metadata: DocumentationMetadata = {
   openapi: '3.0.2',
   servers: [
@@ -53,7 +56,10 @@ const documentationData = {
       createApplicationForUser,
       getApplicationByDomain,
       updateApplicationByDomain,
-      deleteApplicationByDomain
+      deleteApplicationByDomain,
+
+      createApplicationData,
+      getApplicationData
     }
   }
 };
