@@ -6,6 +6,11 @@ import register from './routes/auth/register';
 import login from './routes/auth/login';
 import changePassword from './routes/auth/changePassword';
 
+import getAllUsers from './routes/users/getAllUsers';
+import getCurrentUser from './routes/users/getCurrentUser';
+import updateCurrentUser from './routes/users/updateCurrentUser';
+import getUserByUsername from './routes/users/getUserByUsername';
+
 const metadata: DocumentationMetadata = {
   openapi: '3.0.2',
   servers: [
@@ -28,6 +33,13 @@ const documentationData = {
       register,
       login,
       changePassword
+    },
+
+    User: {
+      getAllUsers,
+      getCurrentUser,
+      updateCurrentUser,
+      getUserByUsername
     }
   }
 };
