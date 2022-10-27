@@ -104,7 +104,6 @@ jobs:
           external_repository: freenalytics/api-docs
           publish_branch: public
           publish_dir: ./build-docs
-          destination_dir: /
           enable_jekyll: false
           allow_empty_commit: true
           commit_message: ${{ github.event.head_commit.message }}
