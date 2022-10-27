@@ -16,6 +16,20 @@ export interface DocumentationInfo {
   version: string
 }
 
+export interface PathParam {
+  name: string,
+  description: string,
+  type: 'string' | 'number'
+}
+
+export interface QueryParam {
+  name: string,
+  description: string,
+  required: boolean,
+  type: 'string' | 'boolean' | 'number'
+  isArray: boolean
+}
+
 export interface RouteData {
   path: string,
   method: 'get' | 'put' | 'post' | 'delete' | 'patch',
@@ -27,18 +41,8 @@ export interface RouteData {
     schema: SchemaName,
     isArray?: boolean
   },
-  pathParams?: {
-    name: string,
-    description: string,
-    type: 'string' | 'number'
-  }[],
-  queryParams?: {
-    name: string,
-    description: string,
-    required: boolean,
-    type: 'string' | 'boolean' | 'number'
-    isArray: boolean
-  }[],
+  pathParams?: PathParam[],
+  queryParams?: QueryParam[],
   bodySchema?: SchemaName,
   tokenRequired: boolean
 }
