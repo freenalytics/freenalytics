@@ -3,7 +3,7 @@ import redisClient from '../redis/client';
 import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
 import { getPathForTemplate } from '../utils/template';
-import { ResourceNotFoundError, EmptyCSVExportError } from '../errors/http';
+import { ResourceNotFoundError } from '../errors/http';
 import { WithPagination } from '../models/types';
 
 export interface GetDataOptions {
@@ -65,10 +65,6 @@ export const getDataForApplication = async (domain: string, options: GetDataOpti
 export const getDataForApplicationAsCsv = async (domain: string): Promise<string> => {
   const schema = await getApplicationSchema(domain);
   const data = await Data.find({ domain }, { _id: 0, __v: 0 });
-
-  if (!data || data.length < 1) {
-    throw new EmptyCSVExportError(`Application ${domain} has no data entries to export.`);
-  }
 
   const fields = ['createdAt', ...getPathForTemplate(schema)];
   const dataTransformer = (entry: DataModel) => {

@@ -4,7 +4,7 @@ const mockingoose = require('mockingoose');
 import Data from '../models/data';
 import Application from '../models/application';
 import redisClient from '../redis/client';
-import { EmptyCSVExportError, ResourceNotFoundError } from '../errors/http';
+import { ResourceNotFoundError } from '../errors/http';
 
 jest.mock('redis', () => jest.requireActual('redis-mock'));
 Object.defineProperty(redisClient, 'exists', {
@@ -172,12 +172,6 @@ describe('Services: DataService', () => {
 
     afterAll(() => {
       mockingoose(Data).reset('find');
-    });
-
-    it('should reject with an EmptyCSVExportError if no data entries are found.', async () => {
-      mockingoose(Data).toReturn([], 'find');
-
-      await expect(getDataForApplicationAsCsv('FD-123')).rejects.toThrow(EmptyCSVExportError);
     });
 
     it('should resolve the csv data.', async () => {
