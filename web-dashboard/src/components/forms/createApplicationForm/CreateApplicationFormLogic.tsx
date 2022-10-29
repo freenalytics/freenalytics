@@ -7,6 +7,7 @@ import CreateApplicationFormView from './CreateApplicationFormView';
 import useLocale from '../../../hooks/locale';
 import { VALID_APPLICATION_TYPES } from '../../../services/api/ApplicationService';
 import { CreateApplicationData } from './types';
+import { OfficialTemplateForm } from '../../common/officialTemplatePicker/templates';
 
 interface Props {
   onSubmit: SubmitHandler<CreateApplicationData>
@@ -61,9 +62,16 @@ const CreateApplicationFormLogic: React.FC<Props> = ({ onSubmit }) => {
     }
   };
 
+  const handleOfficialTemplateSelect = (data: OfficialTemplateForm) => {
+    Object.entries(data).forEach(([key, value]) => {
+      form.setValue(key as any, value);
+      form.clearErrors(key as any);
+    });
+  };
+
   return (
     <Fragment>
-      <OfficialTemplatePicker />
+      <OfficialTemplatePicker onSelect={handleOfficialTemplateSelect} />
       <CreateApplicationFormView form={form} onSubmit={handleSubmit} error={error} />
     </Fragment>
   );

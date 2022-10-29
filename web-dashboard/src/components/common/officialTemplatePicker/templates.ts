@@ -24,7 +24,7 @@ properties:
     type: string
 required:
   - name
-    `,
+    `.trim(),
     connectors: [{
       language: 'JavaScript',
       package_url: 'https://github.com/freenalytics'

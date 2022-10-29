@@ -56,7 +56,7 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                 <Form.Input
                   type="url"
                   name={getFieldName('package_url', index)}
-                  placeholder={getValues(getFieldName('package_url', index))}
+                  value={getValues(getFieldName('package_url', index))}
                   onChange={handleChangeWithValidation}
                 />
                 <Icon align="left">
@@ -76,7 +76,7 @@ const ApplicationConnectorsFormField: React.FC<Props> = ({ form }) => {
                 <Form.Input
                   type="text"
                   name={getFieldName('language', index)}
-                  placeholder={getValues(getFieldName('language', index))}
+                  value={getValues(getFieldName('language', index))}
                   onChange={handleChangeWithValidation}
                 />
                 <Icon align="left">
