@@ -1,0 +1,31 @@
+@use "sass:map";
+
+.official-template-picker {
+  .level {
+    overflow-x: scroll;
+  }
+}
+
+.official-template-item {
+
+  .card {
+    margin: 0.75rem;
+    text-align: center;
+
+    @media (min-width: map.get($breakpoints, 'tablet-min')) {
+      max-width: 250px;
+
+      .description {
+        white-space: nowrap;
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+      }
+    }
+
+    &:hover, &:active, &:focus {
+      background-color: hsl(0, 0%, 96%);
+      cursor: pointer;
+    }
+  }
+}

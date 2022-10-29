@@ -9,7 +9,7 @@ export type TranslateValues = Record<string, PrimitiveType | FormatXMLElementFn<
 export type ValidLocale = keyof typeof strings;
 export type MessageKey = keyof typeof strings.en; // en is the default locale, so it should have all keys.
 
-export const DEFAULT_LOCALE = 'en';
+export const DEFAULT_LOCALE: ValidLocale = 'en';
 export const AVAILABLE_LOCALES = {
   en: 'English'
 };
@@ -35,6 +35,6 @@ export const getMessage = (locale: ValidLocale, key: MessageKey): InlMessageForm
 export type TranslateFunction = (locale: ValidLocale, key: MessageKey, values?: TranslateValuesForReact) => string;
 export type LocalizedTranslateFunction = (key: MessageKey, values?: TranslateValuesForReact) => string;
 
-export const translate: TranslateFunction = (locale: ValidLocale, key: MessageKey, values: TranslateValuesForReact = {}): string => {
+export const translate: TranslateFunction = (locale, key, values = {}): string => {
   return getMessage(locale, key).format(values as TranslateValues) as string;
 };

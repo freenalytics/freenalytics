@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CodeEditor from '@uiw/react-textarea-code-editor';
-import { SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { SubmitHandler, UseFormReturn, useWatch } from 'react-hook-form';
 import RequestErrorMessage from '../../common/requestErrorMessage';
 import ApplicationTypePicker from '../../common/form/applicationTypePicker';
 import ApplicationConnectorsFormField from '../../common/form/applicationConnectorsFormField';
@@ -19,7 +19,14 @@ interface Props {
 const CreateApplicationFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
   const { t } = useLocale();
   const { handleChangeNoValidation, handleBlurValidate, handleChangeWithValidation } = useFormHelper<CreateApplicationData>(form);
-  const { handleSubmit, formState: { isSubmitting, errors } } = form;
+  const { handleSubmit, formState: { isSubmitting, errors }, getValues, control } = form;
+
+  // Only this one is enough to trigger a re-render and update the form views with the modified data from the
+  // official template picker.
+  const schemaWatch = useWatch({
+    control,
+    name: 'schema'
+  });
 
   return (
     <Box className="create-application-form">
@@ -31,7 +38,13 @@ const CreateApplicationFormView: React.FC<Props> = ({ form, onSubmit, error }) =
             {t('forms.create_application.name.label')}
           </Form.Label>
           <Form.Control>
-            <Form.Input type="text" name="name" required onChange={handleChangeNoValidation} onBlur={handleBlurValidate} />
+            <Form.Input
+              type="text"
+              name="name"
+              required
+              onChange={handleChangeNoValidation}
+              onBlur={handleBlurValidate}
+            />
             <Icon align="left">
               <FontAwesomeIcon icon="font" />
             </Icon>
@@ -46,7 +59,12 @@ const CreateApplicationFormView: React.FC<Props> = ({ form, onSubmit, error }) =
             {t('forms.create_application.type.label')}
           </Form.Label>
           <Form.Control>
-            <ApplicationTypePicker name="type" required onChange={handleChangeWithValidation} />
+            <ApplicationTypePicker
+              name="type"
+              required
+              onChange={handleChangeWithValidation}
+              value={getValues('type')}
+            />
           </Form.Control>
           <Form.Help color="danger">
             {errors.type?.message}
@@ -66,6 +84,7 @@ const CreateApplicationFormView: React.FC<Props> = ({ form, onSubmit, error }) =
                 placeholder={t('forms.create_application.schema.placeholder')}
                 onChange={handleChangeNoValidation}
                 onBlur={handleBlurValidate}
+                value={schemaWatch}
               />
             </div>
           </Form.Control>

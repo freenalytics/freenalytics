@@ -110,6 +110,11 @@ const FORMS = {
   'forms.create_application.errors.fields.connectors.package_url.required': 'Connector package URL is required.',
   'forms.create_application.errors.fields.connectors.language.required': 'Connector language is required.',
 
+  'forms.create_application.official_templates.header.text': 'Official Templates',
+  'forms.create_application.official_templates.description.text': 'Official templates allow you to quickly create an application for common types of applications. Clicking on any of these templates will overwrite your current form.',
+  'forms.create_application.official_templates.template.official_web.name.text': 'Web Template',
+  'forms.create_application.official_templates.template.official_web.description.text': "This template contains a schema that can be used for web applications. An official connector can be found on the project's GitHub page.",
+
   'forms.application_settings.name.label': 'Application Name',
   'forms.application_settings.type.label': 'Application Type',
   'forms.application_settings.buttons.save.label': 'Save',

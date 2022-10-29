@@ -1,19 +1,10 @@
 import React from 'react';
 import { Card, Media, Heading, Content } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import ApplicationTypeIcon from '../applicationTypeIcon';
 import useLocale from '../../../hooks/locale';
-import { ApplicationModel, ApplicationType } from '../../../services/api/ApplicationService';
+import { ApplicationModel } from '../../../services/api/ApplicationService';
 import { DYNAMIC_PROTECTED_ROUTES } from '../../../constants/routes';
-
-const TYPE_ICONS: Record<ApplicationType, IconProp> = {
-  mobile: 'mobile-screen',
-  web: 'earth-americas',
-  server: 'server',
-  desktop: 'desktop',
-  other: 'robot'
-};
 
 interface Props extends ApplicationModel {
 
@@ -28,7 +19,7 @@ const ApplicationCard: React.FC<Props> = ({ name, domain, type, createdAt, lastM
         <Card.Content>
           <Media>
             <Media.Item align="left">
-              <FontAwesomeIcon size="3x" icon={TYPE_ICONS[type]} />
+              <ApplicationTypeIcon type={type} />
             </Media.Item>
             <Media.Item>
               <Heading size={4}>

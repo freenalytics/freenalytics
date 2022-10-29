@@ -17,9 +17,10 @@ interface Props {
   required?: boolean
   onChange: (e: ChangeEvent<any>) => void
   defaultValue?: string
+  value?: string
 }
 
-const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChange, defaultValue }) => {
+const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChange, defaultValue = null, value }) => {
   const { t } = useLocale();
 
   useEffect(() => {
@@ -27,7 +28,13 @@ const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChan
   }, []);
 
   return (
-    <Form.Select name={name} required={required} onChange={onChange} defaultValue={defaultValue ?? VALID_APPLICATION_TYPES[0]}>
+    <Form.Select
+      name={name}
+      required={required}
+      onChange={onChange}
+      value={value}
+      defaultValue={defaultValue && !value ? VALID_APPLICATION_TYPES[0] : undefined}
+    >
       {
         VALID_APPLICATION_TYPES.map((type) => (
           <option key={type} value={type}>
