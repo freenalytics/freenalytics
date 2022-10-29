@@ -2,7 +2,7 @@ import { create, get, exportAsCsv } from './dataController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as dataService from '../services/dataService';
-import { BadRequestError, ResourceNotFoundError, SchemaValidationError } from '../errors/http';
+import { BadRequestError, SchemaValidationError } from '../errors/http';
 import { PAGINATION_DEFAULT_LIMIT, PAGINATION_DEFAULT_START } from '../constants/pagination';
 
 const mockedData = {
@@ -77,17 +77,18 @@ describe('Controllers: DataController', () => {
   });
 
   describe('get()', () => {
-    const getDataForApplicationSpy = jest.spyOn(dataService as any, 'getDataForApplication')
+    const getDataForApplicationForUserSpy = jest.spyOn(dataService as any, 'getDataForApplicationForUser')
       .mockResolvedValue([mockedData]);
 
     beforeEach(() => {
-      getDataForApplicationSpy.mockClear();
+      getDataForApplicationForUserSpy.mockClear();
     });
 
     it('should call next with a BadRequestError if the start query parameter is invalid.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { start: 'what' }
+        query: { start: 'what' },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
@@ -98,7 +99,8 @@ describe('Controllers: DataController', () => {
     it('should call next with a BadRequestError if the start query parameter is a negative number.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { start: '-1' }
+        query: { start: '-1' },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
@@ -109,7 +111,8 @@ describe('Controllers: DataController', () => {
     it('should call next with a BadRequestError if the limit query parameter is invalid.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { limit: 'what' }
+        query: { limit: 'what' },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
@@ -120,7 +123,8 @@ describe('Controllers: DataController', () => {
     it('should call next with a BadRequestError if the limit parameter is lesser than 0.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { limit: '0' }
+        query: { limit: '0' },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
@@ -128,26 +132,15 @@ describe('Controllers: DataController', () => {
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
     });
 
-    it('should call next with a ResourceNotFoundError if the application does not exist.', async () => {
-      getApplicationSchemaSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
-      const req = {
-        params: { domain: 'FD-123' },
-        query: {}
-      } as unknown as Request;
-      await get(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
     it('should get the data with the default start and limit if not specified.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: {}
+        query: {},
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
-      expect(getDataForApplicationSpy).toHaveBeenCalledWith('FD-123', {
+      expect(getDataForApplicationForUserSpy).toHaveBeenCalledWith('FD-123', 'moon', {
         start: PAGINATION_DEFAULT_START,
         limit: PAGINATION_DEFAULT_LIMIT
       });
@@ -156,11 +149,12 @@ describe('Controllers: DataController', () => {
     it('should get the data with the provided start and limit values.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { start: 1, limit: 3 }
+        query: { start: 1, limit: 3 },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
-      expect(getDataForApplicationSpy).toHaveBeenCalledWith('FD-123', {
+      expect(getDataForApplicationForUserSpy).toHaveBeenCalledWith('FD-123', 'moon', {
         start: 1,
         limit: 3
       });
@@ -169,7 +163,8 @@ describe('Controllers: DataController', () => {
     it('should respond with the data.', async () => {
       const req = {
         params: { domain: 'FD-123' },
-        query: { start: 1, limit: 3 }
+        query: { start: 1, limit: 3 },
+        user: { username: 'moon' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
@@ -180,15 +175,16 @@ describe('Controllers: DataController', () => {
 
   describe('exportAsCsv()', () => {
     const req = {
-      params: { domain: 'FD-123' }
+      params: { domain: 'FD-123' },
+      user: { username: 'moon' }
     } as unknown as Request;
     const res = new ResponseMock() as unknown as Response;
 
-    const getDataForApplicationAsCsvSpy = jest.spyOn(dataService, 'getDataForApplicationAsCsv')
+    const getDataForApplicationForUserAsCsvSpy = jest.spyOn(dataService, 'getDataForApplicationForUserAsCsv')
       .mockResolvedValue('');
 
     beforeEach(() => {
-      getDataForApplicationAsCsvSpy.mockClear();
+      getDataForApplicationForUserAsCsvSpy.mockClear();
       (res.attachment as jest.Mock).mockClear();
     });
 
@@ -199,7 +195,7 @@ describe('Controllers: DataController', () => {
     });
 
     it('should send the data.', async () => {
-      getDataForApplicationAsCsvSpy.mockResolvedValueOnce('csv data');
+      getDataForApplicationForUserAsCsvSpy.mockResolvedValueOnce('csv data');
       await exportAsCsv(req, res, nextMock);
 
       expect(res.send).toHaveBeenCalledWith('csv data');
