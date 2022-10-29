@@ -1,7 +1,8 @@
+import { parseAsync } from 'json2csv';
 import redisClient from '../redis/client';
 import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
-import { ResourceNotFoundError } from '../errors/http';
+import { ResourceNotFoundError, EmptyCSVExportError } from '../errors/http';
 import { WithPagination } from '../models/types';
 
 export interface GetDataOptions {
@@ -58,4 +59,24 @@ export const getDataForApplication = async (domain: string, options: GetDataOpti
       isLast: options.start + options.limit >= numOfDocuments
     }
   };
+};
+
+export const getDataForApplicationAsCsv = async (domain: string): Promise<string> => {
+  const data = await Data.find({ domain }, { _id: 0, __v: 0 });
+
+  if (!data || data.length < 1) {
+    throw new EmptyCSVExportError(`Application ${domain} has no data entries to export.`);
+  }
+
+  const [first] = data;
+  const fields = ['createdAt', ...Object.keys(first.payload)];
+
+  const dataTransformer = (entry: DataModel) => {
+    return {
+      createdAt: entry.createdAt,
+      ...entry.payload
+    };
+  };
+
+  return await parseAsync(data, { fields, transforms: [dataTransformer] });
 };
