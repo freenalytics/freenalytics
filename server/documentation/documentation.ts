@@ -19,6 +19,7 @@ import deleteApplicationByDomain from './routes/applications/deleteApplicationBy
 
 import createApplicationData from './routes/applications/createApplicationData';
 import getApplicationData from './routes/applications/getApplicationData';
+import getApplicationDataAsCsv from './routes/applications/getApplicationDataAsCsv';
 
 const metadata: DocumentationMetadata = {
   openapi: '3.0.2',
@@ -59,7 +60,8 @@ const documentationData = {
       deleteApplicationByDomain,
 
       createApplicationData,
-      getApplicationData
+      getApplicationData,
+      getApplicationDataAsCsv
     }
   }
 };
