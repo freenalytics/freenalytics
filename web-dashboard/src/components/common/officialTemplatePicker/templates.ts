@@ -14,8 +14,8 @@ export interface OfficialTemplate extends OfficialTemplateForm {
 
 const templates: OfficialTemplate[] = [
   {
-    nameKey: 'forms.create_application.official_templates.template.official_web.name',
-    descriptionKey: 'forms.create_application.official_templates.template.official_web.description',
+    nameKey: 'forms.create_application.official_templates.template.official_web.name.text',
+    descriptionKey: 'forms.create_application.official_templates.template.official_web.description.text',
     type: 'web',
     schema: `
 type: object

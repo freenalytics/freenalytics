@@ -1,6 +1,7 @@
 import React from 'react';
-import { Level, Box } from 'react-bulma-components';
+import { Level, Box, Heading } from 'react-bulma-components';
 import OfficialTemplateItem from './OfficialTemplateItem';
+import useLocale from '../../../hooks/locale';
 import templates, { OfficialTemplateForm } from './templates';
 
 interface Props {
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const OfficialTemplatePicker: React.FC<Props> = ({ onSelect }) => {
+  const { t } = useLocale();
+
   const handleItemClick = (data: OfficialTemplateForm) => {
     if (onSelect) {
       onSelect(data);
@@ -16,6 +19,13 @@ const OfficialTemplatePicker: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box className="official-template-picker">
+      <Heading size={4}>
+        {t('forms.create_application.official_templates.header.text')}
+      </Heading>
+      <Heading subtitle size={5}>
+        {t('forms.create_application.official_templates.description.text')}
+      </Heading>
+
       <Level>
         <Level.Side>
           {
