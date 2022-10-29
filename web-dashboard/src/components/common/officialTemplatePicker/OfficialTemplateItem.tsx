@@ -12,17 +12,17 @@ const OfficialTemplateItem: React.FC<Props> = ({ nameKey, descriptionKey, type }
   const { t } = useLocale();
 
   return (
-    <Level.Item>
-      <Card>
-        <Card.Content alignItems="center">
+    <Level.Item className="official-template-item">
+      <Card title={t(descriptionKey)}>
+        <Card.Content>
           <ApplicationTypeIcon type={type} />
 
-          <Heading size={6}>
+          <Heading size={5} my={4}>
             {t(nameKey)}
           </Heading>
-          <Heading subtitle>
+          <p className="description">
             {t(descriptionKey)}
-          </Heading>
+          </p>
         </Card.Content>
       </Card>
     </Level.Item>

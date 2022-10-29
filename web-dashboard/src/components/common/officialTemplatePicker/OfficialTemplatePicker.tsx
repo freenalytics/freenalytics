@@ -5,7 +5,7 @@ import templates from './templates';
 
 const OfficialTemplatePicker = () => {
   return (
-    <Box>
+    <Box className="official-template-picker">
       <Level>
         <Level.Side>
           {
