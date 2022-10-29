@@ -1,7 +1,8 @@
 /* eslint-disable max-lines */
 import {
   generateErrorResponses,
-  generateSuccessfulResponse,
+  generateSuccessfulResponseWithSchema,
+  generateSuccessfulResponseForBinary,
   generateResponses,
   generatePathParamsForRoute,
   generateQueryParamsForRoute,
@@ -63,7 +64,7 @@ describe('Documentation: Docgen: OpenAPI: Paths', () => {
     });
   });
 
-  describe('generateSuccessfulResponse()', () => {
+  describe('generateSuccessfulResponseWithSchema()', () => {
     it('should return an object with the success response.', () => {
       const data = {
         success: {
@@ -71,11 +72,27 @@ describe('Documentation: Docgen: OpenAPI: Paths', () => {
           schema: 'TestSchema'
         }
       } as unknown as RouteData;
-      const result = generateSuccessfulResponse(data);
+      const result = generateSuccessfulResponseWithSchema(data);
 
       expect(result).toHaveProperty('200');
       expect(result).toHaveProperty('200.description');
-      expect(result).toHaveProperty('200.content');
+      expect(result).toHaveProperty('200.content.application/json');
+    });
+  });
+
+  describe('generateSuccessfulResponseForBinary()', () => {
+    it('should return an object with the success response.', () => {
+      const data = {
+        success: {
+          code: 200,
+          binaryType: 'text/csv'
+        }
+      } as unknown as RouteData;
+      const result = generateSuccessfulResponseForBinary(data);
+
+      expect(result).toHaveProperty('200');
+      expect(result).toHaveProperty('200.description');
+      expect(result).toHaveProperty('200.content.text/csv');
     });
   });
 

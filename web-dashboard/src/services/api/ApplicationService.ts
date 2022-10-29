@@ -130,6 +130,16 @@ class ApplicationService {
       fn: () => this.doGetApplicationDataByDomain(domain, options)
     };
   }
+
+  // This is a blob request, no caching should be done.
+  public async getApplicationDataAsCsv(domain: string) {
+    try {
+      return await this.client.instance.get(`/applications/${domain}/data/csv`, { responseType: 'blob' });
+    } catch (error) {
+      this.client.handleRequestError(error);
+      throw this.client.createRequestError(error);
+    }
+  }
 }
 
 export default ApplicationService;

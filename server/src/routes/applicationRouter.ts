@@ -23,4 +23,8 @@ router.route('/:domain/data')
   .post(jsonBodyRequired, dataController.create)
   .all(onlySupportedMethods('GET', 'POST'));
 
+router.route('/:domain/data/csv')
+  .get(verifyUser, dataController.exportAsCsv)
+  .all(onlySupportedMethods('GET'));
+
 export default router;

@@ -1,4 +1,4 @@
-import { createDataForApplication, getApplicationSchema, getDataForApplication } from './dataService';
+import { createDataForApplication, getApplicationSchema, getDataForApplication, getDataForApplicationAsCsv } from './dataService';
 import { promisify } from 'util';
 const mockingoose = require('mockingoose');
 import Data from '../models/data';
@@ -162,6 +162,23 @@ describe('Services: DataService', () => {
       };
 
       expect(result).toMatchObject(expected);
+    });
+  });
+
+  describe('getDataForApplicationAsCsv()', () => {
+    beforeEach(() => {
+      mockingoose(Data).toReturn([data1], 'find');
+    });
+
+    afterAll(() => {
+      mockingoose(Data).reset('find');
+    });
+
+    it('should resolve the csv data.', async () => {
+      const data = await getDataForApplicationAsCsv('FD-123');
+      const expected = '"createdAt","key"\n"2022-10-14T04:24:22.951Z","value1"';
+
+      expect(data).toBe(expected);
     });
   });
 });

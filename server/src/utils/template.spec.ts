@@ -1,4 +1,4 @@
-import { generateSchema, validateDataWithTemplate } from './template';
+import { generateSchema, validateDataWithTemplate, getPathForTemplate } from './template';
 import { SchemaValidationError } from '../errors/http';
 
 describe('Utils: Template', () => {
@@ -69,6 +69,51 @@ properties:
       expect(() => {
         validateDataWithTemplate({ unknown: 123 }, template);
       }).toThrow(SchemaValidationError);
+    });
+  });
+
+  describe('getPathForTemplate()', () => {
+    const schema = {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string'
+        },
+        phone: {
+          type: 'number'
+        },
+        nested_data: {
+          type: 'object',
+          properties: {
+            title: {
+              type: 'string'
+            },
+            subtitle: {
+              type: 'string'
+            }
+          },
+          required: [
+            'title',
+            'subtitle'
+          ]
+        },
+        arr_numbers: {
+          type: 'array',
+          items: {
+            type: 'number'
+          }
+        }
+      },
+      required: [
+        'name',
+        'phone'
+      ]
+    };
+
+    it('should return an array of the paths for a given schema.', () => {
+      const expected = ['name', 'phone', 'nested_data.title', 'nested_data.subtitle', 'arr_numbers'];
+
+      expect(getPathForTemplate(schema)).toMatchObject(expected);
     });
   });
 });

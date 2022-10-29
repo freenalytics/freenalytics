@@ -1,6 +1,8 @@
+import { parseAsync } from 'json2csv';
 import redisClient from '../redis/client';
 import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
+import { getPathForTemplate } from '../utils/template';
 import { ResourceNotFoundError } from '../errors/http';
 import { WithPagination } from '../models/types';
 
@@ -58,4 +60,19 @@ export const getDataForApplication = async (domain: string, options: GetDataOpti
       isLast: options.start + options.limit >= numOfDocuments
     }
   };
+};
+
+export const getDataForApplicationAsCsv = async (domain: string): Promise<string> => {
+  const schema = await getApplicationSchema(domain);
+  const data = await Data.find({ domain }, { _id: 0, __v: 0 });
+
+  const fields = ['createdAt', ...getPathForTemplate(schema)];
+  const dataTransformer = (entry: DataModel) => {
+    return {
+      createdAt: entry.createdAt,
+      ...entry.payload
+    };
+  };
+
+  return await parseAsync(data, { fields, transforms: [dataTransformer] });
 };

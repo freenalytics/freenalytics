@@ -1,8 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import HttpStatus from 'http-status-codes';
-import { getApplicationSchema, createDataForApplication, getDataForApplication } from '../services/dataService';
+import {
+  getApplicationSchema,
+  createDataForApplication,
+  getDataForApplication,
+  getDataForApplicationAsCsv
+} from '../services/dataService';
 import { ResponseBuilder } from '../utils/http';
 import { validateDataWithTemplate } from '../utils/template';
+import { addAttachment } from '../utils/response';
 import { PAGINATION_DEFAULT_START, PAGINATION_DEFAULT_LIMIT } from '../constants/pagination';
 import { BadRequestError } from '../errors/http';
 
@@ -45,6 +51,20 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       .withData(data);
 
     res.status(response.statusCode).send(response.build());
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const exportAsCsv = async (req: Request, res: Response, next: NextFunction) => {
+  const { domain } = req.params;
+
+  try {
+    const csv = await getDataForApplicationAsCsv(domain);
+    const filename = `${domain}-data.csv`;
+
+    addAttachment(res, filename);
+    res.status(HttpStatus.OK).send(csv);
   } catch (error) {
     next(error);
   }
