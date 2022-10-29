@@ -47,6 +47,7 @@
     "react-code-blocks": "^0.0.9-0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.35.0",
+    "react-hot-toast": "^2.4.0",
     "react-loader-spinner": "^5.3.4",
     "react-responsive": "^9.0.0",
     "react-router-dom": "^6.4.0",

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bulma-components';
+import { toast } from 'react-hot-toast';
 import fileDownload from 'js-file-download';
 import useLocale from '../../../../hooks/locale';
 import useApi from '../../../../hooks/api';
@@ -13,10 +14,14 @@ const ExportDataButton: React.FC<Props> = ({ domain }) => {
   const { client } = useApi();
 
   const handleClick = async () => {
-    const response = await client.application.getApplicationDataAsCsv(domain);
-    const filename = response.headers['x-suggested-filename'] ?? 'data.csv';
+    try {
+      const response = await client.application.getApplicationDataAsCsv(domain);
+      const filename = response.headers['x-suggested-filename'] ?? 'data.csv';
 
-    fileDownload(response.data, filename);
+      fileDownload(response.data, filename);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
 
   return (
