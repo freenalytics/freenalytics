@@ -1,4 +1,4 @@
-import { parseAsync } from 'json2csv';
+import { parse, transforms } from 'json2csv';
 import redisClient from '../redis/client';
 import Data, { DataModel } from '../models/data';
 import Application from '../models/application';
@@ -68,9 +68,6 @@ export const getDataForApplicationAsCsv = async (domain: string): Promise<string
     throw new EmptyCSVExportError(`Application ${domain} has no data entries to export.`);
   }
 
-  const [first] = data;
-  const fields = ['createdAt', ...Object.keys(first.payload)];
-
   const dataTransformer = (entry: DataModel) => {
     return {
       createdAt: entry.createdAt,
@@ -78,5 +75,5 @@ export const getDataForApplicationAsCsv = async (domain: string): Promise<string
     };
   };
 
-  return await parseAsync(data, { fields, transforms: [dataTransformer] });
+  return parse(data, { transforms: [dataTransformer, transforms.flatten({ objects: true })] });
 };
