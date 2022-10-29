@@ -2,7 +2,7 @@ import { create, get } from './dataController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as dataService from '../services/dataService';
-import { BadRequestError, SchemaValidationError } from '../errors/http';
+import { BadRequestError, ResourceNotFoundError, SchemaValidationError } from '../errors/http';
 import { PAGINATION_DEFAULT_LIMIT, PAGINATION_DEFAULT_START } from '../constants/pagination';
 
 const mockedData = {
@@ -126,6 +126,18 @@ describe('Controllers: DataController', () => {
 
       expect(nextMock).toHaveBeenCalledTimes(1);
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
+    });
+
+    it('should call next with a ResourceNotFoundError if the application does not exist.', async () => {
+      getApplicationSchemaSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+      const req = {
+        params: { domain: 'FD-123' },
+        query: {}
+      } as unknown as Request;
+      await get(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
     });
 
     it('should get the data with the default start and limit if not specified.', async () => {

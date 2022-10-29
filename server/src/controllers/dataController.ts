@@ -38,6 +38,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
+    await getApplicationSchema(domain);
     const data = await getDataForApplication(domain, { start, limit });
     const response = new ResponseBuilder()
       .withStatusCode(HttpStatus.OK)
