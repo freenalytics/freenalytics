@@ -38,8 +38,9 @@ export interface RouteData {
   throws?: HttpError[],
   success: {
     code: number,
-    schema: SchemaName,
-    isArray?: boolean
+    schema?: SchemaName,
+    isArray?: boolean,
+    binaryType?: string
   },
   pathParams?: PathParam[],
   queryParams?: QueryParam[],
