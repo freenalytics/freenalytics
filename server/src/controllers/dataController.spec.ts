@@ -95,10 +95,32 @@ describe('Controllers: DataController', () => {
       expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
     });
 
+    it('should call next with a BadRequestError if the start query parameter is a negative number.', async () => {
+      const req = {
+        params: { domain: 'FD-123' },
+        query: { start: '-1' }
+      } as unknown as Request;
+      await get(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
+    });
+
     it('should call next with a BadRequestError if the limit query parameter is invalid.', async () => {
       const req = {
         params: { domain: 'FD-123' },
         query: { limit: 'what' }
+      } as unknown as Request;
+      await get(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(BadRequestError);
+    });
+
+    it('should call next with a BadRequestError if the limit parameter is lesser than 0.', async () => {
+      const req = {
+        params: { domain: 'FD-123' },
+        query: { limit: '0' }
       } as unknown as Request;
       await get(req, res, nextMock);
 
