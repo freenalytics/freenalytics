@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import OfficialTemplatePicker from './officialTemplatePicker';
 import CreateApplicationFormView from './CreateApplicationFormView';
 import useLocale from '../../../hooks/locale';
 import { VALID_APPLICATION_TYPES } from '../../../services/api/ApplicationService';
@@ -61,7 +62,10 @@ const CreateApplicationFormLogic: React.FC<Props> = ({ onSubmit }) => {
   };
 
   return (
-    <CreateApplicationFormView form={form} onSubmit={handleSubmit} error={error} />
+    <Fragment>
+      <OfficialTemplatePicker />
+      <CreateApplicationFormView form={form} onSubmit={handleSubmit} error={error} />
+    </Fragment>
   );
 };
 
