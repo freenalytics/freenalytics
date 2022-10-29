@@ -37,6 +37,10 @@ export const createDataForApplication = async (domain: string, validData: object
 export const getDataForApplication = async (domain: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
   const numOfDocuments = await Data.countDocuments({ domain });
 
+  if (numOfDocuments < options.start) {
+    throw new ResourceNotFoundError(`Start cursor out of bounds. There are only ${numOfDocuments} data entries.`);
+  }
+
   const result = await Data.find({ domain }, { _id: 0, __v: 0 })
     .sort({ createdAt: -1 })
     .skip(options.start)

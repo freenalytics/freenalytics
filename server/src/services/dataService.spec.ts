@@ -4,6 +4,7 @@ const mockingoose = require('mockingoose');
 import Data from '../models/data';
 import Application from '../models/application';
 import redisClient from '../redis/client';
+import { ResourceNotFoundError } from '../errors/http';
 
 jest.mock('redis', () => jest.requireActual('redis-mock'));
 Object.defineProperty(redisClient, 'exists', {
@@ -123,7 +124,7 @@ describe('Services: DataService', () => {
   });
 
   describe('getDataForApplication()', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockingoose(Data).toReturn([data1, data2, data3], 'find');
       mockingoose(Data).toReturn(3, 'countDocuments');
     });
@@ -133,8 +134,20 @@ describe('Services: DataService', () => {
       mockingoose(Data).reset('countDocuments');
     });
 
+    it('should reject ResourceNotFoundError if the start index is out of bounds.', async () => {
+      await expect(getDataForApplication('FD-123', { start: 5, limit: 1 })).rejects.toThrow(ResourceNotFoundError);
+    });
+
+    it('should resolve an empty array if the no data entries exist for the given application.', async () => {
+      mockingoose(Data).toReturn([], 'find');
+
+      const result = await getDataForApplication('FD-123', { start: 0, limit: 1 });
+      expect(result.result).toHaveLength(0);
+    });
+
     it('should resolve the adequate data.', async () => {
       mockingoose(Data).toReturn([data1], 'find');
+
       const result = await getDataForApplication('FD-123', { start: 0, limit: 1 });
       const expected = {
         result: [data1],
@@ -149,7 +162,6 @@ describe('Services: DataService', () => {
       };
 
       expect(result).toMatchObject(expected);
-      mockingoose(Data).toReturn([data1, data2, data3], 'find');
     });
   });
 });
