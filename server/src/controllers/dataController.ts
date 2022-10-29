@@ -28,16 +28,17 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
   const { domain } = req.params;
 
   const start = req.query.start ? parseInt(req.query.start as string, 10) : PAGINATION_DEFAULT_START;
-  if (isNaN(start)) {
-    return next(new BadRequestError('start query parameter must be a valid number.'));
+  if (isNaN(start) || start < 0) {
+    return next(new BadRequestError('start query parameter must be a valid positive number.'));
   }
 
   const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : PAGINATION_DEFAULT_LIMIT;
-  if (isNaN(limit)) {
-    return next(new BadRequestError('limit query parameter must be a valid number.'));
+  if (isNaN(limit) || limit < 1) {
+    return next(new BadRequestError('limit query parameter must be a valid positive number greater than 1.'));
   }
 
   try {
+    await getApplicationSchema(domain);
     const data = await getDataForApplication(domain, { start, limit });
     const response = new ResponseBuilder()
       .withStatusCode(HttpStatus.OK)
