@@ -6,6 +6,7 @@ import Loading from '../../components/common/loading';
 import RequestErrorMessageFullPage from '../../components/common/requestErrorMessageFullPage';
 import PageWrapper from '../../components/common/pageWrapper';
 import ApplicationSidebar from '../../components/common/applicationSidebar';
+import ExportDataButton from '../../components/pageComponents/applicationEntryTable/exportDataButton';
 import EntryTable from '../../components/dataVisualization/entryTable';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
@@ -38,6 +39,7 @@ const ApplicationEntryTablePage: React.FC = () => {
           {t('pages.application.entries.header.text')}
         </Heading>
 
+        <ExportDataButton domain={domain!} />
         <EntryTable domain={domain!} schema={application!.template.schema} />
       </ApplicationSidebar>
     </PageWrapper>
