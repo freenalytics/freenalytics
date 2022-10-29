@@ -59,7 +59,6 @@ export const exportAsCsv = async (req: Request, res: Response, next: NextFunctio
   const { domain } = req.params;
 
   try {
-    await getApplicationSchema(domain);
     const csv = await getDataForApplicationAsCsv(domain);
 
     res.attachment(`${domain}-data.csv`);

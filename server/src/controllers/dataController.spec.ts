@@ -192,14 +192,6 @@ describe('Controllers: DataController', () => {
       (res.attachment as jest.Mock).mockClear();
     });
 
-    it('should call next with a ResourceNotFoundError if the application does not exist.', async () => {
-      getApplicationSchemaSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
-      await exportAsCsv(req, res, nextMock);
-
-      expect(nextMock).toHaveBeenCalledTimes(1);
-      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
-    });
-
     it('should set the attachment name in the response object.', async () => {
       await exportAsCsv(req, res, nextMock);
 
