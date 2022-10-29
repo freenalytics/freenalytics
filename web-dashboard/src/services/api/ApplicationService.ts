@@ -112,6 +112,23 @@ class ApplicationService {
     };
   }
 
+  private async doDeleteApplicationByDomain(domain: string): Promise<void> {
+    try {
+      const response = await this.client.instance.delete(`/applications/${domain}`);
+      return response.data.data;
+    } catch (error) {
+      this.client.handleRequestError(error);
+      throw this.client.createRequestError(error);
+    }
+  }
+
+  public deleteApplicationByDomain(domain: string) {
+    return {
+      key: ['applications', domain],
+      fn: () => this.doDeleteApplicationByDomain(domain)
+    };
+  }
+
   private async doGetApplicationDataByDomain(
     domain: string, options: GetApplicationDataOptions
   ): Promise<ResponseWithPagination<ApplicationDataModel[]>> {

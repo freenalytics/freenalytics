@@ -8,6 +8,7 @@ import PageWrapper from '../../components/common/pageWrapper';
 import ApplicationSidebar from '../../components/common/applicationSidebar';
 import ApplicationSettingsForm from '../../components/forms/applicationSettingsForm';
 import ApplicationUpdatedAlert from '../../components/pageComponents/applicationSettings/applicationUpdatedAlert';
+import SettingsDangerZone from '../../components/pageComponents/applicationSettings/settingsDangerZone';
 import useTitle from '../../hooks/title';
 import useLocale from '../../hooks/locale';
 import useApi from '../../hooks/api';
@@ -50,6 +51,8 @@ const ApplicationSettingsPage: React.FC = () => {
         }
 
         <ApplicationSettingsForm domain={domain!} onComplete={handleComplete} />
+
+        <SettingsDangerZone domain={domain!} />
       </ApplicationSidebar>
     </PageWrapper>
   );

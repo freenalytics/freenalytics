@@ -25,6 +25,13 @@ const PAGES = {
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',
   'pages.application.settings.success.description.text': 'Your application has updated successfully.',
+  'pages.application.settings.danger.header.text': 'Danger Zone',
+  'pages.application.settings.danger.delete.text': 'Delete this application?',
+  'pages.application.settings.danger.delete.button.label': 'Delete',
+  'pages.application.settings.danger.delete.modal.header.text': 'Are you sure you want to delete this application?',
+  'pages.application.settings.danger.delete.modal.description.text': 'This operation cannot be undone. Your application and all data entries associated with it will be deleted permanently.',
+  'pages.application.settings.danger.delete.modal.buttons.confirm.label': 'Confirm Delete',
+  'pages.application.settings.danger.delete.modal.buttons.cancel.label': 'Cancel',
 
   'pages.login.title': 'Login',
 
