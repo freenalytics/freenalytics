@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import OfficialTemplatePicker from './officialTemplatePicker';
+import OfficialTemplatePicker from '../../common/officialTemplatePicker';
 import CreateApplicationFormView from './CreateApplicationFormView';
 import useLocale from '../../../hooks/locale';
 import { VALID_APPLICATION_TYPES } from '../../../services/api/ApplicationService';
