@@ -8,6 +8,7 @@ import {
 } from '../services/dataService';
 import { ResponseBuilder } from '../utils/http';
 import { validateDataWithTemplate } from '../utils/template';
+import { addAttachment } from '../utils/response';
 import { PAGINATION_DEFAULT_START, PAGINATION_DEFAULT_LIMIT } from '../constants/pagination';
 import { BadRequestError } from '../errors/http';
 
@@ -60,8 +61,9 @@ export const exportAsCsv = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const csv = await getDataForApplicationAsCsv(domain);
+    const filename = `${domain}-data.csv`;
 
-    res.attachment(`${domain}-data.csv`);
+    addAttachment(res, filename);
     res.status(HttpStatus.OK).send(csv);
   } catch (error) {
     next(error);
