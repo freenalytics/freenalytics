@@ -1,5 +1,6 @@
 import uniqid from 'uniqid';
 import Application, { ApplicationModel } from '../models/application';
+import Data from '../models/data';
 import { ApplicationCreateBody, ApplicationUpdateBody } from '../schemas/application';
 import { ResourceNotFoundError, SchemaValidationError } from '../errors/http';
 import { generateSchema } from '../utils/template';
@@ -52,6 +53,8 @@ export const deleteApplicationForUserByDomain = async (owner: string, domain: st
   if (result.deletedCount < 1) {
     throw new ResourceNotFoundError(`Application ${domain} was not found.`);
   }
+
+  await Data.deleteMany({ domain });
 };
 
 export const updateApplicationForUserByDomain = async (

@@ -7,6 +7,7 @@ import {
 } from './applicationService';
 const mockingoose = require('mockingoose');
 import Application from '../models/application';
+import Data from '../models/data';
 
 const app1 = {
   name: 'app1',
@@ -129,6 +130,13 @@ describe('Services: ApplicationService', () => {
   });
 
   describe('deleteApplicationForUserByDomain()', () => {
+    const dataDeleteSpy = jest.spyOn(Data as any, 'deleteMany')
+      .mockResolvedValue(null);
+
+    beforeEach(() => {
+      dataDeleteSpy.mockClear();
+    });
+
     beforeAll(() => {
       mockingoose(Application).toReturn((query: any) => {
         return {
@@ -137,14 +145,21 @@ describe('Services: ApplicationService', () => {
           }).length
         };
       }, 'deleteOne');
+      mockingoose(Data).toReturn(null, 'deleteMany');
     });
 
     afterAll(() => {
       mockingoose(Application).reset('deleteOne');
+      mockingoose(Data).reset('deleteMany');
     });
 
     it('should reject if nothing was deleted.', async () => {
       await expect(deleteApplicationForUserByDomain('moonstar', 'FD-789')).rejects.toThrow(Error);
+    });
+
+    it('should delete all data.', async () => {
+      await deleteApplicationForUserByDomain('moonstar', 'FD-123');
+      expect(dataDeleteSpy).toHaveBeenCalledWith({ domain: 'FD-123' });
     });
 
     it('should resolve if an application was deleted.', async () => {
