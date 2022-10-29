@@ -1,4 +1,4 @@
-import { create, get } from './dataController';
+import { create, get, exportAsCsv } from './dataController';
 import { Request, Response } from 'express';
 import { ResponseMock } from '../../__mocks__/http_mocks';
 import * as dataService from '../services/dataService';
@@ -175,6 +175,42 @@ describe('Controllers: DataController', () => {
 
       expect(res.send).toHaveBeenCalledTimes(1);
       expect((res.send as jest.Mock).mock.calls[0][0].data).toMatchObject([mockedData]);
+    });
+  });
+
+  describe('exportAsCsv()', () => {
+    const req = {
+      params: { domain: 'FD-123' }
+    } as unknown as Request;
+    const res = new ResponseMock() as unknown as Response;
+
+    const getDataForApplicationAsCsvSpy = jest.spyOn(dataService, 'getDataForApplicationAsCsv')
+      .mockResolvedValue('');
+
+    beforeEach(() => {
+      getDataForApplicationAsCsvSpy.mockClear();
+      (res.attachment as jest.Mock).mockClear();
+    });
+
+    it('should call next with a ResourceNotFoundError if the application does not exist.', async () => {
+      getApplicationSchemaSpy.mockRejectedValueOnce(new ResourceNotFoundError(''));
+      await exportAsCsv(req, res, nextMock);
+
+      expect(nextMock).toHaveBeenCalledTimes(1);
+      expect(nextMock.mock.calls[0][0]).toBeInstanceOf(ResourceNotFoundError);
+    });
+
+    it('should set the attachment name in the response object.', async () => {
+      await exportAsCsv(req, res, nextMock);
+
+      expect(res.attachment).toHaveBeenCalledWith('FD-123-data.csv');
+    });
+
+    it('should send the data.', async () => {
+      getDataForApplicationAsCsvSpy.mockResolvedValueOnce('csv data');
+      await exportAsCsv(req, res, nextMock);
+
+      expect(res.send).toHaveBeenCalledWith('csv data');
     });
   });
 });
