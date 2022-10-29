@@ -3,14 +3,15 @@ import HttpStatus from 'http-status-codes';
 import {
   getApplicationSchema,
   createDataForApplication,
-  getDataForApplication,
-  getDataForApplicationAsCsv
+  getDataForApplicationForUser,
+  getDataForApplicationForUserAsCsv
 } from '../services/dataService';
 import { ResponseBuilder } from '../utils/http';
 import { validateDataWithTemplate } from '../utils/template';
 import { addAttachment } from '../utils/response';
 import { PAGINATION_DEFAULT_START, PAGINATION_DEFAULT_LIMIT } from '../constants/pagination';
 import { BadRequestError } from '../errors/http';
+import { UserModel } from '../models/user';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   const { domain } = req.params;
@@ -32,6 +33,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const get = async (req: Request, res: Response, next: NextFunction) => {
   const { domain } = req.params;
+  const { username } = req.user as UserModel;
 
   const start = req.query.start ? parseInt(req.query.start as string, 10) : PAGINATION_DEFAULT_START;
   if (isNaN(start) || start < 0) {
@@ -44,8 +46,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    await getApplicationSchema(domain);
-    const data = await getDataForApplication(domain, { start, limit });
+    const data = await getDataForApplicationForUser(domain, username, { start, limit });
     const response = new ResponseBuilder()
       .withStatusCode(HttpStatus.OK)
       .withData(data);
@@ -58,9 +59,10 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
 
 export const exportAsCsv = async (req: Request, res: Response, next: NextFunction) => {
   const { domain } = req.params;
+  const { username } = req.user as UserModel;
 
   try {
-    const csv = await getDataForApplicationAsCsv(domain);
+    const csv = await getDataForApplicationForUserAsCsv(domain, username);
     const filename = `${domain}-data.csv`;
 
     addAttachment(res, filename);

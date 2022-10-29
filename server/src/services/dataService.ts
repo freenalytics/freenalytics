@@ -36,7 +36,12 @@ export const createDataForApplication = async (domain: string, validData: object
   return data;
 };
 
-export const getDataForApplication = async (domain: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
+export const getDataForApplicationForUser = async (domain: string, owner: string, options: GetDataOptions): Promise<WithPagination<DataModel[]>> => {
+  const application = await Application.findOne({ domain, owner });
+  if (!application) {
+    throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+
   const numOfDocuments = await Data.countDocuments({ domain });
 
   if (numOfDocuments < options.start) {
@@ -62,7 +67,12 @@ export const getDataForApplication = async (domain: string, options: GetDataOpti
   };
 };
 
-export const getDataForApplicationAsCsv = async (domain: string): Promise<string> => {
+export const getDataForApplicationForUserAsCsv = async (domain: string, owner: string): Promise<string> => {
+  const application = await Application.findOne({ domain, owner });
+  if (!application) {
+    throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+
   const schema = await getApplicationSchema(domain);
   const data = await Data.find({ domain }, { _id: 0, __v: 0 });
 
