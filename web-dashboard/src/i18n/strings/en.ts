@@ -21,6 +21,10 @@ const PAGES = {
   'pages.application.information.upload.header.text': 'Uploading Data',
   'pages.application.information.upload.schema_preview.text': "Your application's schema has the following structure.",
   'pages.application.information.upload.data_example.text': 'To upload data for this application, you should make a request to the following URL with the following JSON payload.',
+  'pages.application.information.connectors.header.text': 'Available Connectors',
+  'pages.application.information.connectors.description.text': "Here's a list of all the connectors available for this application.",
+  'pages.application.information.connectors.empty.text': 'There are no connectors available for this application.',
+  'pages.application.information.connectors.connector.text': 'Connector Library for {language}',
 
   'pages.application.settings.title': 'Settings | {app}',
   'pages.application.settings.header.text': 'Settings',
