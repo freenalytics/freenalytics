@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Content } from 'react-bulma-components';
 import useLocale from '../../../../hooks/locale';
 import { ConnectorModel } from '../../../../services/api/ApplicationService';
