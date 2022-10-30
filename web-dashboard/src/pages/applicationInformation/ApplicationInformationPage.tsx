@@ -9,6 +9,7 @@ import ApplicationSidebar from '../../components/common/applicationSidebar';
 import SchemaPreview from '../../components/pageComponents/applicationInformation/schemaPreview';
 import ApiUrlBlock from '../../components/common/apiUrlBlock';
 import DataExamplePreview from '../../components/pageComponents/applicationInformation/dataExamplePreview';
+import ConnectorsPreview from '../../components/pageComponents/applicationInformation/connectorsPreview';
 import useTitle from '../../hooks/title';
 import useApi from '../../hooks/api';
 import useLocale from '../../hooks/locale';
@@ -55,6 +56,13 @@ const ApplicationInformationPage = () => {
           </p>
           <ApiUrlBlock method="POST" path={`applications/${domain}/data`} />
           <DataExamplePreview schema={application!.template.schema} />
+        </Content>
+
+        <Content>
+          <h2>
+            {t('pages.application.information.connectors.header.text')}
+          </h2>
+          <ConnectorsPreview connectors={application!.connectors} />
         </Content>
       </ApplicationSidebar>
     </PageWrapper>
