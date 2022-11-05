@@ -11,6 +11,9 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+  'pages.application.dashboard.header.refresh.description.text': 'Click here to refresh the data.',
+  'pages.application.dashboard.header.limit_options.title.text': 'Pick a number of entries to show',
+  'pages.application.dashboard.header.limit_options.item.text': 'Show {limit} entries',
 
   'pages.application.entries.title': 'Data Entries | {app}',
   'pages.application.entries.header.text': 'Data Entries',
