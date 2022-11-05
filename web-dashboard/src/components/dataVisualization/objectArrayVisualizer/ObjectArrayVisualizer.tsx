@@ -10,8 +10,6 @@ interface Props {
 const ObjectArrayVisualizer: React.FC<Props> = ({ path, data }) => {
   const { t } = useLocale();
 
-  console.log(data);
-
   return (
     <Box className="data-visualizer">
       <h3 className="data-visualizer-title">
