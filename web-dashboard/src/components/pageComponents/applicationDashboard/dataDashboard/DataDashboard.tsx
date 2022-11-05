@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../common/loading';
 import RequestErrorMessage from '../../../common/requestErrorMessage';
@@ -10,8 +10,9 @@ interface Props {
 }
 
 const DataDashboard: React.FC<Props> = ({ domain }) => {
+  const [limit, setLimit] = useState<number>(50);
   const { client, queryClient } = useApi();
-  const request = client.application.getApplicationDataByDomain(domain, { start: 0, limit: 50 });
+  const request = client.application.getApplicationDataByDomain(domain, { start: 0, limit });
   const { isLoading, error, data } = useQuery(request.key, request.fn);
 
   const handleForceRefresh = async () => {
@@ -19,7 +20,7 @@ const DataDashboard: React.FC<Props> = ({ domain }) => {
   };
 
   const handleLimitChange = (limit: number) => {
-    console.log(limit);
+    setLimit(limit);
   };
 
   if (isLoading) {
