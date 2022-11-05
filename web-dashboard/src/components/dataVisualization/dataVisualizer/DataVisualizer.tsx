@@ -17,11 +17,11 @@ interface Props {
 }
 
 const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
-  if (type === 'string') {
-    const preparedData = data
-      .map((entry) => objectPath.get(entry.payload, path))
-      .filter(Boolean);
+  const preparedData = data
+    .map((entry) => objectPath.get(entry.payload, path))
+    .filter(Boolean);
 
+  if (type === 'string') {
     return (
       <StringVisualizer path={path} data={preparedData} />
     );
@@ -29,7 +29,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
 
   if (type === 'string[]') {
     return (
-      <StringArrayVisualizer />
+      <StringArrayVisualizer path={path} data={preparedData} />
     );
   }
 

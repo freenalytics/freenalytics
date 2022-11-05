@@ -6,4 +6,11 @@
   .data-visualizer-title {
     text-align: center;
   }
+
+  .string-array-visualizer-item {
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
 }
