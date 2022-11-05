@@ -8,9 +8,11 @@ export const getPathForSchema = (schema: any): string[] => {
     }, []);
 };
 
-export const getPathWithTypeForSchema = (schema: any): Record<string, string | null> => {
+export type SchemaDataType = 'string' | 'string[]' | 'number' | 'number[]' | 'integer' | 'integer[]' | 'object[]' | 'boolean' | 'boolean[]' | 'null' | 'null[]';
+
+export const getPathWithTypeForSchema = (schema: any): Record<string, SchemaDataType | null> => {
   return Object.keys(schema.properties)
-    .reduce((acc: Record<string, string | null>, key: string) => {
+    .reduce((acc: Record<string, SchemaDataType | null>, key: string) => {
       const property = schema.properties[key];
       const type = property?.type !== 'array' ? property?.type : `${property?.items?.type}[]`;
 
