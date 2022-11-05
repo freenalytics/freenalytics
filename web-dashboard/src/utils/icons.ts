@@ -3,7 +3,7 @@ import {
   faServer, faMobileScreen, faEarthAmericas, faDesktop, faRobot,
   faHouse, faWrench, faArrowRight, faArrowLeft, faUser,
   faKey, faFont, faCode, faCircleInfo, faTableList,
-  faRefresh, faAngleDown, faHashtag
+  faRefresh, faAngleDown, faHashtag, faFaceFrown
 } from '@fortawesome/free-solid-svg-icons';
 import { faFaceSurprise } from '@fortawesome/free-regular-svg-icons';
 
@@ -12,6 +12,6 @@ export const loadIcons = () => {
     faServer, faFaceSurprise, faMobileScreen, faEarthAmericas, faDesktop,
     faRobot, faHouse, faWrench, faArrowRight, faArrowLeft,
     faUser, faKey, faFont, faCode, faCircleInfo,
-    faTableList, faRefresh, faAngleDown, faHashtag
+    faTableList, faRefresh, faAngleDown, faHashtag, faFaceFrown
   );
 };

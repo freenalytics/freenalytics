@@ -20,4 +20,14 @@
       margin-right: 1rem;
     }
   }
+
+  .unsupported-visualizer-notification {
+    height: 100%;
+    text-align: center;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
 }

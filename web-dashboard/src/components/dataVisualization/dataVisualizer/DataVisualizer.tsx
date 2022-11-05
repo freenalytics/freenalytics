@@ -62,7 +62,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
   }
 
   return (
-    <UnsupportedVisualizer />
+    <UnsupportedVisualizer path={path} type={type} />
   );
 };
 
