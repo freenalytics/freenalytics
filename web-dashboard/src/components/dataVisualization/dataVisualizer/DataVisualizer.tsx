@@ -39,7 +39,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
 
   if (type === 'number[]' || type === 'integer[]') {
     return (
-      <NumberArrayVisualizer />
+      <NumberArrayVisualizer path={path} data={mappedData.filter(Boolean)} />
     );
   }
 
