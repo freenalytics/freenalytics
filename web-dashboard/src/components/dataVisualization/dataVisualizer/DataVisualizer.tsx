@@ -57,7 +57,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
 
   if (type === 'boolean[]') {
     return (
-      <BooleanArrayVisualizer />
+      <BooleanArrayVisualizer path={path} data={mappedData.filter(Boolean)} />
     );
   }
 
