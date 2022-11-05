@@ -51,7 +51,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
 
   if (type === 'boolean') {
     return (
-      <BooleanVisualizer />
+      <BooleanVisualizer path={path} data={mappedData.filter((e) => e !== undefined)} />
     );
   }
 

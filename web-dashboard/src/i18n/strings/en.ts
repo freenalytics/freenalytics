@@ -75,6 +75,7 @@ const COMMON = {
   'common.data_vis.string_array.title.text': 'Data Table for {path}',
   'common.data_vis.number.title.text': 'Line Chart for {path}',
   'common.data_vis.number_array.title.text': 'Line Charts for {path}',
+  'common.data_vis.boolean.title.text': 'Pie Chart for {path}',
 
   'common.form.application_type_picker.mobile.text': 'Mobile',
   'common.form.application_type_picker.web.text': 'Web',
