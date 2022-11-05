@@ -36,7 +36,7 @@ const ApplicationDashboardPage: React.FC = () => {
           {application!.name}
         </Heading>
 
-        <DataDashboard domain={domain!} />
+        <DataDashboard domain={domain!} schema={application!.template.schema} />
       </ApplicationSidebar>
     </PageWrapper>
   );
