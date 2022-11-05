@@ -17,25 +17,23 @@ interface Props {
 }
 
 const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
-  const preparedData = data
-    .map((entry) => objectPath.get(entry.payload, path))
-    .filter(Boolean);
+  const mappedData = data.map((entry) => objectPath.get(entry.payload, path)).reverse();
 
   if (type === 'string') {
     return (
-      <StringVisualizer path={path} data={preparedData} />
+      <StringVisualizer path={path} data={mappedData.filter(Boolean)} />
     );
   }
 
   if (type === 'string[]') {
     return (
-      <StringArrayVisualizer path={path} data={preparedData} />
+      <StringArrayVisualizer path={path} data={mappedData.filter(Boolean)} />
     );
   }
 
   if (type === 'number' || type === 'integer') {
     return (
-      <NumberVisualizer />
+      <NumberVisualizer path={path} data={mappedData.filter((n) => !isNaN(n))} />
     );
   }
 
