@@ -1,4 +1,5 @@
 import React from 'react';
+import objectPath from 'object-path';
 import StringVisualizer from '../stringVisualizer';
 import StringArrayVisualizer from '../stringArrayVisualizer';
 import NumberVisualizer from '../numberVisualizer';
@@ -12,14 +13,17 @@ import { SchemaDataType } from '../../../utils/schema';
 interface Props {
   path: string
   type: SchemaDataType | null
-  data: object[]
+  data: { payload: object }[]
 }
 
-// @ts-ignore
 const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
   if (type === 'string') {
+    const preparedData = data
+      .map((entry) => objectPath.get(entry.payload, path))
+      .filter(Boolean);
+
     return (
-      <StringVisualizer />
+      <StringVisualizer path={path} data={preparedData} />
     );
   }
 

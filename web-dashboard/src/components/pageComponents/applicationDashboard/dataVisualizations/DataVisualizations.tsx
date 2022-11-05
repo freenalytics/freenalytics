@@ -5,7 +5,7 @@ import { getPathWithTypeForSchema } from '../../../../utils/schema';
 
 interface Props {
   schema: object
-  data: object[]
+  data: { payload: object }[]
 }
 
 const DataVisualizations: React.FC<Props> = ({ schema, data }) => {
