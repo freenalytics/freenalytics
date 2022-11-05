@@ -13,7 +13,10 @@ const PAGES = {
   'pages.application.dashboard.title': 'Dashboard | {app}',
   'pages.application.dashboard.header.refresh.description.text': 'Click here to refresh the data.',
   'pages.application.dashboard.header.limit_options.title.text': 'Pick a number of entries to show',
-  'pages.application.dashboard.header.limit_options.item.text': 'Show {limit} entries',
+  'pages.application.dashboard.header.limit_options.item.text': 'Show last {limit} entries',
+  'pages.application.dashboard.header.interval_options.title.text': 'Set automatic refresh interval',
+  'pages.application.dashboard.header.interval_options.item.text': 'Update every {value} seconds',
+  'pages.application.dashboard.header.interval_options.item.disable.text': 'Disable automatic refresh',
 
   'pages.application.entries.title': 'Data Entries | {app}',
   'pages.application.entries.header.text': 'Data Entries',

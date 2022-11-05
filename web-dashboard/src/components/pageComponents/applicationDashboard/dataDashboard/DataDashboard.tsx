@@ -14,9 +14,10 @@ interface Props {
 
 const DataDashboard: React.FC<Props> = ({ domain, schema }) => {
   const [limit, setLimit] = useState<number>(50);
+  const [refetchInterval, setRefetchInterval] = useState<number | false>(30000);
   const { client, queryClient } = useApi();
   const request = client.application.getApplicationDataByDomain(domain, { start: 0, limit });
-  const { isLoading, error, data } = useQuery(request.key, request.fn);
+  const { isLoading, error, data } = useQuery(request.key, request.fn, { refetchInterval });
 
   const handleForceRefresh = async () => {
     await queryClient.refetchQueries(request.key);
@@ -24,6 +25,14 @@ const DataDashboard: React.FC<Props> = ({ domain, schema }) => {
 
   const handleLimitChange = (limit: number) => {
     setLimit(limit);
+  };
+
+  const handleIntervalChange = (interval: number | false) => {
+    if (!interval) {
+      setRefetchInterval(false);
+    } else {
+      setRefetchInterval(interval * 1000);
+    }
   };
 
   if (isLoading) {
@@ -40,7 +49,7 @@ const DataDashboard: React.FC<Props> = ({ domain, schema }) => {
 
   return (
     <Content>
-      <DataDashboardHeader onRefresh={handleForceRefresh} onLimitChange={handleLimitChange} />
+      <DataDashboardHeader onRefresh={handleForceRefresh} onLimitChange={handleLimitChange} onIntervalChange={handleIntervalChange} />
       <DataVisualizations schema={schema} data={data!.result} />
     </Content>
   );
