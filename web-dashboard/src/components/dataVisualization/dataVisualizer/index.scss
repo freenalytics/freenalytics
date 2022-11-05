@@ -1,0 +1,33 @@
+.data-visualizer {
+  width: 100%;
+  height: 400px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+
+  .data-visualizer-title {
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .block {
+    flex: 1;
+  }
+
+  .string-array-visualizer-item {
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  .unsupported-visualizer-notification {
+    height: 100%;
+    text-align: center;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}

@@ -21,7 +21,7 @@ const EntryTableView: React.FC<Props> = ({ data, schema, startIndex }) => {
   return (
     <Block>
       <Table.Container>
-        <Table striped style={{ minWidth: '100%' }}>
+        <Table striped className="is-fullwidth">
           <thead>
             <tr>
               {

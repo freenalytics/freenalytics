@@ -11,6 +11,12 @@ const PAGES = {
   'pages.create_application.instructions.description.5.text': 'Official templates and connectors are coming soon.',
 
   'pages.application.dashboard.title': 'Dashboard | {app}',
+  'pages.application.dashboard.header.refresh.description.text': 'Click here to refresh the data.',
+  'pages.application.dashboard.header.limit_options.title.text': 'Pick a number of entries to show',
+  'pages.application.dashboard.header.limit_options.item.text': 'Show last {limit} entries',
+  'pages.application.dashboard.header.interval_options.title.text': 'Set automatic refresh interval',
+  'pages.application.dashboard.header.interval_options.item.text': 'Update every {value} seconds',
+  'pages.application.dashboard.header.interval_options.item.disable.text': 'Disable automatic refresh',
 
   'pages.application.entries.title': 'Data Entries | {app}',
   'pages.application.entries.header.text': 'Data Entries',
@@ -68,6 +74,15 @@ const COMMON = {
   'common.alerts.empty.description.text': 'No content is available at the moment for this section.',
 
   'common.data_vis.entry_table.columns.createdAt.text': 'Creation Date',
+  'common.data_vis.string.title.text': 'Data Table for {path}',
+  'common.data_vis.string_array.title.text': 'Data Table for {path}',
+  'common.data_vis.number.title.text': 'Line Chart for {path}',
+  'common.data_vis.number_array.title.text': 'Line Charts for {path}',
+  'common.data_vis.object_array.title.text': 'Object Array for {path}',
+  'common.data_vis.boolean.title.text': 'Pie Chart for {path}',
+  'common.data_vis.boolean_array.title.text': 'Bar Charts for {path}',
+  'common.data_vis.unsupported.title.text': 'No Visualization for {path}',
+  'common.data_vis.unsupported.description.text': 'There is no supported visualizer for data type {type}.',
 
   'common.form.application_type_picker.mobile.text': 'Mobile',
   'common.form.application_type_picker.web.text': 'Web',

@@ -1,6 +1,4 @@
-.application-sidebar {
-  display: flex;
-
+.application-sidebar-desktop {
   .menu {
     margin-right: 4rem;
 
@@ -14,47 +12,53 @@
   }
 
   .application-content {
-    flex: 1;
+    padding-bottom: 2rem;
   }
 }
 
 .application-sidebar-mobile {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  background-color: white;
-  height: 100%;
-  width: 100%;
-  margin-left: -100%;
-  transition: margin-left 800ms ease;
+  &.sidebar-open {
+    .sidebar-menu {
+      margin-left: 0;
+    }
 
-  .svg-icon {
-    margin-right: 1rem;
+    .sidebar-toggle {
+      left: 100%;
+    }
   }
-}
 
-.sidebar-open {
-  .application-sidebar-mobile {
-    margin-left: 0;
+  .sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    margin-left: -100%;
+    transition: margin-left 800ms ease;
+
+    .svg-icon {
+      margin-right: 1rem;
+    }
   }
 
   .sidebar-toggle {
-    left: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 50%;
+    height: 50%;
+    width: 20%;
+    color: hsl(0, 0%, 29%);
+    transition: left 800ms ease;
+
+    .svg-icon {
+      padding-left: 4px;
+    }
   }
-}
 
-.sidebar-toggle {
-  position: fixed;
-  z-index: 100;
-  left: 0;
-  top: 50%;
-  height: 50%;
-  width: 20%;
-  color: hsl(0, 0%, 29%);
-  transition: left 800ms ease;
-
-  .svg-icon {
-    padding-left: 4px;
+  .application-content {
+    padding-bottom: 2rem;
   }
 }

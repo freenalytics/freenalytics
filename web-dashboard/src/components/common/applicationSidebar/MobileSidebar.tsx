@@ -12,8 +12,8 @@ const MobileSidebar: React.FC<SidebarProps> = ({ active, domain, children }) => 
   };
 
   return (
-    <div className={open ? 'sidebar-open' : ''}>
-      <Menu className="application-sidebar-mobile">
+    <div className={`application-sidebar-mobile ${open ? 'sidebar-open' : ''}`}>
+      <Menu className="sidebar-menu">
         <Menu.List>
           <Menu.List.Item onClick={handleToggle}>
             <FontAwesomeIcon size="2x" icon="arrow-left" />
@@ -27,7 +27,9 @@ const MobileSidebar: React.FC<SidebarProps> = ({ active, domain, children }) => 
         <FontAwesomeIcon className="svg-icon" size="1x" icon="arrow-right" onClick={handleToggle} />
       </div>
 
-      {children}
+      <div className="application-content">
+        {children}
+      </div>
     </div>
   );
 };
