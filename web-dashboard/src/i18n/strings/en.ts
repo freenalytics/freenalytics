@@ -75,9 +75,10 @@ const COMMON = {
   'common.data_vis.string_array.title.text': 'Data Table for {path}',
   'common.data_vis.number.title.text': 'Line Chart for {path}',
   'common.data_vis.number_array.title.text': 'Line Charts for {path}',
+  'common.data_vis.object_array.title.text': 'Object Array for {path}',
   'common.data_vis.boolean.title.text': 'Pie Chart for {path}',
   'common.data_vis.boolean_array.title.text': 'Bar Charts for {path}',
-  'common.data_vis.unsupported.title.text': 'No visualization for {path}',
+  'common.data_vis.unsupported.title.text': 'No Visualization for {path}',
   'common.data_vis.unsupported.description.text': 'There is no supported visualizer for data type {type}.',
 
   'common.form.application_type_picker.mobile.text': 'Mobile',

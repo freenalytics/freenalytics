@@ -45,7 +45,7 @@ const DataVisualizer: React.FC<Props> = ({ path, type, data }) => {
 
   if (type === 'object[]') {
     return (
-      <ObjectArrayVisualizer />
+      <ObjectArrayVisualizer path={path} data={mappedData.filter((e) => e && e.length > 0)} />
     );
   }
 
