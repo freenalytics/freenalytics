@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content } from 'react-bulma-components';
+import { Columns } from 'react-bulma-components';
 import DataVisualizer from '../../../dataVisualization/dataVisualizer';
 import { getPathWithTypeForSchema } from '../../../../utils/schema';
 
@@ -12,13 +12,22 @@ const DataVisualizations: React.FC<Props> = ({ schema, data }) => {
   const schemaTypes = getPathWithTypeForSchema(schema);
 
   return (
-    <Content>
+    <Columns>
       {
         Object.entries(schemaTypes).map(([path, type]) => (
-          <DataVisualizer key={path} path={path} type={type} data={data} />
+          <Columns.Column
+            key={path}
+            mobile={{ size: 12 }}
+            tablet={{ size: 12 }}
+            desktop={{ size: 6 }}
+            widescreen={{ size: 6 }}
+            fullhd={{ size: 6 }}
+          >
+            <DataVisualizer path={path} type={type} data={data} />
+          </Columns.Column>
         ))
       }
-    </Content>
+    </Columns>
   );
 };
 
