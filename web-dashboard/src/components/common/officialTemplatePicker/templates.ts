@@ -20,14 +20,45 @@ const templates: OfficialTemplate[] = [
     schema: `
 type: object
 properties:
-  name:
+  page_title:
     type: string
-required:
-  - name
+  url_route:
+    type: string
+  user_time_in_page:
+    type: number
+  user_scrolled:
+    type: boolean
+  user_first_visit:
+    type: boolean
+  user_location:
+    type: string
+  referrer:
+    type: string
+  num_of_clicks:
+    type: integer
+  element_clicked:
+    type: object
+    properties:
+      url_route:
+        type: string
+      tag_name:
+        type: string
+      class_name:
+        type: string
+      id:
+        type: string
+      page_x:
+        type: integer
+      page_y:
+        type: integer
+      client_x:
+        type: integer
+      client_y:
+        type: integer
     `.trim(),
     connectors: [{
       language: 'JavaScript',
-      package_url: 'https://github.com/freenalytics'
+      package_url: 'https://github.com/freenalytics/freenalytics-connector-web'
     }]
   }
 ];
