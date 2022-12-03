@@ -5,9 +5,22 @@ import {
   deleteApplicationForUserByDomain,
   updateApplicationForUserByDomain
 } from './applicationService';
+import { promisify } from 'util';
 const mockingoose = require('mockingoose');
 import Application from '../models/application';
 import Data from '../models/data';
+import redisClient from '../redis/client';
+
+jest.mock('redis', () => jest.requireActual('redis-mock'));
+Object.defineProperty(redisClient, 'exists', {
+  value: promisify(redisClient.exists.bind(redisClient))
+});
+Object.defineProperty(redisClient, 'del', {
+  value: promisify(redisClient.del.bind(redisClient))
+});
+Object.defineProperty(redisClient, 'set', {
+  value: promisify(redisClient.set.bind(redisClient))
+});
 
 const app1 = {
   name: 'app1',
@@ -166,6 +179,12 @@ describe('Services: ApplicationService', () => {
       expect(async () => {
         await deleteApplicationForUserByDomain('moonstar', 'FD-123');
       }).not.toThrow();
+    });
+
+    it('should delete the schema from the redis cache if found.', async () => {
+      await redisClient.set('FD-123:schema', 'something');
+      await deleteApplicationForUserByDomain('moonstar', 'FD-123');
+      expect(await redisClient.exists('FD-123:schema')).toBeFalsy();
     });
   });
 
