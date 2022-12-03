@@ -49,7 +49,7 @@ const EntryTableView: React.FC<Props> = ({ data, schema, startIndex }) => {
 
                       return (
                         <td key={`${path}-${index}`}>
-                          {Array.isArray(cell) ? `[${cell.join(', ')}]` : cell}
+                          {Array.isArray(cell) ? `[${cell.join(', ')}]` : cell === undefined ? '' : `${cell}`}
                         </td>
                       );
                     })
