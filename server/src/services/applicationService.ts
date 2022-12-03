@@ -1,4 +1,5 @@
 import uniqid from 'uniqid';
+import redisClient from '../redis/client';
 import Application, { ApplicationModel } from '../models/application';
 import Data from '../models/data';
 import { ApplicationCreateBody, ApplicationUpdateBody } from '../schemas/application';
@@ -52,6 +53,13 @@ export const deleteApplicationForUserByDomain = async (owner: string, domain: st
 
   if (result.deletedCount < 1) {
     throw new ResourceNotFoundError(`Application ${domain} was not found.`);
+  }
+
+  const key = `${domain}:schema`;
+  const cacheHit = await redisClient.exists(key);
+
+  if (cacheHit) {
+    await redisClient.del(key);
   }
 
   await Data.deleteMany({ domain });
