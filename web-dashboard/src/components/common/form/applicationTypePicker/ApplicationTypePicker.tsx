@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent } from 'react';
 import { Form } from 'react-bulma-components';
 import useLocale from '../../../../hooks/locale';
 import { MessageKey } from '../../../../i18n';
@@ -16,16 +16,11 @@ interface Props {
   name: string
   required?: boolean
   onChange: (e: ChangeEvent<any>) => void
-  defaultValue?: string
   value?: string
 }
 
-const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChange, defaultValue = null, value }) => {
+const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChange, value }) => {
   const { t } = useLocale();
-
-  useEffect(() => {
-    onChange({ currentTarget: { name, value: defaultValue ?? VALID_APPLICATION_TYPES[0] } } as unknown as ChangeEvent<any>);
-  }, []);
 
   return (
     <Form.Select
@@ -33,7 +28,6 @@ const ApplicationTypePicker: React.FC<Props> = ({ name, required = false, onChan
       required={required}
       onChange={onChange}
       value={value}
-      defaultValue={defaultValue && !value ? VALID_APPLICATION_TYPES[0] : undefined}
     >
       {
         VALID_APPLICATION_TYPES.map((type) => (
