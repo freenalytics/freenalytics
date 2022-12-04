@@ -45,7 +45,7 @@ const ApplicationSettingsFormView: React.FC<Props> = ({ form, onSubmit, error })
             {t('forms.application_settings.type.label')}
           </Form.Label>
           <Form.Control>
-            <ApplicationTypePicker name="type" onChange={handleChangeWithValidation} defaultValue={getValues('type')} />
+            <ApplicationTypePicker name="type" onChange={handleChangeWithValidation} value={getValues('type')} />
           </Form.Control>
           <Form.Help color="danger">
             {errors.type?.message}
