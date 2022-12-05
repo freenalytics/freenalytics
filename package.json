@@ -1,6 +1,6 @@
 {
   "name": "freenalytics",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An open source, self-hosted dashboard for usage analytics of general use applications.",
   "private": true,
   "author": "Freenalytics",
