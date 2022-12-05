@@ -5,6 +5,9 @@ The server for Freenalytics. It is an Express server that serves the API and the
 
 ## Development
 
+If you're interested in developing the server, please check out [Server Development](https://freenalytics.github.io/development/server/)
+on the documentation page.
+
 For development, make sure you're running at least [Node v16.15.1](https://nodejs.org/en/).
 
 Clone this repository:

@@ -5,6 +5,9 @@ server that serves the API.
 
 ## Development
 
+If you're interested in developing the server, please check out [Web Dashboard Development](https://freenalytics.github.io/development/web-dashboard/)
+on the documentation page.
+
 For development, make sure you're running at least [Node v16.15.1](https://nodejs.org/en/).
 
 Clone this repository:
