@@ -51,14 +51,22 @@ properties:
         type: integer
       page_y:
         type: integer
+      page_width:
+        type: integer
+      page_height:
+        type: integer
       client_x:
         type: integer
       client_y:
         type: integer
+      client_width:
+        type: integer
+      client_height:
+        type: integer
     `.trim(),
     connectors: [{
       language: 'JavaScript',
-      package_url: 'https://github.com/freenalytics/freenalytics-connector-web'
+      package_url: 'https://github.com/freenalytics/freenalytics-connector-web/tree/v1.1.0'
     }]
   }
 ];
